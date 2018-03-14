@@ -1,9 +1,11 @@
 <resources>
-    <string name="app_name">BZhi</string>
+    <string name="app_name">币知道</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="top">Top</string>
     <string name="star">收藏</string>
     <string name="fast_information">快讯</string>
+    <string name="slogen">快人一步，尽晓币圈事</string>
+    <string name="coming_soon">即将到来，敬请期待</string>
+    <string name="share">分享</string>
 </resources>

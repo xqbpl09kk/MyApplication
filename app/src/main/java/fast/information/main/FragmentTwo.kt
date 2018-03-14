@@ -8,8 +8,9 @@ import android.view.ViewGroup
 import fast.information.R
 
 /**
- * Created by xiaqibo on 2018/3/1.
- */
+* MyApplication
+* Created by xiaqibo on 2018/3/1-0:19.
+*/
 class FragmentTwo : Fragment() {
 
     companion object {
@@ -22,9 +23,8 @@ class FragmentTwo : Fragment() {
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val contentView :View = (inflater?:LayoutInflater.from(context)).inflate(R.layout.fragment_empty ,container , false )
-        return contentView
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_empty ,container , false )
     }
 
 }

@@ -1,8 +1,9 @@
 package fast.information.network
 
 /**
- * Created by xiaqibo on 2018/3/13.
- */
+* MyApplication
+* Created by xiaqibo on 2018/3/13-0:19.
+*/
 interface ResultCallback <in T >{
 
     fun onSuccess(t: T ?)

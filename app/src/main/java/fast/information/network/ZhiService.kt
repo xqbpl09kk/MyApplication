@@ -5,8 +5,9 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 /**
- * Created by xiaqibo on 2018/3/12.
- */
+* MyApplication
+* Created by xiaqibo on 2018/3/12-0:20.
+*/
 interface ZhiService {
 
     @GET("/v1/news/list")

@@ -19,8 +19,9 @@ import fast.information.network.RetrofitHelper
 import kotlinx.android.synthetic.main.fragment_one.*
 
 /**
- * Created by xiaqibo on 2018/3/1.
- */
+* MyApplication
+* Created by xiaqibo on 2018/3/1-0:19.
+*/
 class FragmentOne : Fragment() {
 
     private var cursor : Int = 0
@@ -38,14 +39,13 @@ class FragmentOne : Fragment() {
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return (inflater?:LayoutInflater.from(context))
-                    .inflate(R.layout.fragment_one, container, false )
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_one, container, false )
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = HomeAdapter(context)
+        adapter = HomeAdapter(context!!)
         recycler_view.adapter = adapter
         val layoutManager = LinearLayoutManager(context)
         recycler_view.layoutManager = layoutManager
@@ -82,7 +82,7 @@ class FragmentOne : Fragment() {
                 if(adapter.showStar())
                     adapter.switchContent()
                 val items : ArrayList<MessageItem> = (t ?: return).items ?: return
-                cursor = t.next_cursor
+                cursor = t.nextCursor
                 if(loadMore) adapter.addItems(items)
                 else adapter.update(items)
                 Toast.makeText(context
@@ -107,8 +107,8 @@ class FragmentOne : Fragment() {
 
     private fun loadStarData(){
         val list =  Gson().fromJson<Array<MessageItem>>(
-                context.getSharedPreferences("stared" , Context.MODE_PRIVATE)
-                        .getString("star" , "")
+                context?.getSharedPreferences("stared" , Context.MODE_PRIVATE)
+                        ?.getString("star" , "")
                 , Array<MessageItem>::class.java)
         val stared = ArrayList<MessageItem>()
         if(list != null)

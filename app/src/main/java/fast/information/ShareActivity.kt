@@ -5,19 +5,18 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.os.Handler
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
-import android.util.Log
 import fast.information.network.MessageItem
 import kotlinx.android.synthetic.main.activity_share.*
 import java.io.File
 import java.io.FileOutputStream
 
 /**
- * Created by xiaqibo on 2018/3/14.
- */
+* MyApplication
+* Created by xiaqibo on 2018/3/14-0:20.
+*/
 class ShareActivity :Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +24,7 @@ class ShareActivity :Activity() {
         setContentView(R.layout.activity_share)
         val messageItem : MessageItem = intent.getSerializableExtra("message_item") as MessageItem
         val share :Boolean = intent.getBooleanExtra("share" , true)
-        time_text.text = messageItem.created_at
+        time_text.text = messageItem.createdAt
         content_text.text = messageItem.content
         content_text.setOnClickListener({  imageShare()  })
         if(share)

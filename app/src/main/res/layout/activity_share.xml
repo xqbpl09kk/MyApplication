@@ -25,6 +25,7 @@
             >
 
             <ImageView
+                android:contentDescription="@string/app_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_launcher" />
@@ -33,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="币知道"
+                android:text="@string/app_name"
                 android:textColor="#eeeeee"
                 android:textSize="30sp" />
 
@@ -41,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="快人一步，尽晓币圈事"
+                android:text="@string/slogen"
                 android:textColor="#eeeeee"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -51,7 +52,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="2018-3-10 13:23"
             android:paddingLeft="15dp"
             android:textColor="#555555"
             android:paddingRight="15dp"
@@ -64,7 +64,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="比特币大涨100%"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:textColor="#333333"
@@ -72,6 +71,7 @@
             android:focusable="true" />
 
         <ImageView
+            android:contentDescription="@string/app_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

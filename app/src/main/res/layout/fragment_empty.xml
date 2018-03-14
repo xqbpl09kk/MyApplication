@@ -9,5 +9,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textSize="20sp"
-        android:text="即将到来,敬请期待" />
+        android:text="@string/coming_soon" />
 </FrameLayout>

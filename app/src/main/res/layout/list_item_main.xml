@@ -15,29 +15,29 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="5dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="5dp"
         android:paddingTop="10dp">
 
         <TextView
             android:id="@+id/time_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="04:33" />
+            />
 
         <TextView
             android:id="@+id/content_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="这里是内容"
+
             android:textColor="#333333" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:layout_gravity="right"
+            android:layout_gravity="end"
             android:orientation="horizontal">
 
             <TextView
@@ -45,21 +45,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?selectableItemBackgroundBorderless"
-                android:drawableLeft="@drawable/start_selector"
+                android:drawableStart="@drawable/start_selector"
                 android:gravity="center_vertical"
                 android:padding="5dp"
                 android:textSize="14sp"
-                android:text="收藏"
+                android:text="@string/star"
                 android:textColor="#222222" />
             <TextView
                 android:id="@+id/action2_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?selectableItemBackgroundBorderless"
-                android:drawableLeft="@drawable/ic_share_black_24dp"
+                android:drawableStart="@drawable/ic_share_black_24dp"
                 android:gravity="center_vertical"
                 android:padding="5dp"
-                android:text="分享"
+                android:text="@string/share"
                 android:textSize="14sp"
                 android:textColor="#222222" />
         </LinearLayout>

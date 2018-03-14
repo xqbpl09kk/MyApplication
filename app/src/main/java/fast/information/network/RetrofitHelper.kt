@@ -7,11 +7,11 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import fast.information.network.ResultListBundle
 /**
- * Created by xiaqibo on 2018/3/12.
- */
-public class RetrofitHelper private constructor(){
+* MyApplication
+* Created by xiaqibo on 2018/3/12-0:20.
+*/
+class RetrofitHelper private constructor(){
 
     private val baseUrl: String = "http://btcapi.yaopic.com/"
     private val tag  : String = "RetrofitHelper"

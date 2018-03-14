@@ -11,9 +11,9 @@ import org.junit.Assert.*
  */
 class ExampleUnitTest {
     @Test
-    fun addition_isCorrect() {
+    fun additionCorrect() {
         assertEquals(4, 2 + 2)
-        var v :String ?= null
+        val v :String ?= null
         System.out.print(v?.length)
     }
 }
