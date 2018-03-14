@@ -77,11 +77,9 @@ class HomeAdapter (private val context:Context) :
             data.addAll(items)
         }else{
             stared.clear()
-            stared.addAll(items)
             staredId.clear()
-            for(star in stared){
-                staredId.add(star.content.hashCode())
-            }
+            stared.addAll(items)
+            stared.mapTo(staredId) { it.content.hashCode() }
         }
         notifyDataSetChanged()
     }
@@ -91,9 +89,7 @@ class HomeAdapter (private val context:Context) :
             data.addAll(items)
         }else{
             stared.addAll(items)
-            for(star in stared){
-                staredId.add(star.content.hashCode())
-            }
+            stared.mapTo(staredId) { it.content.hashCode() }
         }
         notifyDataSetChanged()
     }
