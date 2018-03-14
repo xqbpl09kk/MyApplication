@@ -37,14 +37,11 @@ class ShareActivity :Activity() {
         val shareIntent = Intent()
         shareIntent.action = Intent.ACTION_SEND
         shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
-        shareIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        shareIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
         shareIntent.type = "image/*"
         startActivity(Intent.createChooser(shareIntent, "分享到"))
     }
 
-    /**
-     *
-     */
     private fun makeImageFile() : Uri {
         clearTmpFile()
         content.buildDrawingCache()
@@ -60,6 +57,5 @@ class ShareActivity :Activity() {
             file.delete()
         }
     }
-
 
 }

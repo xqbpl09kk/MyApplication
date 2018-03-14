@@ -20,8 +20,6 @@ import fast.information.ShareActivity
 class HomeAdapter (private val context:Context) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
-
-
     private val data : ArrayList<MessageItem> = ArrayList()
     private val staredId : ArrayList<Int> = ArrayList()
     private val stared : ArrayList<MessageItem> = ArrayList()
@@ -73,7 +71,6 @@ class HomeAdapter (private val context:Context) :
         })
     }
 
-
     fun update(items : ArrayList<MessageItem>){
         if(showData == data){
             data.clear()
@@ -101,7 +98,6 @@ class HomeAdapter (private val context:Context) :
         notifyDataSetChanged()
     }
 
-
     private fun removeStar(messageItem : MessageItem){
         for(message in stared){
             if(messageItem.content.hashCode()
@@ -124,6 +120,5 @@ class HomeAdapter (private val context:Context) :
     fun showStar():Boolean {
         return showData == stared
     }
-
 
 }

@@ -11,5 +11,4 @@ class ResultListBundle <T>{
     var next_cursor :Int = 0
     var items :ArrayList<T> ?= null
 
-
 }

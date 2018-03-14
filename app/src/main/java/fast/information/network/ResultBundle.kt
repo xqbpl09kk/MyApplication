@@ -5,7 +5,6 @@ package fast.information.network
  */
 class ResultBundle <T>{
 
-
     var version :String ?= null
     var time : String ?= null
     var t:T ?= null

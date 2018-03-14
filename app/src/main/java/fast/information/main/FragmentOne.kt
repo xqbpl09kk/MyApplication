@@ -28,9 +28,6 @@ class FragmentOne : Fragment() {
     private var loading : Boolean = false
     private lateinit var  adapter :HomeAdapter
 
-
-
-
     companion object {
 
         fun createInstance(argBundle : Bundle) : FragmentOne {
@@ -45,7 +42,6 @@ class FragmentOne : Fragment() {
         return (inflater?:LayoutInflater.from(context))
                     .inflate(R.layout.fragment_one, container, false )
     }
-
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -74,7 +70,6 @@ class FragmentOne : Fragment() {
             } })
         netStep(false)
     }
-
 
     private fun netStep (loadMore:Boolean){
         if(!loadMore){
@@ -110,7 +105,6 @@ class FragmentOne : Fragment() {
         })
     }
 
-
     private fun loadStarData(){
         val list =  Gson().fromJson<Array<MessageItem>>(
                 context.getSharedPreferences("stared" , Context.MODE_PRIVATE)
@@ -123,11 +117,9 @@ class FragmentOne : Fragment() {
         refresh_layout.isRefreshing = false
     }
 
-
     fun scrollToTop() {
         recycler_view.smoothScrollToPosition( 0 )
     }
-
 
     fun switchContent(){
         adapter.switchContent()

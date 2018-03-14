@@ -15,14 +15,12 @@ public class RetrofitHelper private constructor(){
 
     private val baseUrl: String = "http://btcapi.yaopic.com/"
     private val tag  : String = "RetrofitHelper"
-
     private val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create(
                     GsonBuilder()
                             .setDateFormat("yyyy-MM-dd hh:mm:ss")
-                            .create()
-            ))
+                            .create()))
             .build()
 
     private val service: ZhiService = retrofit.create(ZhiService::class.java)
