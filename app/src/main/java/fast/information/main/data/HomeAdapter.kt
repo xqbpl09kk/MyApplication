@@ -27,6 +27,8 @@ class HomeAdapter(private val context: Context) :
     private val stared: ArrayList<MessageItem> = ArrayList()
     private var showData = stared
 
+    private var showStar = true
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater: LayoutInflater = LayoutInflater.from(context)
         val contentView: View = layoutInflater.inflate(R.layout.list_item_main, parent, false)
@@ -42,8 +44,9 @@ class HomeAdapter(private val context: Context) :
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val itemData: MessageItem = showData[position]
-        holder.itemView.time_text.text = itemData.createdAt
-        holder.itemView.content_text.text = Integer.toString(position).plus(itemData.content)
+        holder.itemView.time_text.text = itemData.getDate(false)
+        holder.itemView.content_text.text = Integer.toString(position)
+                .plus("、").plus(itemData.content)
         holder.itemView.action1_text.isSelected = staredId.contains(itemData.content.hashCode())
         holder.itemView.action2_text.setOnClickListener({
             startActivity(context,
@@ -75,7 +78,7 @@ class HomeAdapter(private val context: Context) :
     }
 
     fun update(items: ArrayList<MessageItem>) {
-        if (showData == data) {
+        if (!showStar) {
             data.clear()
             data.addAll(items)
         } else {
@@ -88,7 +91,7 @@ class HomeAdapter(private val context: Context) :
     }
 
     fun addItems(items: ArrayList<MessageItem>) {
-        if (showData == data) {
+        if (!showStar) {
             data.addAll(items)
         } else {
             stared.addAll(items)
@@ -108,7 +111,8 @@ class HomeAdapter(private val context: Context) :
     }
 
     fun switchContent() {
-        showData = if (showData == data) {
+        showStar = ! showStar
+        showData = if (showStar) {
             stared
         } else {
             data
@@ -117,7 +121,7 @@ class HomeAdapter(private val context: Context) :
     }
 
     fun showStar(): Boolean {
-        return showData == stared
+        return showStar
     }
 
 }

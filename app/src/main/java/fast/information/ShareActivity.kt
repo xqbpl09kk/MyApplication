@@ -22,9 +22,10 @@ class ShareActivity :Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_share)
-        val messageItem : MessageItem = intent.getSerializableExtra("message_item") as MessageItem
+        val messageItem : MessageItem = intent
+                .getSerializableExtra("message_item") as MessageItem
         val share :Boolean = intent.getBooleanExtra("share" , true)
-        time_text.text = messageItem.createdAt
+        time_text.text = messageItem.getDate(true)
         content_text.text = messageItem.content
         content_text.setOnClickListener({  imageShare()  })
         if(share)

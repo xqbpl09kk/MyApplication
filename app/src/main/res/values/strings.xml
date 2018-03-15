@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">币知道</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">资讯</string>
+    <string name="title_dashboard">行情</string>
+    <string name="more">更多</string>
     <string name="star">收藏</string>
     <string name="fast_information">快讯</string>
     <string name="slogen">快人一步，尽晓币圈事</string>

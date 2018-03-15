@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     private var fragmentThree  : FragmentThree ?= null
     private var currentFragment : Fragment  ?= null
     private var isStarChecked :Boolean = false
-    private val bottomMenu : IntArray = intArrayOf(R.id.navigation_home  , R.id.navigation_dashboard , R.id.navigation_notifications)
+    private val bottomMenuIds : IntArray = intArrayOf(R.id.navigation_home  , R.id.navigation_dashboard , R.id.navigation_notifications)
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
@@ -60,7 +60,8 @@ class MainActivity : AppCompatActivity() {
                 fragmentOne?.scrollToTop()
             }
         }else if(item?.itemId ?: 0 == R.id.star){
-            switchPage(0)
+            navigation.selectedItemId = bottomMenuIds[0]
+//            switchPage(0)
             isStarChecked = ! isStarChecked
             if(isStarChecked){
                 item?.icon = ContextCompat.getDrawable(this , R.drawable.ic_home_black_24dp)
@@ -84,7 +85,7 @@ class MainActivity : AppCompatActivity() {
         Log.e("tag", "onRestoreInstanceState")
         val position = savedInstanceState.getInt("position")
         switchPage(position)
-        navigation.selectedItemId = bottomMenu[position]
+        navigation.selectedItemId = bottomMenuIds[position]
         super.onRestoreInstanceState(savedInstanceState)
     }
 

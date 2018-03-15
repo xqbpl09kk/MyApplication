@@ -19,7 +19,7 @@ class RetrofitHelper private constructor(){
             .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create(
                     GsonBuilder()
-                            .setDateFormat("yyyy-MM-dd hh:mm:ss")
+                            .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
                             .create()))
             .build()
 

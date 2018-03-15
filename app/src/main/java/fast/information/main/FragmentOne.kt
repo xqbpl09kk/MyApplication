@@ -79,6 +79,7 @@ class FragmentOne : Fragment() {
         loading = true
         RetrofitHelper.instance.getMessage(cursor , size , object :ResultCallback<ResultListBundle<MessageItem>>{
             override fun onSuccess(t : ResultListBundle<MessageItem>?) {
+                if(context == null || activity?.isFinishing == true) return
                 if(adapter.showStar())
                     adapter.switchContent()
                 val items : ArrayList<MessageItem> = (t ?: return).items ?: return
@@ -94,6 +95,7 @@ class FragmentOne : Fragment() {
             }
 
             override fun onFailure(message: String, errorCode: Int) {
+                if(context == null || activity?.isFinishing == true) return
                 refresh_layout.isRefreshing = false
                 loading = false
                 Toast.makeText(context , "Error:".plus(message)
