@@ -30,6 +30,10 @@
   <component name="ProjectType">
     <option name="id" value="Android" />
   </component>
+  <component name="StateStore">
+    <option name="mTargetDirectory" value="Current Path" />
+    <option name="mFastbootTarget" value="boot" />
+  </component>
   <component name="masterDetails">
     <states>
       <state key="ProjectJDKs.UI">
