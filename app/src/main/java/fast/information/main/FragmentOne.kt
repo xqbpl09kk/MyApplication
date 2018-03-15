@@ -86,10 +86,6 @@ class FragmentOne : Fragment() {
                 cursor = t.nextCursor
                 if(loadMore) adapter.addItems(items)
                 else adapter.update(items)
-                Toast.makeText(context
-                        , "更新了".plus(Integer.toString(items.size))
-                            .plus("条")
-                        , Toast.LENGTH_SHORT).show()
                 refresh_layout.isRefreshing = false
                 loading= false
             }
