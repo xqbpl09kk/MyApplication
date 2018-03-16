@@ -23,13 +23,22 @@
 
 # Retain generic type information for use by reflection by converters and adapters
 
--keepattributes Signature
-
 # Retain service method parameters
 
--keepclassmembernames , allowobfuscation interface *{
-    @reftrofit2.http.* <methods> ;
-}
+-dontwarn retrofit2.**
+-dontwarn okhttp3.**
+-dontwarn okio.**
+-keep class retrofit2.** { *; }
+-keepattributes Signature
+-keepattributes Exceptions
+
+#-keepclasseswithmembers class * {
+#    @retrofit2.http.* <methods>;
+#}
+#
+#-keepclassmembernames , allowobfuscation interface *{
+#    @reftrofit2.http.* <methods> ;
+#}
 
 # Ignore annotation used for build tooling .
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
