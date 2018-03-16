@@ -36,7 +36,8 @@ class RetrofitHelper private constructor(){
     fun getMessage(cursor: Int, size: Int, result:ResultCallback<ResultListBundle<MessageItem>>) {
         val call : Call<ResultListBundle<MessageItem>> = service.getMessage(cursor , size )
         call.enqueue(object :Callback<ResultListBundle<MessageItem>>{
-            override fun onResponse(call: Call<ResultListBundle<MessageItem>>?, response: Response<ResultListBundle<MessageItem>>?) {
+            override fun onResponse(call: Call<ResultListBundle<MessageItem>>?
+                                    , response: Response<ResultListBundle<MessageItem>>?) {
                 val resultBundle:ResultListBundle<MessageItem> ?= response?.body()
 //                val messageList = resultBundle?.items
                 result.onSuccess(resultBundle)

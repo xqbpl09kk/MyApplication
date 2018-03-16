@@ -15,5 +15,19 @@ class ExampleUnitTest {
         assertEquals(4, 2 + 2)
         val v :String ?= null
         System.out.print(v?.length)
+        val a :ArrayList<String> = ArrayList()
+        val b :ArrayList<String> = ArrayList()
+
+        val c = (a == b)
+        print(c)
+        val d = A()
+        val e = A()
+        val f = (d == e )
+        print(f)
+    }
+
+
+    class A{
+
     }
 }

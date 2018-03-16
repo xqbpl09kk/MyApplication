@@ -2,6 +2,7 @@ package fast.information.main
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -68,7 +69,7 @@ class FragmentOne : Fragment() {
             }else{
                 netStep(false)
             } })
-        netStep(false)
+        Handler().postDelayed({ netStep(false)} , 200)
     }
 
     private fun netStep (loadMore:Boolean){
