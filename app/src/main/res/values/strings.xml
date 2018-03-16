@@ -1,11 +1,14 @@
 <resources>
-    <string name="app_name">币知道</string>
+    <string name="app_name">币知</string>
     <string name="title_home">资讯</string>
     <string name="title_dashboard">行情</string>
     <string name="more">更多</string>
     <string name="star">收藏</string>
     <string name="fast_information">快讯</string>
-    <string name="slogen">快人一步，尽晓币圈事</string>
+    <string name="slogan">传达币圈资讯</string>
     <string name="coming_soon">即将到来，敬请期待</string>
     <string name="share">分享</string>
+    <string name="update">更新</string>
+    <string name="cancel">取消</string>
+    <string name="download_complete_notify">下载已经完成，请点击通知栏完成安装。</string>
 </resources>

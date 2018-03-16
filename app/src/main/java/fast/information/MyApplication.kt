@@ -1,6 +1,7 @@
 package fast.information
 
 import android.app.Application
+import fast.information.network.RetrofitHelper
 
 /**
 * MyApplication
@@ -8,8 +9,17 @@ import android.app.Application
 */
 class MyApplication  : Application(){
 
+    companion object {
+        lateinit var instance: MyApplication
+    }
+
+
+
     override fun onCreate(){
         super.onCreate()
         System.out.print("App created ! ")
+        instance = this
     }
+
+
 }
