@@ -1,9 +1,8 @@
-package fast.information.network
+package fast.information.network.bean
 
 import android.annotation.SuppressLint
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 

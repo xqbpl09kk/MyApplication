@@ -13,9 +13,9 @@ import android.widget.Toast
 import com.google.gson.Gson
 import fast.information.R
 import fast.information.main.data.HomeAdapter
-import fast.information.network.MessageItem
-import fast.information.network.ResultCallback
-import fast.information.network.ResultListBundle
+import fast.information.network.bean.MessageItem
+import fast.information.network.bean.base.ResultCallback
+import fast.information.network.bean.base.ResultListBundle
 import fast.information.network.RetrofitHelper
 import kotlinx.android.synthetic.main.fragment_one.*
 
@@ -78,7 +78,7 @@ class FragmentOne : Fragment() {
             loadStarData()
         }
         loading = true
-        RetrofitHelper.instance.getMessage(cursor , size , object :ResultCallback<ResultListBundle<MessageItem>>{
+        RetrofitHelper.instance.getMessage(cursor , size , object : ResultCallback<ResultListBundle<MessageItem>> {
             override fun onSuccess(t : ResultListBundle<MessageItem>?) {
                 if(context == null || activity?.isFinishing == true) return
                 if(adapter.showStar())

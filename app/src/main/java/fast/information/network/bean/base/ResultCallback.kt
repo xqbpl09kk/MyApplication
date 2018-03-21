@@ -1,4 +1,4 @@
-package fast.information.network
+package fast.information.network.bean.base
 
 /**
 * MyApplication
@@ -10,3 +10,5 @@ interface ResultCallback <in T >{
     fun onFailure(message : String , errorCode : Int )
 
 }
+
+

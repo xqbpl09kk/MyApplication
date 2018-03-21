@@ -1,4 +1,4 @@
-package fast.information.network
+package fast.information.network.bean.base
 
 /**
 * MyApplication
@@ -8,6 +8,6 @@ class ResultBundle <T>{
 
     var version :String ?= null
     var time : String ?= null
-    var t:T ?= null
+    var item:T ?= null
 
 }

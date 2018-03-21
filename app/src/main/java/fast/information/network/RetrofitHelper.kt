@@ -3,6 +3,11 @@ package fast.information.network
 
 import com.google.gson.GsonBuilder
 import fast.information.MyApplication
+import fast.information.network.bean.MessageItem
+import fast.information.network.bean.UpdateInfo
+import fast.information.network.bean.base.ResultBundle
+import fast.information.network.bean.base.ResultCallback
+import fast.information.network.bean.base.ResultListBundle
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -32,20 +37,17 @@ class RetrofitHelper private constructor(){
 
     private val service: ZhiService = retrofit.create(ZhiService::class.java)
 
-    init{
-
-    }
 
     companion object {
         val instance: RetrofitHelper = RetrofitHelper()
     }
 
-    fun getMessage(cursor: Int, size: Int, result:ResultCallback<ResultListBundle<MessageItem>>) {
+    fun getMessage(cursor: Int, size: Int, result: ResultCallback<ResultListBundle<MessageItem>>) {
         val call : Call<ResultListBundle<MessageItem>> = service.getMessage(cursor , size )
         call.enqueue(object :Callback<ResultListBundle<MessageItem>>{
             override fun onResponse(call: Call<ResultListBundle<MessageItem>>?
                                     , response: Response<ResultListBundle<MessageItem>>?) {
-                val resultBundle:ResultListBundle<MessageItem> ?= response?.body()
+                val resultBundle: ResultListBundle<MessageItem>?= response?.body()
                 result.onSuccess(resultBundle)
             }
 
@@ -62,7 +64,7 @@ class RetrofitHelper private constructor(){
         call.enqueue(object :Callback<ResultBundle<UpdateInfo>>{
             override fun onResponse(call: Call<ResultBundle<UpdateInfo>>?
                                     , response: Response<ResultBundle<UpdateInfo>>?) {
-                val resultBundle:ResultBundle<UpdateInfo> ?= response?.body()
+                val resultBundle: ResultBundle<UpdateInfo>?= response?.body()
                 result.onSuccess(resultBundle)
             }
 
@@ -94,7 +96,7 @@ class RetrofitHelper private constructor(){
     }
 
 
-    private fun saveApk(responseBody : ResponseBody , result:ResultCallback<Int>){
+    private fun saveApk(responseBody : ResponseBody , result: ResultCallback<Int>){
         var outputStream: OutputStream ?= null
         var inputStream :InputStream ? = null
         try {

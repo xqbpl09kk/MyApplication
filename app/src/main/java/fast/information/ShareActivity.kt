@@ -9,8 +9,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
-import android.view.View
-import fast.information.network.MessageItem
+import fast.information.network.bean.MessageItem
 import kotlinx.android.synthetic.main.activity_share.*
 import java.io.File
 import java.io.FileOutputStream

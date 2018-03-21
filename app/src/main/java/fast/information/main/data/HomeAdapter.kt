@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import com.google.gson.Gson
 import fast.information.R
 import fast.information.ShareActivity
-import fast.information.network.MessageItem
+import fast.information.network.bean.MessageItem
 import kotlinx.android.synthetic.main.list_item_main.view.*
 
 

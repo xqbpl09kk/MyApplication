@@ -25,21 +25,24 @@
 
 # Retain service method parameters
 
--dontwarn retrofit2.**
+
+
 -dontwarn okhttp3.**
 -dontwarn okio.**
--keep class retrofit2.** { *; }
--keepattributes Signature
--keepattributes Exceptions
+-dontwarn retrofit2.**
+
+#-keep class retrofit2.** { *; }
+#-keep class sun.misc.Unsafe { *; }
+#-keep class com.google.gson.stream.** { *; }
+-keep class fast.information.network.bean.**{ *; }
+
+#-keepattributes Signature
+#-keepattributes Exceptions
+#-keepattributes Signature
+#-keepattributes *Annotation*
+
 
 #-keepclasseswithmembers class * {
 #    @retrofit2.http.* <methods>;
 #}
-#
-#-keepclassmembernames , allowobfuscation interface *{
-#    @reftrofit2.http.* <methods> ;
-#}
-
-# Ignore annotation used for build tooling .
--dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
 

@@ -1,4 +1,4 @@
-package fast.information.network
+package fast.information.network.bean
 
 /**
  * Created by xiaqibo on 2018/3/16.

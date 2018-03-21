@@ -16,10 +16,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import fast.information.R
-import fast.information.network.ResultBundle
-import fast.information.network.ResultCallback
+import fast.information.network.bean.base.ResultBundle
+import fast.information.network.bean.base.ResultCallback
 import fast.information.network.RetrofitHelper
-import fast.information.network.UpdateInfo
+import fast.information.network.bean.UpdateInfo
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 
@@ -52,7 +52,6 @@ class MainActivity : AppCompatActivity() {
         false
     }
 
-    val testUrl ="http://imtt.dd.qq.com/16891/03A5F05B75B14F38A36755BBDF3B035B.apk?fsname=com.speedsoftware.rootexplorer_4.7.4_999474.apk&csr=97c2"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.e("tag", "onCreate")
@@ -77,7 +76,7 @@ class MainActivity : AppCompatActivity() {
 //            switchPage(0)
             isStarChecked = ! isStarChecked
             if(isStarChecked){
-                item?.icon = ContextCompat.getDrawable(this , R.drawable.ic_home_black_24dp)
+                item?.icon = ContextCompat.getDrawable(this , R.drawable.ic_home_white_24dp)
                 setTitle(R.string.star)
             }else{
                 item?.icon = ContextCompat.getDrawable(this , R.drawable.ic_star_black_24dp)
@@ -142,7 +141,7 @@ class MainActivity : AppCompatActivity() {
     private fun checkUpdate(){
         RetrofitHelper.instance.checkUpdate(object : ResultCallback<ResultBundle<UpdateInfo>> {
             override fun onSuccess(t: ResultBundle<UpdateInfo>?) {
-                val updateInfo = t?.t ?: return
+                val updateInfo = t?.item ?: return
                 if(updateInfo.latest_app_version
                         != packageManager.getPackageInfo(packageName , 0).versionName)
                     showUpdateDialog(updateInfo)
@@ -150,12 +149,13 @@ class MainActivity : AppCompatActivity() {
 
             override fun onFailure(message: String, errorCode: Int) {
                 //do nothing
+                Log.i("CheckUpdate"  ,message)
             }
         })
     }
 
 
-    private fun showUpdateDialog( updateInfo :UpdateInfo ?){
+    private fun showUpdateDialog( updateInfo : UpdateInfo?){
         if (isFinishing) return
         val dialogBuilder : AlertDialog.Builder = AlertDialog.Builder(this@MainActivity)
                 .setTitle(R.string.update)
@@ -165,7 +165,7 @@ class MainActivity : AppCompatActivity() {
                 }.setPositiveButton(R.string.update){dialog , _ ->
                     run {
                         dialog.cancel()
-                        download(updateInfo?.android_url?:testUrl)
+                        download(updateInfo?.android_url?:"")
                     }
                 }
         dialogBuilder.create().show()

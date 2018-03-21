@@ -1,4 +1,4 @@
-package fast.information.network
+package fast.information.network.bean.base
 
 import com.google.gson.annotations.SerializedName
 

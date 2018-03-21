@@ -1,5 +1,9 @@
 package fast.information.network
 
+import fast.information.network.bean.MessageItem
+import fast.information.network.bean.UpdateInfo
+import fast.information.network.bean.base.ResultBundle
+import fast.information.network.bean.base.ResultListBundle
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.GET
@@ -16,9 +20,7 @@ interface ZhiService {
     fun getMessage(@Query("cursor") cursor  : Int ,
                    @Query("size") size : Int ) : Call<ResultListBundle<MessageItem>>
 
-
-
-    @GET("/v1/check_version")
+    @GET("/v1/version/info")
     fun checkUpdate() : Call<ResultBundle<UpdateInfo>>
 
 
