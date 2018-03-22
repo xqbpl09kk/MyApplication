@@ -16,6 +16,9 @@ import org.android.agoo.huawei.HuaWeiRegister
 */
 class MyApplication  : Application(){
 
+
+    val googlePlay :String = "GooglePlay"
+
     companion object {
         lateinit var instance: MyApplication
     }
