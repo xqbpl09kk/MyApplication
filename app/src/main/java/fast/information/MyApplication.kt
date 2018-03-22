@@ -16,6 +16,7 @@ import org.android.agoo.huawei.HuaWeiRegister
 */
 class MyApplication  : Application(){
 
+    val bool : Boolean = false
     companion object {
         lateinit var instance: MyApplication
     }
