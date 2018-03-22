@@ -3,6 +3,7 @@ package fast.information.network
 
 import android.util.Log
 import com.google.gson.GsonBuilder
+import fast.information.BuildConfig
 import fast.information.MyApplication
 import fast.information.network.bean.MessageItem
 import fast.information.network.bean.UpdateInfo
@@ -26,7 +27,8 @@ import java.io.OutputStream
 */
 class RetrofitHelper private constructor(){
 
-    private val baseUrl: String = "http://btcapi.yaopic.com/"
+//    private val baseUrl: String = "http://btcapi.yaopic.com/"
+    private val baseUrl :String = BuildConfig.Base_Url
     private val tag  : String = "RetrofitHelper"
     private val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
