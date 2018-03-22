@@ -1,6 +1,7 @@
 package fast.information.network
 
 
+import android.util.Log
 import com.google.gson.GsonBuilder
 import fast.information.MyApplication
 import fast.information.network.bean.MessageItem

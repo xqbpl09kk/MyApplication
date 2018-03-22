@@ -3,12 +3,13 @@ package fast.information.main.data
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.support.v4.content.ContextCompat.startActivity
+import android.support.v4.app.ActivityCompat.startActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.gson.Gson
+import fast.information.MyApplication
 import fast.information.R
 import fast.information.ShareActivity
 import fast.information.network.bean.MessageItem
@@ -49,17 +50,19 @@ class HomeAdapter(private val context: Context) :
                 .plus("、").plus(itemData.content)
         holder.itemView.action1_text.isSelected = staredId.contains(itemData.content.hashCode())
         holder.itemView.action2_text.setOnClickListener({
-            startActivity(context,
-                    Intent(context, ShareActivity::class.java)
+            MyApplication.instance
+                    .startActivity(Intent(context, ShareActivity::class.java)
                             .putExtra("message_item", itemData)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     , null)
         })
         holder.itemView.setOnClickListener({
-            startActivity(context,
-                    Intent(context, ShareActivity::class.java)
+            MyApplication.instance
+                    .startActivity(Intent(context, ShareActivity::class.java)
                             .putExtra("message_item", itemData)
                             .putExtra("share", false)
-                    , null)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            , null)
         })
         holder.itemView.action1_text.setOnClickListener({
             if (it.isSelected) {

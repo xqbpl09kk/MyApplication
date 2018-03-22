@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.google.gson.Gson
+import fast.information.MyApplication
 import fast.information.R
 import fast.information.main.data.HomeAdapter
 import fast.information.network.bean.MessageItem
@@ -48,7 +49,7 @@ class FragmentOne : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         adapter = HomeAdapter(context!!)
         recycler_view.adapter = adapter
-        val layoutManager = LinearLayoutManager(context)
+        val layoutManager = LinearLayoutManager(MyApplication.instance)
         recycler_view.layoutManager = layoutManager
 
         recycler_view.addOnScrollListener(object: RecyclerView.OnScrollListener(){
@@ -80,7 +81,7 @@ class FragmentOne : Fragment() {
         loading = true
         RetrofitHelper.instance.getMessage(cursor , size , object : ResultCallback<ResultListBundle<MessageItem>> {
             override fun onSuccess(t : ResultListBundle<MessageItem>?) {
-                if(context == null || activity?.isFinishing == true) return
+                if(activity?.isFinishing == true) return
                 if(adapter.showStar())
                     adapter.switchContent()
                 val items : ArrayList<MessageItem> = (t ?: return).items ?: return
@@ -92,10 +93,10 @@ class FragmentOne : Fragment() {
             }
 
             override fun onFailure(message: String, errorCode: Int) {
-                if(context == null || activity?.isFinishing == true) return
+                if(activity?.isFinishing == true) return
                 refresh_layout.isRefreshing = false
                 loading = false
-                Toast.makeText(context , "Error:".plus(message)
+                Toast.makeText(MyApplication.instance , "Error:".plus(message)
                         .plus("\t Code :")
                         .plus(Integer.toString(errorCode))
                         ,Toast.LENGTH_SHORT).show()
@@ -106,7 +107,7 @@ class FragmentOne : Fragment() {
 
     private fun loadStarData(){
         val list =  Gson().fromJson<Array<MessageItem>>(
-                context?.getSharedPreferences("stared" , Context.MODE_PRIVATE)
+                MyApplication.instance.getSharedPreferences("stared" , Context.MODE_PRIVATE)
                         ?.getString("star" , "")
                 , Array<MessageItem>::class.java)
         val stared = ArrayList<MessageItem>()

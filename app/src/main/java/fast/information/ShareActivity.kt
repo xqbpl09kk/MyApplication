@@ -9,6 +9,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
+import com.google.gson.Gson
+import fast.information.main.MainActivity
 import fast.information.network.bean.MessageItem
 import kotlinx.android.synthetic.main.activity_share.*
 import java.io.File
@@ -23,10 +25,14 @@ class ShareActivity :Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_share)
-        val messageItem : MessageItem = intent
-                .getSerializableExtra("message_item") as MessageItem
+        var message  = intent .getSerializableExtra("message_item")
+        if(message == null){
+            val messageString : String = intent.getStringExtra("message")
+            message = Gson().fromJson(messageString , MessageItem::class.java)
+        }
+        val messageItem = message as MessageItem
         val share :Boolean = intent.getBooleanExtra("share" , true)
-        time_text.text = messageItem.getDate(true)
+        time_text.text = messageItem!!.getDate(true)
         content_text.text = messageItem.content
         content_text.setOnClickListener({  imageShare()  })
         if(share)
@@ -58,6 +64,12 @@ class ShareActivity :Activity() {
         for(file in externalCacheDir.listFiles()){
             file.delete()
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(Intent(this@ShareActivity, MainActivity::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
     }
 
 }

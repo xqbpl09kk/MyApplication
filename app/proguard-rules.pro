@@ -31,11 +31,22 @@
 -dontwarn okio.**
 -dontwarn retrofit2.**
 
+# umeng push
+-dontwarn org.android.agoo.control.**
+-dontwarn com.taobao.tlog.adapter.**
+-dontwarn com.taobao.accs.**
+-dontwarn anetwork.channel.**
+-dontwarn anet.channel.**
+-dontwarn com.huawei.android.**
+
+
+
+
 #-keep class retrofit2.** { *; }
 #-keep class sun.misc.Unsafe { *; }
 #-keep class com.google.gson.stream.** { *; }
 -keep class fast.information.network.bean.**{ *; }
-
+-keep class com.umeng.commonsdk.** {*;}
 #-keepattributes Signature
 #-keepattributes Exceptions
 #-keepattributes Signature
