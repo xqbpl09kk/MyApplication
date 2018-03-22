@@ -12,6 +12,7 @@ class MyApplication  : Application(){
 
 
     val googlePlay :String = "GooglePlay"
+    val newItems :String = "newItem"
 
     companion object {
         lateinit var instance: MyApplication
