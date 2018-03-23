@@ -18,12 +18,14 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
+            buildConfigField "String","Base_Url" ,"\"http://47.104.133.201:10080\""
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
 
         release {
             minifyEnabled true
             shrinkResources true
+            buildConfigField "String","Base_Url" ,"\"http://47.104.133.201:10080\""
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

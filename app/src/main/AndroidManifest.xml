@@ -38,6 +38,12 @@
             android:launchMode="singleTask"
             android:exported="true"/>
 
+        <activity android:name=".ConcernActivity"
+            android:label="@string/concern"/>
+
+        <activity android:name=".SettingsActivity"
+            android:label="@string/settings"/>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"
