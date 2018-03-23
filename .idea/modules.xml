@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MyApplication.iml" filepath="$PROJECT_DIR$/MyApplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pushPlus/pushPlus.iml" filepath="$PROJECT_DIR$/pushPlus/pushPlus.iml" />
+      <module fileurl="file://C:\Users\xiaqibo\AndroidStudioProjects\MyApplication-GooglePlay\MyApplication\pushPlus\pushPlus.iml" filepath="C:\Users\xiaqibo\AndroidStudioProjects\MyApplication-GooglePlay\MyApplication\pushPlus\pushPlus.iml" />
     </modules>
   </component>
 </project>
