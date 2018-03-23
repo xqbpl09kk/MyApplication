@@ -27,8 +27,8 @@ import java.io.OutputStream
 */
 class RetrofitHelper private constructor(){
 
-//    private val baseUrl: String = "http://btcapi.yaopic.com/"
     private val baseUrl :String = BuildConfig.Base_Url
+
     private val tag  : String = "RetrofitHelper"
     private val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)

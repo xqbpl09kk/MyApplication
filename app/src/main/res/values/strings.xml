@@ -11,4 +11,8 @@
     <string name="update">更新</string>
     <string name="cancel">取消</string>
     <string name="download_complete_notify">下载已经完成，请点击通知栏完成安装。</string>
+    <string name="concern">关于我们</string>
+    <string name="settings">设置</string>
+    <string name="push_message">推送</string>
+    <string name="auto_update">Wifi下自动下载更新</string>
 </resources>
