@@ -77,6 +77,6 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="10dp"
-            android:src="@mipmap/download_QR" />
+            android:src="@mipmap/download_qr" />
     </LinearLayout>
 </ScrollView>
