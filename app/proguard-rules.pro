@@ -47,6 +47,7 @@
 #-keep class com.google.gson.stream.** { *; }
 -keep class fast.information.network.bean.**{ *; }
 -keep class com.umeng.commonsdk.** {*;}
+
 #-keepattributes Signature
 #-keepattributes Exceptions
 #-keepattributes Signature

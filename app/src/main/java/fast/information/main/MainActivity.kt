@@ -171,11 +171,12 @@ class MainActivity : AppCompatActivity() {
         dialogBuilder.create().show()
     }
 
-    private fun download(downloadUrl : String){
+    private fun download(downloadUrl : String ?){
         val downloadManager :DownloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val downloadId = downloadManager.enqueue(
                 DownloadManager.Request(Uri.parse(downloadUrl))
-                        .setDestinationUri(Uri.fromFile(File(applicationContext.externalCacheDir.absolutePath , "bzhi.apk")))
+                        .setDestinationUri(Uri.fromFile(
+                                        File(applicationContext.externalCacheDir.absolutePath , "bzhi.apk")))
                         .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI)
                         .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
         )
@@ -184,7 +185,7 @@ class MainActivity : AppCompatActivity() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
                 if(id == downloadId){
-                    Toast.makeText(context , R.string.download_complete_notify ,Toast.LENGTH_LONG).show()
+                    Toast.makeText(context , R.string.download_complete_notify,Toast.LENGTH_LONG).show()
                     unregisterReceiver(downloadStatusReceiver)
                 }
             }

@@ -24,13 +24,19 @@ open class MessageItem :Serializable{
     }
 
     @SerializedName("id")
-    var id :String ?= null
+    var id:String ?= null
     @SerializedName("content")
-    var content :String =""
+    var content:String =""
     @SerializedName("link")
-    var link :String ?= null
+    var link:String ?= null
+    @SerializedName("is_red")
+    var isRed:Int = 0
+    @SerializedName("title")
+    var title:String ?= null
+
     @SerializedName("created_at")
     private var createdAt:String ?= null
+
 
     fun getDate(showAll :Boolean):String{
         dateFormat.parse(createdAt)

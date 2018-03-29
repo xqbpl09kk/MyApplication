@@ -12,6 +12,11 @@ import org.junit.Assert.*
 class ExampleUnitTest {
     @Test
     fun additionCorrect() {
+   
+    }
+
+
+    fun test1(){
         assertEquals(4, 2 + 2)
         val v :String ?= null
         System.out.print(v?.length)
@@ -25,8 +30,6 @@ class ExampleUnitTest {
         val f = (d == e )
         print(f)
     }
-
-
     class A{
 
     }

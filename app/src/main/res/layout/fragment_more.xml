@@ -15,14 +15,30 @@
         android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
         android:padding="@dimen/common_padding"/>
 
+    <View android:layout_height="0.5dp"
+        android:layout_width="match_parent"
+        android:background="@color/half_trans"/>
     <TextView android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="@string/settings"
-        android:layout_marginTop="10dp"
         android:background="?android:selectableItemBackground"
         android:lines="1"
         android:textSize="18sp"
         android:id="@+id/settings"
+        android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
+        android:padding="@dimen/common_padding"/>
+
+    <View android:layout_height="0.5dp"
+        android:layout_width="match_parent"
+        android:background="@color/half_trans"/>
+
+    <TextView android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="@string/comment"
+        android:background="?android:selectableItemBackground"
+        android:lines="1"
+        android:textSize="18sp"
+        android:id="@+id/comment"
         android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
         android:padding="@dimen/common_padding"/>
 </LinearLayout>

@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+
     android:layout_gravity="center_horizontal"
     android:scrollbars="none"
     android:orientation="vertical">
@@ -11,6 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:id="@+id/content"
+        android:minWidth="200dp"
         android:layout_gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -28,16 +30,16 @@
                 android:contentDescription="@string/app_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/icon" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/app_name"
-                android:textColor="#eeeeee"
-                android:textSize="30sp" />
-
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:text="@string/app_name"-->
+                <!--android:textColor="#eeeeee"-->
+                <!--android:textSize="30sp" />-->
+0
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -46,16 +48,25 @@
                 android:textColor="#eeeeee"
                 android:textSize="18sp" />
         </LinearLayout>
-
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:textColor="#333333"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:gravity="center_horizontal"
+            android:textSize="18sp" />
         <TextView
             android:id="@+id/time_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:paddingLeft="15dp"
-            android:textColor="#555555"
+            android:textColor="#888888"
             android:paddingRight="15dp"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/content_text"
@@ -67,7 +78,7 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:textColor="#333333"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:focusable="true" />
 
         <ImageView

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.support.v4.app.ActivityCompat.startActivity
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -47,8 +48,15 @@ class HomeAdapter(private val context: Context) :
         val itemData: MessageItem = showData[position]
         holder.itemView.time_text.text = itemData.getDate(false)
         holder.itemView.content_text.text = Integer.toString(position)
-                .plus("、").plus(itemData.content)
+                .plus("、").plus(itemData.title).plus(itemData.content)
         holder.itemView.action1_text.isSelected = staredId.contains(itemData.content.hashCode())
+
+        holder.itemView.content_text.setTextColor(
+                if(itemData.isRed ==1)
+                    ContextCompat.getColor(context,  R.color.red)
+                else
+                    ContextCompat.getColor(context , R.color.text_normal))
+
         holder.itemView.action2_text.setOnClickListener({
             MyApplication.instance
                     .startActivity(Intent(context, ShareActivity::class.java)

@@ -46,6 +46,7 @@ dependencies {
     implementation 'com.android.support:cardview-v7:27.1.0'
     //umeng
     implementation project(':pushPlus')
+    implementation 'com.umeng.sdk:analytics:latest.integration'
     //    implementation project(':ShareSDK')
     //    implementation project(':PushSDK')
     //    implementation 'com.umeng.sdk:common:1.4.4'

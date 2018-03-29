@@ -28,7 +28,6 @@ class MyApplication  : Application(){
         System.out.print("App created ! ")
         instance = this
         initUmengPush()
-//        UMConfigure.init(this, "5ab1c3a3b27b0a523f000062", "Umeng", UMConfigure.DEVICE_TYPE_PHONE, "d27fbc58ddef55f95d0638c18862f36f");
     }
 
 
