@@ -8,6 +8,9 @@ import com.umeng.message.PushAgent
 import fast.information.network.RetrofitHelper
 import org.android.agoo.huawei.HuaWeiReceiver
 import org.android.agoo.huawei.HuaWeiRegister
+import org.android.agoo.mezu.MeizuPushReceiver
+import org.android.agoo.mezu.MeizuRegister
+import org.android.agoo.xiaomi.MiPushRegistar
 
 
 /**
@@ -16,10 +19,16 @@ import org.android.agoo.huawei.HuaWeiRegister
 */
 class MyApplication  : Application(){
 
-    val bool : Boolean = false
     companion object {
         lateinit var instance: MyApplication
     }
+
+    val miPushId : String= "miPushId"
+    val miPushSecret :String = "miPushSecret"
+    val meiZuId :String = "meizuId"
+    val meizuKey : String = "MeizuKey"
+
+
 
 
 
@@ -39,7 +48,7 @@ class MyApplication  : Application(){
         mPushAgent.register(object : IUmengRegisterCallback {
 
             override fun onSuccess(deviceToken: String) {
-               Log.i("MyApplication" , "init umeng success . device token is $deviceToken")
+                Log.i("MyApplication" , "init umeng success . device token is $deviceToken")
             }
 
             override fun onFailure(s: String, s1: String) {
@@ -47,6 +56,9 @@ class MyApplication  : Application(){
             }
         })
         HuaWeiRegister.register(this@MyApplication)
+        MiPushRegistar.register(this@MyApplication , miPushId , miPushSecret)
+        MeizuRegister.register(this@MyApplication , meiZuId , meizuKey)
+
     }
 
 

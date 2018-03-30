@@ -21,8 +21,7 @@ import kotlinx.android.synthetic.main.list_item_main.view.*
 * MyApplication
 * Created by xiaqibo on 2018/3/6-0:19.
 */
-class HomeAdapter(private val context: Context) :
-        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HomeAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val data: ArrayList<MessageItem> = ArrayList()
     private val staredId: ArrayList<Int> = ArrayList()
@@ -47,7 +46,7 @@ class HomeAdapter(private val context: Context) :
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val itemData: MessageItem = showData[position]
         holder.itemView.time_text.text = itemData.getDate(false)
-        holder.itemView.content_text.text = Integer.toString(position)
+        holder.itemView.content_text.text = Integer.toString(position +1 )
                 .plus("、").plus(itemData.title).plus(itemData.content)
         holder.itemView.action1_text.isSelected = staredId.contains(itemData.content.hashCode())
 

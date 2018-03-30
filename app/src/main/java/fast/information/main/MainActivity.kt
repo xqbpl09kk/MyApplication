@@ -37,15 +37,15 @@ class MainActivity : AppCompatActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
-                switchPage(0)
+                switchPageByFragment(fragmentOne)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
-                switchPage(1)
+                switchPageByFragment(fragmentTwo)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
-                switchPage(2)
+                switchPageByFragment(fragmentThree)
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -56,13 +56,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         Log.e("tag", "onCreate")
         setContentView(R.layout.activity_main)
+        navigation.menu.findItem(R.id.navigation_dashboard).isVisible   = false
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        navigation.menu.findItem(R.id.navigation_dashboard).isVisible   = false
         initFragments()
         checkUpdate()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main , menu)
+
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -73,7 +76,7 @@ class MainActivity : AppCompatActivity() {
             }
         }else if(item?.itemId ?: 0 == R.id.star){
             navigation.selectedItemId = bottomMenuIds[0]
-//            switchPage(0)
+//            switchPageByIndex(0)
             isStarChecked = ! isStarChecked
             if(isStarChecked){
                 item?.icon = ContextCompat.getDrawable(this , R.drawable.ic_home_white_24dp)
@@ -96,7 +99,7 @@ class MainActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         Log.e("tag", "onRestoreInstanceState")
         val position = savedInstanceState.getInt("position")
-        switchPage(position)
+        switchPageByIndex(position)
         navigation.selectedItemId = bottomMenuIds[position]
         super.onRestoreInstanceState(savedInstanceState)
     }
@@ -115,10 +118,10 @@ class MainActivity : AppCompatActivity() {
         fragmentThree = FragmentThree.createInstance(bundle3)
         fragmentList.add(fragmentThree!!)
 
-        switchPage(0)
+        switchPageByIndex(0)
     }
 
-    private fun switchPage(pageIndex : Int){
+    private fun switchPageByIndex(pageIndex : Int){
         assert(pageIndex < 3)
         val ft = fragmentManager.beginTransaction()
         currentFragment = if(currentFragment == null ){
@@ -128,6 +131,25 @@ class MainActivity : AppCompatActivity() {
             ft.hide(currentFragment)
             val targetFragment : Fragment = fragmentList[pageIndex]
             if(targetFragment.isAdded){
+                ft.show(targetFragment)
+            }else{
+                ft.add(R.id.main_fragment_container , targetFragment)
+            }
+            targetFragment
+        }
+        ft.commit()
+    }
+
+
+
+    private fun switchPageByFragment(targetFragment:Fragment ?){
+        val ft = fragmentManager.beginTransaction()
+        currentFragment = if(currentFragment == null ){
+            ft.add(R.id.main_fragment_container ,fragmentOne)
+            fragmentOne
+        }else{
+            ft.hide(currentFragment)
+            if(targetFragment?.isAdded == true){
                 ft.show(targetFragment)
             }else{
                 ft.add(R.id.main_fragment_container , targetFragment)
