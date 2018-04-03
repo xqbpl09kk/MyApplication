@@ -28,7 +28,7 @@ import java.io.OutputStream
 class RetrofitHelper private constructor(){
 
     private val baseUrl: String = BuildConfig.Base_Url
-    private val tag  : String = "RetrofitHelper"
+    private val TAG = "RetrofitTracker"
     private val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create(
@@ -46,40 +46,43 @@ class RetrofitHelper private constructor(){
 
     fun getMessage(cursor: Int, size: Int, result: ResultCallback<ResultListBundle<MessageItem>>) {
         val call : Call<ResultListBundle<MessageItem>> = service.getMessage(cursor , size )
-        call.enqueue(object :Callback<ResultListBundle<MessageItem>>{
-            override fun onResponse(call: Call<ResultListBundle<MessageItem>>?
-                                    , response: Response<ResultListBundle<MessageItem>>?) {
-                val resultBundle: ResultListBundle<MessageItem>?= response?.body()
-                result.onSuccess(resultBundle)
-            }
-
-            override fun onFailure(call: Call<ResultListBundle<MessageItem>>?, t: Throwable?) {
-                result.onFailure("inner error" , 101)
-            }
-
-        })
+        handleRequest(call , result)
+//        call.enqueue(object :Callback<ResultListBundle<MessageItem>>{
+//            override fun onResponse(call: Call<ResultListBundle<MessageItem>>?
+//                                    , response: Response<ResultListBundle<MessageItem>>?) {
+//                val resultBundle: ResultListBundle<MessageItem>?= response?.body()
+//                result.onSuccess(resultBundle)
+//            }
+//
+//            override fun onFailure(call: Call<ResultListBundle<MessageItem>>?, t: Throwable?) {
+//                result.onFailure("inner error" , 101)
+//            }
+//
+//        })
     }
 
 
     fun checkUpdate(result : ResultCallback<ResultBundle<UpdateInfo>>){
         val call : Call<ResultBundle<UpdateInfo>> = service.checkUpdate()
-        call.enqueue(object :Callback<ResultBundle<UpdateInfo>>{
-            override fun onResponse(call: Call<ResultBundle<UpdateInfo>>?
-                                    , response: Response<ResultBundle<UpdateInfo>>?) {
-                val resultBundle: ResultBundle<UpdateInfo>?= response?.body()
-                result.onSuccess(resultBundle)
-            }
-
-            override fun onFailure(call: Call<ResultBundle<UpdateInfo>>?, t: Throwable?) {
-                result.onFailure("inner error" , 101)
-            }
-
-        })
+        handleRequest(call , result)
+//        call.enqueue(object :Callback<ResultBundle<UpdateInfo>>{
+//            override fun onResponse(call: Call<ResultBundle<UpdateInfo>>?
+//                                    , response: Response<ResultBundle<UpdateInfo>>?) {
+//                val resultBundle: ResultBundle<UpdateInfo>?= response?.body()
+//                result.onSuccess(resultBundle)
+//            }
+//
+//            override fun onFailure(call: Call<ResultBundle<UpdateInfo>>?, t: Throwable?) {
+//                result.onFailure("inner error" , 101)
+//            }
+//
+//        })
     }
 
 
     fun downloadApkFile(downloadUrl :String , result : ResultCallback<Int>){
         val call = service.downloadApkFile(downloadUrl)
+
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
                if(response?.isSuccessful == true
@@ -92,6 +95,23 @@ class RetrofitHelper private constructor(){
 
             override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
                 result.onFailure("下载失败" ,101)
+            }
+
+        })
+    }
+
+
+    private fun<T > handleRequest(call :Call<T>  ,result:ResultCallback<T> ){
+
+        call.enqueue(object : Callback<T> {
+            override fun onResponse(call: Call<T>?, response: Response<T>?) {
+                result.onSuccess(response?.body())
+                Log.i(TAG.plus("-success"),response?.body().toString())
+            }
+
+            override fun onFailure(call: Call<T>?, t: Throwable?) {
+                t?.message?.let { result.onFailure(it,500 ) }
+                Log.i(TAG.plus("-error"), t?.message)
             }
 
         })

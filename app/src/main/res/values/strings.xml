@@ -17,4 +17,6 @@
     <string name="auto_update">Wifi下自动下载更新</string>
     <string name="comment">在PlayStore点评</string>
     <string name="no_market_app">PlayStore is not installed on this device.</string>
+    <string name="demo_name">BTC</string>
+    <string name="demo_price_unit">/usdt</string>
 </resources>

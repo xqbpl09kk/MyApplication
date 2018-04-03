@@ -1,9 +1,8 @@
-package fast.information.main.data
+package fast.information.main.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.support.v4.app.ActivityCompat.startActivity
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater

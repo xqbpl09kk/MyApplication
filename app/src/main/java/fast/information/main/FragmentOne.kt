@@ -13,7 +13,7 @@ import android.widget.Toast
 import com.google.gson.Gson
 import fast.information.MyApplication
 import fast.information.R
-import fast.information.main.data.HomeAdapter
+import fast.information.main.adapter.HomeAdapter
 import fast.information.network.bean.MessageItem
 import fast.information.network.bean.base.ResultCallback
 import fast.information.network.bean.base.ResultListBundle
