@@ -14,7 +14,7 @@
         android:label="@string/app_name"
 
         android:supportsRtl="true"
-        android:name=".MyApplication"
+        android:name=".common.MyApplication"
         android:theme="@style/AppTheme"
 
 

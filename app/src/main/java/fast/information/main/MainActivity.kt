@@ -117,7 +117,6 @@ class MainActivity : AppCompatActivity() {
         val bundle3 = Bundle()
         fragmentThree = FragmentThree.createInstance(bundle3)
         fragmentList.add(fragmentThree!!)
-
         switchPageByIndex(0)
     }
 

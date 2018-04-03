@@ -63,7 +63,8 @@ class ShareActivity :Activity() {
 
     private fun clearTmpFile(){
         for(file in externalCacheDir.listFiles()){
-            file.delete()
+            if(file.endsWith(".jpg"))
+                file.delete()
         }
     }
 

@@ -4,7 +4,7 @@ package fast.information.network
 import android.util.Log
 import com.google.gson.GsonBuilder
 import fast.information.BuildConfig
-import fast.information.MyApplication
+import fast.information.common.MyApplication
 import fast.information.network.bean.MessageItem
 import fast.information.network.bean.UpdateInfo
 import fast.information.network.bean.base.ResultBundle

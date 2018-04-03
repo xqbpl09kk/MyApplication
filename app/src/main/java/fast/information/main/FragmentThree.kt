@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import fast.information.ConcernActivity
-import fast.information.MyApplication
+import fast.information.common.MyApplication
 import fast.information.R
 import fast.information.SettingsActivity
 

@@ -1,14 +1,11 @@
-package fast.information
+package fast.information.common
 
 import android.app.Application
 import android.util.Log
 import com.umeng.commonsdk.UMConfigure
 import com.umeng.message.IUmengRegisterCallback
 import com.umeng.message.PushAgent
-import fast.information.network.RetrofitHelper
-import org.android.agoo.huawei.HuaWeiReceiver
 import org.android.agoo.huawei.HuaWeiRegister
-import org.android.agoo.mezu.MeizuPushReceiver
 import org.android.agoo.mezu.MeizuRegister
 import org.android.agoo.xiaomi.MiPushRegistar
 
@@ -36,6 +33,7 @@ class MyApplication  : Application(){
         super.onCreate()
         System.out.print("App created ! ")
         instance = this
+        Thread.setDefaultUncaughtExceptionHandler(UnCaughtException())
         initUmengPush()
     }
 

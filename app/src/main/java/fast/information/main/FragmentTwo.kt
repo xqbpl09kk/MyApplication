@@ -7,7 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import fast.information.MyApplication
+import fast.information.common.MyApplication
 import fast.information.R
 import fast.information.main.adapter.BoardAdapter
 import kotlinx.android.synthetic.main.fragment_second.*
