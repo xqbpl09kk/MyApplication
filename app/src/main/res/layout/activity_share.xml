@@ -30,7 +30,7 @@
                 android:contentDescription="@string/app_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/icon" />
+                android:src="@mipmap/launcher_icon" />
 
             <!--<TextView-->
                 <!--android:layout_width="wrap_content"-->
