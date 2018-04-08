@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder
 import fast.information.BuildConfig
 import fast.information.common.MyApplication
 import fast.information.network.bean.MessageItem
+import fast.information.network.bean.TickerListItem
 import fast.information.network.bean.UpdateInfo
 import fast.information.network.bean.base.ResultBundle
 import fast.information.network.bean.base.ResultCallback
@@ -47,36 +48,18 @@ class RetrofitHelper private constructor(){
     fun getMessage(cursor: Int, size: Int, result: ResultCallback<ResultListBundle<MessageItem>>) {
         val call : Call<ResultListBundle<MessageItem>> = service.getMessage(cursor , size )
         handleRequest(call , result)
-//        call.enqueue(object :Callback<ResultListBundle<MessageItem>>{
-//            override fun onResponse(call: Call<ResultListBundle<MessageItem>>?
-//                                    , response: Response<ResultListBundle<MessageItem>>?) {
-//                val resultBundle: ResultListBundle<MessageItem>?= response?.body()
-//                result.onSuccess(resultBundle)
-//            }
-//
-//            override fun onFailure(call: Call<ResultListBundle<MessageItem>>?, t: Throwable?) {
-//                result.onFailure("inner error" , 101)
-//            }
-//
-//        })
     }
 
 
     fun checkUpdate(result : ResultCallback<ResultBundle<UpdateInfo>>){
         val call : Call<ResultBundle<UpdateInfo>> = service.checkUpdate()
         handleRequest(call , result)
-//        call.enqueue(object :Callback<ResultBundle<UpdateInfo>>{
-//            override fun onResponse(call: Call<ResultBundle<UpdateInfo>>?
-//                                    , response: Response<ResultBundle<UpdateInfo>>?) {
-//                val resultBundle: ResultBundle<UpdateInfo>?= response?.body()
-//                result.onSuccess(resultBundle)
-//            }
-//
-//            override fun onFailure(call: Call<ResultBundle<UpdateInfo>>?, t: Throwable?) {
-//                result.onFailure("inner error" , 101)
-//            }
-//
-//        })
+    }
+
+
+    fun tickerList(cursor:Int , size:Int , result : ResultCallback<ResultListBundle<TickerListItem>>){
+        val call : Call<ResultListBundle<TickerListItem>> = service.tickerList(cursor , size )
+        handleRequest(call , result)
     }
 
 

@@ -79,6 +79,7 @@ class FragmentOne : Fragment() {
             loadStarData()
         }
         loading = true
+        refresh_layout.isRefreshing = true
         RetrofitHelper.instance.getMessage(cursor , size
                 , object : ResultCallback<ResultListBundle<MessageItem>> {
             override fun onSuccess(t : ResultListBundle<MessageItem>?) {

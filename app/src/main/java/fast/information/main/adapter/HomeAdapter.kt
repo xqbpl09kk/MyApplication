@@ -76,7 +76,7 @@ class HomeAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerV
                 removeStar(itemData)
             } else {
                 staredId.add(itemData.content.hashCode())
-                stared.add(itemData)
+                stared.add(0 , itemData)
             }
             context.getSharedPreferences("stared", Context.MODE_PRIVATE)
                     .edit()

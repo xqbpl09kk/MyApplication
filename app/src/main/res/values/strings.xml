@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">币知</string>
-    <string name="title_home">资讯</string>
+    <string name="title_home">回到顶部</string>
     <string name="title_dashboard">行情</string>
     <string name="more">更多</string>
     <string name="star">收藏</string>
@@ -19,4 +19,6 @@
     <string name="no_market_app">PlayStore is not installed on this device.</string>
     <string name="demo_name">BTC</string>
     <string name="demo_price_unit">/usdt</string>
+    <string name="search">搜索</string>
+    <string name="sort">排序</string>
 </resources>

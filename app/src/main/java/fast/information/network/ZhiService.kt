@@ -1,6 +1,7 @@
 package fast.information.network
 
 import fast.information.network.bean.MessageItem
+import fast.information.network.bean.TickerListItem
 import fast.information.network.bean.UpdateInfo
 import fast.information.network.bean.base.ResultBundle
 import fast.information.network.bean.base.ResultListBundle
@@ -17,13 +18,19 @@ import retrofit2.http.Url
 interface ZhiService {
 
     @GET("/v1/news/list")
-    fun getMessage(@Query("cursor") cursor  : Int ,
-                   @Query("size") size : Int ) : Call<ResultListBundle<MessageItem>>
+    fun getMessage(@Query("cursor") cursor  : Int
+                   ,@Query("size") size : Int )
+            :Call<ResultListBundle<MessageItem>>
 
     @GET("/v1/version/info")
     fun checkUpdate() : Call<ResultBundle<UpdateInfo>>
 
 
-    @GET()
+    @GET("")
     fun downloadApkFile(@Url downloadUrl :String) :Call<ResponseBody>
+
+    @GET("/v1/ticker/list")
+    fun tickerList(@Query("cursor") cursor :Int
+                   ,@Query("size") size :Int)
+            :Call<ResultListBundle<TickerListItem>>
 }
