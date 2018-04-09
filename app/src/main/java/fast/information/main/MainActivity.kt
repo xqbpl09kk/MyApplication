@@ -85,6 +85,13 @@ class MainActivity : AppCompatActivity() {
                 setTitle(R.string.fast_information)
             }
             fragmentOne?.switchContent()
+        }else if(item?.itemId ?: 0 == R.id.sort){
+            val dialogBuilder : AlertDialog.Builder = AlertDialog.Builder(this@MainActivity)
+            dialogBuilder.setSingleChoiceItems(R.array.sort_name , fragmentTwo?.adapter?.currentSortMode ?: 0) { dialog, which ->
+                fragmentTwo?.sort(which)
+                dialog?.dismiss()
+            }
+            dialogBuilder.create().show()
         }
         return super.onOptionsItemSelected(item)
     }

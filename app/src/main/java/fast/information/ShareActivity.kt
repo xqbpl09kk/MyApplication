@@ -34,7 +34,7 @@ class ShareActivity :Activity() {
         val share :Boolean = intent.getBooleanExtra("share" , true)
         time_text.text = messageItem.getDate(true)
         content_text.text = messageItem.content
-        title_text.text = messageItem.title
+        title_text.text = messageItem.title?.removePrefix("【")?.removeSuffix("】") ?: ""
         content_text.setOnClickListener({  imageShare()  })
         if(share)
             Handler().postDelayed({ imageShare() },200)

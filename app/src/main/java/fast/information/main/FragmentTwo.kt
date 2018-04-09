@@ -2,10 +2,8 @@ package fast.information.main
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,11 +11,13 @@ import android.widget.Toast
 import fast.information.common.MyApplication
 import fast.information.R
 import fast.information.main.adapter.BoardAdapter
+import fast.information.main.adapter.MuiltBoardAdapter
 import fast.information.network.RetrofitHelper
 import fast.information.network.bean.TickerListItem
 import fast.information.network.bean.base.ResultCallback
 import fast.information.network.bean.base.ResultListBundle
 import kotlinx.android.synthetic.main.fragment_second.*
+import java.util.*
 
 /**
 * MyApplication
@@ -25,11 +25,12 @@ import kotlinx.android.synthetic.main.fragment_second.*
 */
 class FragmentTwo : Fragment() {
 
-    private val size :Int = 50
+    private val size :Int = 20
     private var cursor :Int = 0
-    private val adapter = BoardAdapter(MyApplication.instance)
+    val adapter = MuiltBoardAdapter(MyApplication.instance)
     private val layoutManager = LinearLayoutManager(MyApplication.instance)
     private var loading = false
+
 
     companion object {
 
@@ -50,16 +51,16 @@ class FragmentTwo : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         recycler_view.adapter = adapter
         recycler_view.layoutManager = layoutManager
-        recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
-                val visibleCount : Int = layoutManager.childCount
-                val totalCount : Int = layoutManager.itemCount
-                val pastCount : Int =  layoutManager.findFirstVisibleItemPosition()
-                if(!loading && pastCount + visibleCount >= totalCount){
-                    netStep(true)
-                }
-            }
-        })
+//        recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+//                val visibleCount : Int = layoutManager.childCount
+//                val totalCount : Int = layoutManager.itemCount
+//                val pastCount : Int =  layoutManager.findFirstVisibleItemPosition()
+//                if(!loading && pastCount + visibleCount >= totalCount){
+//                    netStep(true)
+//                }
+//            }
+//        })
         refresh_layout.setOnRefreshListener ( {  netStep(false)  })
         netStep(false)
     }
@@ -82,6 +83,7 @@ class FragmentTwo : Fragment() {
                 cursor = t?.nextCursor ?: 0
                 refresh_layout.isRefreshing = false
                 loading = false
+                adapter.currentSortMode = 0
             }
 
             override fun onFailure(message: String, errorCode: Int) {
@@ -90,6 +92,66 @@ class FragmentTwo : Fragment() {
                 loading = false
             }
         })
+    }
+
+
+    fun sort(mode : Int){
+        if(adapter.itemCount == 0) return
+        if(adapter.currentSortMode == mode ) return
+        when(mode){
+            0 ->{ //默认市值
+                adapter.data.sortWith(Comparator { o1, o2 ->
+                    val result :Long= (o1?.market_cap_usd?.toLong() ?: 0 ) - (o2?.market_cap_usd?.toLong()?:0)
+                    when {
+                        result > 0 -> -1
+                        result < 0 -> 1
+                        else -> 0
+                    }
+                })
+            }
+            1 ->{ //1小时增幅
+                adapter.data.sortWith(Comparator { o1, o2 ->
+                    val result :Float= (o1.percent_change_1h?.toFloat()?:Float.MIN_VALUE) - (o2.percent_change_1h?.toFloat()?:Float.MIN_VALUE)
+                    when {
+                        result > 0 -> -1
+                        result < 0 -> 1
+                        else -> 0
+                    }
+                })
+            }
+            2->{ //24h增幅
+                adapter.data.sortWith(Comparator { o1, o2 ->
+                    val result :Float= (o1.percent_change_24h?.toFloat()?:Float.MIN_VALUE)  - (o2.percent_change_24h?.toFloat()?:Float.MIN_VALUE)
+                    when {
+                        result > 0 -> -1
+                        result < 0 -> 1
+                        else -> 0
+                    }
+                })
+            }
+            3->{ // 7d 增幅
+                adapter.data.sortWith(Comparator { o1, o2 ->
+                    val result :Float= (o1.percent_change_7d?.toFloat()?:Float.MIN_VALUE) - (o2.percent_change_7d?.toFloat()?:Float.MIN_VALUE)
+                    when {
+                        result > 0 -> -1
+                        result < 0 -> 1
+                        else -> 0
+                    }
+                })
+            }
+            4->{ //交易量
+                adapter.data.sortWith(Comparator { o1, o2 ->
+                    val result :Long= (o1?.__h_volume_usd?.toLong() ?: 0 ) - (o2?.__h_volume_usd?.toLong()?:0)
+                    when {
+                        result > 0 -> -1
+                        result < 0 -> 1
+                        else -> 0
+                    }
+                })
+            }
+        }
+        adapter.notifyDataSetChanged()
+        adapter.currentSortMode = mode
     }
 
 }

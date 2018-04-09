@@ -12,8 +12,10 @@ import org.junit.Assert.*
 class ExampleUnitTest {
     @Test
     fun additionCorrect() {
-        val test = "google".takeUnless { it.length < 10 }
-        System.out.print(test)
+//        val test = "google".takeUnless { it.length < 10 }
+//        System.out.print(test)
+        val  test :String ?= null
+        System.out.print(test?.removePrefix("【")?.removeSuffix("】"))
     }
 
 

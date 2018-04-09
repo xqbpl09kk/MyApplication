@@ -6,13 +6,13 @@
         android:icon="@drawable/ic_vertical_align_top_black_24dp"
         android:visible="true"
         app:showAsAction="ifRoom"
-        android:title="@string/title_home"/>
+        android:title="@string/top"/>
     <item android:id="@+id/star"
         android:icon="@drawable/ic_star_black_24dp"
         android:visible="true"
         app:showAsAction="ifRoom"
         android:checked="false"
-        android:title="@string/title_home"/>
+        android:title="@string/collection"/>
     <item android:id="@+id/search"
         android:icon="@drawable/ic_star_black_24dp"
         android:visible="true"
