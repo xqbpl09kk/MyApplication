@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">币知</string>
-    <string name="title_home">咨询</string>
+    <string name="title_home">资讯</string>
     <string name="title_dashboard">行情</string>
     <string name="more">更多</string>
     <string name="star">收藏</string>
@@ -23,4 +23,17 @@
     <string name="sort">排序</string>
     <string name="top">回到顶部</string>
     <string name="collection">收藏</string>
+    <string name="review_all">查看更多</string>
+    <string name="market">行情</string>
+    <string name="coin_name">币种</string>
+    <string name="current_price_usdt">价格/USDT</string>
+    <string name="change_volume">涨跌幅度</string>
+    <string name="format_update_items">更新了%d条</string>
+    <string name="used_amount">流通总量</string>
+    <string name="total_amount">发行总量</string>
+    <string name="office_sites">官网</string>
+    <string name="block_sites">区块站</string>
+    <string name="white_paper">白皮书</string>
+    <string name="coin_detail">币概览</string>
+    <string name="error_data">数据错误</string>
 </resources>

@@ -2,11 +2,12 @@ package fast.information.network.bean
 
 import com.google.gson.annotations.SerializedName
 import retrofit2.http.Field
+import java.io.Serializable
 
 /**
  * Created by xiaqibo on 2018/4/8.
  */
-class TickerListItem {
+class TickerListItem : Serializable {
 
     var id : String ?= null
     var coin :String ?= null

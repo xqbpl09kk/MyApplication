@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.DownloadManager
 import android.content.*
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
@@ -16,6 +17,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import fast.information.R
+import fast.information.common.BaseActivity
 import fast.information.network.bean.base.ResultBundle
 import fast.information.network.bean.base.ResultCallback
 import fast.information.network.RetrofitHelper
@@ -23,7 +25,11 @@ import fast.information.network.bean.UpdateInfo
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
+
+    override fun getLayoutRes(): Int {
+        return R.layout.activity_main
+    }
 
     private val fragmentManager  : FragmentManager = supportFragmentManager
     private val fragmentList: ArrayList<Fragment> = ArrayList()
@@ -37,25 +43,27 @@ class MainActivity : AppCompatActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
+                menu?.findItem(R.id.scroll)?.isVisible = true
                 switchPageByFragment(fragmentOne)
-                return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
+                menu?.findItem(R.id.scroll)?.isVisible = false
                 switchPageByFragment(fragmentTwo)
-                return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
+                menu?.findItem(R.id.scroll)?.isVisible = false
                 switchPageByFragment(fragmentThree)
-                return@OnNavigationItemSelectedListener true
+
             }
         }
-        false
+        invalidateOptionsMenu()
+        return@OnNavigationItemSelectedListener true
     }
+    private var menu :Menu ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.e("tag", "onCreate")
-        setContentView(R.layout.activity_main)
         navigation.menu.findItem(R.id.navigation_dashboard).isVisible   = false
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         navigation.menu.findItem(R.id.navigation_dashboard).isVisible   = false
@@ -86,12 +94,7 @@ class MainActivity : AppCompatActivity() {
             }
             fragmentOne?.switchContent()
         }else if(item?.itemId ?: 0 == R.id.sort){
-            val dialogBuilder : AlertDialog.Builder = AlertDialog.Builder(this@MainActivity)
-            dialogBuilder.setSingleChoiceItems(R.array.sort_name , fragmentTwo?.adapter?.currentSortMode ?: 0) { dialog, which ->
-                fragmentTwo?.sort(which)
-                dialog?.dismiss()
-            }
-            dialogBuilder.create().show()
+
         }
         return super.onOptionsItemSelected(item)
     }
@@ -164,6 +167,9 @@ class MainActivity : AppCompatActivity() {
         ft.commit()
     }
 
+    override fun displayHomeAsUpEnabled() :Boolean{
+        return false
+    }
 
     private fun checkUpdate(){
         RetrofitHelper.instance.checkUpdate(object : ResultCallback<ResultBundle<UpdateInfo>> {

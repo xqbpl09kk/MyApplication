@@ -1,13 +1,21 @@
 package fast.information.common
 
 import android.app.Application
+import android.content.Intent
+import android.graphics.Color
+import android.os.Bundle
+import android.support.annotation.ColorInt
+import android.support.annotation.Nullable
+import android.support.v4.content.ContextCompat
 import android.util.Log
 import com.umeng.commonsdk.UMConfigure
 import com.umeng.message.IUmengRegisterCallback
 import com.umeng.message.PushAgent
+import fast.information.R
 import org.android.agoo.huawei.HuaWeiRegister
 import org.android.agoo.mezu.MeizuRegister
 import org.android.agoo.xiaomi.MiPushRegistar
+import java.util.*
 
 
 /**
@@ -18,21 +26,26 @@ class MyApplication  : Application(){
 
     companion object {
         lateinit var instance: MyApplication
+
     }
 
-    val miPushId : String= "miPushId"
-    val miPushSecret :String = "miPushSecret"
-    val meiZuId :String = "meizuId"
-    val meizuKey : String = "MeizuKey"
 
+    @ColorInt var colorGreen : Int ?=null
+    @ColorInt var colorRed : Int ?=null
 
+    private val activityTaskList : LinkedList<BaseActivity> = LinkedList()
 
-
+    private val miPushId : String= "miPushId"
+    private val miPushSecret :String = "miPushSecret"
+    private val meiZuId :String = "meizuId"
+    private val meizuKey : String = "MeizuKey"
 
     override fun onCreate(){
         super.onCreate()
         System.out.print("App created ! ")
         instance = this
+        colorGreen = ContextCompat.getColor(this , R.color.change_green)
+        colorRed = ContextCompat.getColor(this , R.color.change_red)
         Thread.setDefaultUncaughtExceptionHandler(UnCaughtException())
         initUmengPush()
     }
@@ -57,6 +70,21 @@ class MyApplication  : Application(){
         MiPushRegistar.register(this@MyApplication , miPushId , miPushSecret)
         MeizuRegister.register(this@MyApplication , meiZuId , meizuKey)
 
+    }
+
+
+    fun <T:BaseActivity>jumpActivity(clazz : Class<T> ,  bundle : Bundle?){
+        if(activityTaskList.size == 0) return
+        activityTaskList[0].startActivity(Intent(this , clazz).putExtra("data" , bundle))
+    }
+
+    fun onActivityDestroy(activity : BaseActivity ){
+        if(activityTaskList.size == 0) return
+        activityTaskList.remove(activity)
+    }
+
+    fun onActivityCreate(activity : BaseActivity ){
+        activityTaskList.add(activity)
     }
 
 

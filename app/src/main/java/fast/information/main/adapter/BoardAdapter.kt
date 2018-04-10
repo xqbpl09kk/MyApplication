@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import fast.information.R
+import fast.information.common.MyApplication
 import fast.information.network.bean.TickerListItem
 import kotlinx.android.synthetic.main.list_item_cardboard.view.*
 
@@ -32,35 +33,34 @@ class BoardAdapter(private val context: Context) : RecyclerView.Adapter<Recycler
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val itemData = data[position]
-        holder.itemView.name.text = Integer.toString(position +1).plus("、").plus(itemData.symbol)
-        holder.itemView.volume_24h.text = itemData.price.plus("/USDT")
+        holder.itemView.index.text = (position + 1) .toString()
+        holder.itemView.name.text =  itemData.symbol
+        holder.itemView.price.text = itemData.price
         var change = itemData.percent_change_24h?.toFloat() ?: Float.MIN_VALUE
-        var unit = "/24h"
         when (currentSortMode) {
             1 -> {
                 change = itemData.percent_change_1h?.toFloat() ?: Float.MIN_VALUE
-                unit = "/1h"
+                holder.itemView.unit.text = "/1h"
             }
             3 ->{
                 change = itemData.percent_change_7d?.toFloat()?:Float.MIN_VALUE
-                unit = "/7d"
+                holder.itemView.unit.text = "/7d"
             }
         }
         when {
             change > 0 -> {
-                holder.itemView.textView3.text = "+".plus(change).plus("%").plus(unit)
-                holder.itemView.textView3.setTextColor(Color.GREEN)
+                holder.itemView.change.text = "+".plus(change).plus("%")
+                holder.itemView.change.setTextColor(MyApplication.instance.colorGreen!!)
             }
             change < 0 -> {
-                holder.itemView.textView3.text = "-".plus(change).plus("%").plus(unit)
-                holder.itemView.textView3.setTextColor(Color.RED)
+                holder.itemView.change.text = change.toString().plus("%")
+                holder.itemView.change.setTextColor(MyApplication.instance.colorRed!!)
             }
             else -> {
-                holder.itemView.textView3.text = change.toString().plus("%").plus(unit)
-                holder.itemView.textView3.setTextColor(ContextCompat.getColor(context , R.color.text_normal))
+                holder.itemView.change.text = change.toString().plus("%")
+                holder.itemView.change.setTextColor(ContextCompat.getColor(context , R.color.text_normal))
             }
         }
-
     }
 
     fun update(d: ArrayList<TickerListItem>){
@@ -73,5 +73,8 @@ class BoardAdapter(private val context: Context) : RecyclerView.Adapter<Recycler
         data.addAll(d)
         notifyDataSetChanged()
     }
+
+
+
 
 }
