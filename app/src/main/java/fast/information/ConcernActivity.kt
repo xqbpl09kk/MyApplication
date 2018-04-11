@@ -110,7 +110,7 @@ class ConcernActivity :BaseActivity() {
                 if (updateInfo.latest_app_version
                         != packageManager.getPackageInfo(packageName, 0).versionName) {
                     if(getSharedPreferences("settings", Context.MODE_PRIVATE).getBoolean("update" , false)){
-                        download(updateInfo.android_url ?: "")
+                        download(updateInfo.android_url ,updateInfo.latest_app_version)
                         Toast.makeText(MyApplication.instance , R.string.auto_update_on_go , Toast.LENGTH_SHORT).show()
                     }else{
                         showUpdateDialog(updateInfo)
@@ -127,17 +127,17 @@ class ConcernActivity :BaseActivity() {
     }
 
 
-    private fun showUpdateDialog(updateInfo: UpdateInfo?) {
+    private fun showUpdateDialog(updateInfo: UpdateInfo) {
         if (isFinishing) return
         val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this@ConcernActivity)
                 .setTitle(R.string.update)
-                .setMessage(updateInfo?.version_info ?: "test message")
+                .setMessage(updateInfo.version_info ?: "test message")
                 .setNegativeButton(R.string.cancel) { dialog, _ ->
                     dialog.cancel()
                 }.setPositiveButton(R.string.update) { dialog, _ ->
                     run {
                         dialog.cancel()
-                        download(updateInfo?.android_url ?: "")
+                        download(updateInfo.android_url ,updateInfo.latest_app_version)
                     }
                 }
         dialogBuilder.create().show()

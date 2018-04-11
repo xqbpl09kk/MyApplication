@@ -60,15 +60,24 @@ abstract class BaseActivity : AppCompatActivity() {
 
 
 
-    protected fun download(downloadUrl: String?) {
+    protected fun download(downloadUrl: String? ,newVersion:String?) {
         val downloadManager: DownloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-        val downloadId = downloadManager.enqueue(
-                DownloadManager.Request(Uri.parse(if(BuildConfig.DEBUG) "http://img.bishijie.com/Bishijie_1.7_release.apk" else downloadUrl))
-                        .setDestinationUri(Uri.fromFile(
-                                File(applicationContext.externalCacheDir.absolutePath, "bzhi.apk")))
-                        .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI)
-                        .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-        )
-        MyApplication.instance.registerDownloadReceiver(downloadId)
+        val preDownloadId = getSharedPreferences("temp" , Context.MODE_PRIVATE).getLong("download_id".plus(newVersion) , 0)
+        val cursor  = downloadManager.query(DownloadManager.Query().setFilterById(preDownloadId))
+        if(!cursor.moveToFirst()){
+            val downloadId = downloadManager.enqueue(
+                    DownloadManager.Request(Uri.parse(if(BuildConfig.DEBUG) "http://img.bishijie.com/Bishijie_1.7_release.apk" else downloadUrl))
+                            .setDestinationUri(Uri.fromFile(
+                                    File(applicationContext.externalCacheDir.absolutePath, "bzhi.apk")))
+                            .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI)
+                            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            )
+            getSharedPreferences("temp" , Context.MODE_PRIVATE).edit().putLong("download_id".plus(newVersion) ,downloadId).apply()
+            MyApplication.instance.registerDownloadReceiver(downloadId)
+        }else{
+            Toast.makeText(MyApplication.instance , R.string.already_enqueued , Toast.LENGTH_LONG).show()
+        }
+
+
     }
 }

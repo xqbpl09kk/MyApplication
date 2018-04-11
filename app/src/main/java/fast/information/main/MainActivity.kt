@@ -58,7 +58,6 @@ class MainActivity : BaseActivity() {
         invalidateOptionsMenu()
         return@OnNavigationItemSelectedListener true
     }
-    private var menu: Menu? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -185,7 +184,7 @@ class MainActivity : BaseActivity() {
                 if (updateInfo.latest_app_version
                         != packageManager.getPackageInfo(packageName, 0).versionName) {
                     if(getSharedPreferences("settings", Context.MODE_PRIVATE).getBoolean("update" , false)){
-                        download(updateInfo.android_url ?: "")
+                        download(updateInfo.android_url ,updateInfo.latest_app_version)
                         Toast.makeText(MyApplication.instance , R.string.auto_update_on_go , Toast.LENGTH_LONG).show()
                     }else{
                         showUpdateDialog(updateInfo)
@@ -201,7 +200,7 @@ class MainActivity : BaseActivity() {
     }
 
 
-    private fun showUpdateDialog(updateInfo: UpdateInfo?) {
+    private fun showUpdateDialog(updateInfo: UpdateInfo) {
         if (isFinishing) return
         val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this@MainActivity)
                 .setTitle(R.string.update)
@@ -210,7 +209,7 @@ class MainActivity : BaseActivity() {
                     dialog.cancel()
                 }.setPositiveButton(R.string.update) { dialog, _ ->
                     dialog.cancel()
-                    download(updateInfo?.android_url ?: "")
+                    download(updateInfo.android_url,updateInfo.latest_app_version)
                 }
         dialogBuilder.create().show()
     }
