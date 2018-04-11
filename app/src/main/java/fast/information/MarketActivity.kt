@@ -14,17 +14,21 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import fast.information.common.BaseActivity
 import fast.information.common.MyApplication
+import fast.information.common.TimerHandler
 import fast.information.main.adapter.BoardAdapter
 import fast.information.network.RetrofitHelper
 import fast.information.network.bean.TickerListItem
 import fast.information.network.bean.base.ResultCallback
 import fast.information.network.bean.base.ResultListBundle
 import kotlinx.android.synthetic.main.activity_market.*
+import java.util.*
 
 /**
  * Created by xiaqibo on 2018/4/10.
  */
-class MarketActivity : BaseActivity() {
+class MarketActivity : BaseActivity() , TimerHandler.Timer{
+
+
     override fun getLayoutRes(): Int {
         return (R.layout.activity_market)
     }
@@ -35,6 +39,8 @@ class MarketActivity : BaseActivity() {
     private val size = 20
     private var cursor = 0
     private var loading = false
+
+    private var timerHandler :TimerHandler ?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +66,10 @@ class MarketActivity : BaseActivity() {
         })
     }
 
+
+    override fun onTime() {
+        netStep(false)
+    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.market , menu)
@@ -89,6 +99,14 @@ class MarketActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         netStep(false)
+        if(timerHandler == null)
+            timerHandler = TimerHandler(this)
+        timerHandler!!.sendEmptyMessageDelayed(TimerHandler.move , TimerHandler.delayMillis)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        timerHandler?.sendEmptyMessage(TimerHandler.stop)
     }
 
     private fun netStep(loadMore: Boolean) {
@@ -107,6 +125,7 @@ class MarketActivity : BaseActivity() {
                 } else {
                     adapter.currentSortMode = 0
                     t?.items?.let { adapter.update(it) }
+                    Toast.makeText(MyApplication.instance, R.string.data_updated , Toast.LENGTH_SHORT).show()
                 }
                 cursor = t?.nextCursor ?: 0
                 refresh_layout.isRefreshing = false

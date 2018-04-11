@@ -73,7 +73,7 @@ class FragmentTwo : Fragment() {
 
 
 
-    private fun netStep(loadMore: Boolean){
+    fun netStep(loadMore: Boolean){
         if(!loadMore){
             cursor = 0
             refresh_layout.isRefreshing = true
@@ -85,6 +85,7 @@ class FragmentTwo : Fragment() {
                     t?.items?.let { adapter.add(it) }
                 }else{
                     t?.items?.let { adapter.update(it) }
+                    Toast.makeText(MyApplication.instance, R.string.data_updated , Toast.LENGTH_SHORT).show()
                 }
                 cursor = t?.nextCursor ?: 0
                 refresh_layout.isRefreshing = false

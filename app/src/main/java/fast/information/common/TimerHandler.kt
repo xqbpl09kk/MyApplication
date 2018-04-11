@@ -6,30 +6,47 @@ import android.os.Message
 import java.lang.ref.WeakReference
 
 
+@Suppress("NAME_SHADOWING")
 /**
  * Created by xiaqibo on 2018/4/11.
  *
  */
 class TimerHandler(activity: Activity) : Handler() {
 
-    companion object {
-        val start: Int = 0
-        val stop: Int = 1
+
+
+    interface Timer{
+        fun onTime()
     }
 
+    companion object {
+
+        val stop: Int = 1
+        val move : Int = 2
+        val delayMillis = 2 * 60 * 1000L //Fetch last data every 2 minutes
+    }
+
+
     private var activityHolder: WeakReference<Activity> = WeakReference(activity)
+
+    private val runnable = Runnable {
+        val activity = activityHolder.get()
+        if(activity!= null && !activity.isFinishing ){
+            (activity as Timer).onTime()
+        }
+    }
+
+
 
     override fun handleMessage(msg: Message?) {
         super.handleMessage(msg)
         when (msg?.what) {
-            start -> {
-
+            move -> {
+                runnable.run()
+                sendEmptyMessageDelayed(move , delayMillis)
             }
             stop -> {
-
-            }
-            else -> {
-
+                removeMessages(2)
             }
         }
     }

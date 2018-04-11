@@ -19,6 +19,7 @@ import android.widget.Toast
 import fast.information.R
 import fast.information.common.BaseActivity
 import fast.information.common.MyApplication
+import fast.information.common.TimerHandler
 import fast.information.network.bean.base.ResultBundle
 import fast.information.network.bean.base.ResultCallback
 import fast.information.network.RetrofitHelper
@@ -26,7 +27,8 @@ import fast.information.network.bean.UpdateInfo
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity() ,TimerHandler.Timer{
+
 
     override fun getLayoutRes(): Int {
         return R.layout.activity_main
@@ -40,6 +42,8 @@ class MainActivity : BaseActivity() {
     private var currentFragment: Fragment? = null
     private var isStarChecked: Boolean = false
     private val bottomMenuIds: IntArray = intArrayOf(R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
+
+    private var timerHandler :TimerHandler ?=null
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
@@ -65,6 +69,7 @@ class MainActivity : BaseActivity() {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         initFragments()
         checkUpdate()
+
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
@@ -110,6 +115,23 @@ class MainActivity : BaseActivity() {
     override fun onSaveInstanceState(outState: Bundle?) {
         outState!!.putInt("position", fragmentList.indexOf(currentFragment))
         Log.e("tag", "onSaveInstanceState")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(timerHandler == null)
+            timerHandler = TimerHandler(this)
+        timerHandler!!.sendEmptyMessageDelayed(TimerHandler.move , TimerHandler.delayMillis)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        timerHandler?.sendEmptyMessage(TimerHandler.stop)
+    }
+
+    override fun onTime() {
+        if(fragmentTwo?.isVisible == true)
+            fragmentTwo?.netStep(false)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
