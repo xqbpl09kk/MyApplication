@@ -21,9 +21,9 @@ class TimerHandler(activity: Activity) : Handler() {
 
     companion object {
 
-        val stop: Int = 1
-        val move : Int = 2
-        val delayMillis = 2 * 60 * 1000L //Fetch last data every 2 minutes
+        const val stop: Int = 1
+        const val move : Int = 2
+        const val delayMillis = 2 * 60 * 1000L //Fetch last data every 2 minutes
     }
 
 
