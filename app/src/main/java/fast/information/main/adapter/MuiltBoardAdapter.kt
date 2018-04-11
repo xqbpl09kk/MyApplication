@@ -1,11 +1,15 @@
 package fast.information.main.adapter
 
 import android.annotation.SuppressLint
+import android.app.ActivityOptions
 import android.content.Context
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.support.annotation.DrawableRes
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.content.ContextCompat
+import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.widget.RecyclerView
 import android.text.Spannable
 import android.text.SpannableStringBuilder
@@ -17,6 +21,7 @@ import fast.information.CoinDetailActivity
 import fast.information.MarketActivity
 import fast.information.R
 import fast.information.common.MyApplication
+import fast.information.main.MainActivity
 import fast.information.network.bean.TickerListItem
 import kotlinx.android.synthetic.main.list_item_muilt_cardboard.view.*
 import java.util.*
@@ -91,7 +96,7 @@ class MuiltBoardAdapter(private val context: Context) : RecyclerView.Adapter<Rec
                     else -> holder.itemView.change_7d.text = itemData.percent_change_7d.plus("%/7d")
                 }
                 holder.itemView.setOnClickListener({
-                    val bundle = Bundle()
+                    val bundle  =Bundle()
                     bundle.putSerializable("ticker_item" , itemData)
                     MyApplication.instance.jumpActivity(CoinDetailActivity::class.java , bundle)
                 })

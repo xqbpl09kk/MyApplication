@@ -3,10 +3,12 @@ package fast.information.main.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
+import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import fast.information.CoinDetailActivity
 import fast.information.R
 import fast.information.common.MyApplication
 import fast.information.network.bean.TickerListItem
@@ -61,6 +63,11 @@ class BoardAdapter(private val context: Context) : RecyclerView.Adapter<Recycler
                 holder.itemView.change.setTextColor(ContextCompat.getColor(context , R.color.text_normal))
             }
         }
+        holder.itemView.setOnClickListener({
+            val bundle = Bundle()
+            bundle.putSerializable("ticker_item" , itemData)
+            MyApplication.instance.jumpActivity(CoinDetailActivity::class.java , bundle)
+        })
     }
 
     fun update(d: ArrayList<TickerListItem>){

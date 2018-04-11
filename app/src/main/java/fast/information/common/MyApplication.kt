@@ -1,16 +1,25 @@
 package fast.information.common
 
+import android.app.Activity
 import android.app.Application
+import android.app.DownloadManager
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.os.Bundle
 import android.support.annotation.ColorInt
 import android.support.annotation.Nullable
+import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.util.Log
+import android.widget.Toast
 import com.umeng.commonsdk.UMConfigure
 import com.umeng.message.IUmengRegisterCallback
 import com.umeng.message.PushAgent
+import fast.information.BuildConfig
 import fast.information.R
 import org.android.agoo.huawei.HuaWeiRegister
 import org.android.agoo.mezu.MeizuRegister
@@ -35,6 +44,9 @@ class MyApplication  : Application(){
 
     private val activityTaskList : LinkedList<BaseActivity> = LinkedList()
 
+
+    var downloadStatusReceiver : BroadcastReceiver ? = null
+
     private val miPushId : String= "miPushId"
     private val miPushSecret :String = "miPushSecret"
     private val meiZuId :String = "meizuId"
@@ -53,6 +65,7 @@ class MyApplication  : Application(){
 
 
     private fun initUmengPush(){
+        if(BuildConfig.DEBUG) return
         UMConfigure.init(this@MyApplication , UMConfigure.DEVICE_TYPE_PHONE , "88f7edf62d3a92c69092d60a77b73729")
         val mPushAgent = PushAgent.getInstance(this)
 
@@ -66,6 +79,8 @@ class MyApplication  : Application(){
                 Log.i("MyApplication" , "error message is $s and $s1")
             }
         })
+
+
         HuaWeiRegister.register(this@MyApplication)
         MiPushRegistar.register(this@MyApplication , miPushId , miPushSecret)
         MeizuRegister.register(this@MyApplication , meiZuId , meizuKey)
@@ -74,8 +89,11 @@ class MyApplication  : Application(){
 
 
     fun <T:BaseActivity>jumpActivity(clazz : Class<T> ,  bundle : Bundle?){
-        if(activityTaskList.size == 0) return
-        activityTaskList[0].startActivity(Intent(this , clazz).putExtra("data" , bundle))
+        if(activityTaskList.size == 0) {
+            startActivity(Intent(this , clazz).putExtra("data" ,bundle).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        }else{
+            activityTaskList.last.startActivity(Intent(this , clazz).putExtra("data" ,bundle))
+        }
     }
 
     fun onActivityDestroy(activity : BaseActivity ){
@@ -87,6 +105,22 @@ class MyApplication  : Application(){
         activityTaskList.add(activity)
     }
 
+    fun getLastActivity():BaseActivity ?{
+        return if(activityTaskList.size == 0) null else activityTaskList.last
+    }
 
+    fun registerDownloadReceiver(downloadId : Long){
+        downloadStatusReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+                if (id == downloadId) {
+                    Toast.makeText(context, R.string.download_complete_notify, Toast.LENGTH_LONG).show()
+                    unregisterReceiver(downloadStatusReceiver)
+                    downloadStatusReceiver = null
+                }
+            }
+        }
+        registerReceiver(downloadStatusReceiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+    }
 
 }

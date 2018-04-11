@@ -18,6 +18,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import fast.information.R
 import fast.information.common.BaseActivity
+import fast.information.common.MyApplication
 import fast.information.network.bean.base.ResultBundle
 import fast.information.network.bean.base.ResultCallback
 import fast.information.network.RetrofitHelper
@@ -31,73 +32,80 @@ class MainActivity : BaseActivity() {
         return R.layout.activity_main
     }
 
-    private val fragmentManager  : FragmentManager = supportFragmentManager
+    private val fragmentManager: FragmentManager = supportFragmentManager
     private val fragmentList: ArrayList<Fragment> = ArrayList()
-    private var fragmentOne  : FragmentOne ? = null
-    private var fragmentTwo : FragmentTwo ?= null
-    private var fragmentThree  : FragmentThree ?= null
-    private var currentFragment : Fragment  ?= null
-    private var isStarChecked :Boolean = false
-    private var downloadStatusReceiver :BroadcastReceiver ?= null
-    private val bottomMenuIds : IntArray = intArrayOf(R.id.navigation_home  , R.id.navigation_dashboard , R.id.navigation_notifications)
+    private var fragmentOne: FragmentOne? = null
+    private var fragmentTwo: FragmentTwo? = null
+    private var fragmentThree: FragmentThree? = null
+    private var currentFragment: Fragment? = null
+    private var isStarChecked: Boolean = false
+    private val bottomMenuIds: IntArray = intArrayOf(R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
-                menu?.findItem(R.id.scroll)?.isVisible = true
                 switchPageByFragment(fragmentOne)
+                setTitle(fragmentOne?.getTitle()!!)
             }
             R.id.navigation_dashboard -> {
-                menu?.findItem(R.id.scroll)?.isVisible = false
                 switchPageByFragment(fragmentTwo)
+                setTitle(R.string.title_dashboard)
             }
             R.id.navigation_notifications -> {
-                menu?.findItem(R.id.scroll)?.isVisible = false
                 switchPageByFragment(fragmentThree)
-
+                setTitle(R.string.settings)
             }
         }
         invalidateOptionsMenu()
         return@OnNavigationItemSelectedListener true
     }
-    private var menu :Menu ?= null
+    private var menu: Menu? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.e("tag", "onCreate")
-        navigation.menu.findItem(R.id.navigation_dashboard).isVisible   = false
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        navigation.menu.findItem(R.id.navigation_dashboard).isVisible   = false
         initFragments()
         checkUpdate()
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        if (navigation.selectedItemId == R.id.navigation_home) {
+            menu?.findItem(R.id.scroll)?.isVisible = true;
+            menu?.findItem(R.id.scroll)?.isVisible = true;
+        } else {
+            menu?.findItem(R.id.scroll)?.isVisible = false;
+            menu?.findItem(R.id.scroll)?.isVisible = false;
+        }
+        return super.onPrepareOptionsMenu(menu)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main , menu)
+        menuInflater.inflate(R.menu.main, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if(item?.itemId ?: 0 == R.id.scroll){
-            if(currentFragment == fragmentOne){
+        if (item?.itemId ?: 0 == R.id.scroll) {
+            if (currentFragment == fragmentOne) {
                 fragmentOne?.scrollToTop()
             }
-        }else if(item?.itemId ?: 0 == R.id.star){
+        } else if (item?.itemId ?: 0 == R.id.star) {
             navigation.selectedItemId = bottomMenuIds[0]
 //            switchPageByIndex(0)
-            isStarChecked = ! isStarChecked
-            if(isStarChecked){
-                item?.icon = ContextCompat.getDrawable(this , R.drawable.ic_home_white_24dp)
+            isStarChecked = !isStarChecked
+            if (isStarChecked) {
+                item?.icon = ContextCompat.getDrawable(this, R.drawable.ic_home_white_24dp)
                 setTitle(R.string.star)
-            }else{
-                item?.icon = ContextCompat.getDrawable(this , R.drawable.ic_star_black_24dp)
+            } else {
+                item?.icon = ContextCompat.getDrawable(this, R.drawable.ic_star_black_24dp)
                 setTitle(R.string.fast_information)
             }
+            invalidateOptionsMenu()
             fragmentOne?.switchContent()
-        }else if(item?.itemId ?: 0 == R.id.sort){
-
         }
         return super.onOptionsItemSelected(item)
     }
+
 
     @SuppressLint("MissingSuperCall")
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -113,7 +121,7 @@ class MainActivity : BaseActivity() {
         super.onRestoreInstanceState(savedInstanceState)
     }
 
-    private fun initFragments(){
+    private fun initFragments() {
 
         val bundle1 = Bundle()
         fragmentOne = FragmentOne.createInstance(bundle1)
@@ -121,7 +129,7 @@ class MainActivity : BaseActivity() {
 
         val bundle2 = Bundle()
         fragmentTwo = FragmentTwo.createInstance(bundle2)
-        fragmentList.add(fragmentTwo !!)
+        fragmentList.add(fragmentTwo!!)
 
         val bundle3 = Bundle()
         fragmentThree = FragmentThree.createInstance(bundle3)
@@ -129,19 +137,19 @@ class MainActivity : BaseActivity() {
         switchPageByIndex(0)
     }
 
-    private fun switchPageByIndex(pageIndex : Int){
+    private fun switchPageByIndex(pageIndex: Int) {
         assert(pageIndex < 3)
         val ft = fragmentManager.beginTransaction()
-        currentFragment = if(currentFragment == null ){
-            ft.add(R.id.main_fragment_container ,fragmentOne)
+        currentFragment = if (currentFragment == null) {
+            ft.add(R.id.main_fragment_container, fragmentOne)
             fragmentOne
-        }else{
+        } else {
             ft.hide(currentFragment)
-            val targetFragment : Fragment = fragmentList[pageIndex]
-            if(targetFragment.isAdded){
+            val targetFragment: Fragment = fragmentList[pageIndex]
+            if (targetFragment.isAdded) {
                 ft.show(targetFragment)
-            }else{
-                ft.add(R.id.main_fragment_container , targetFragment)
+            } else {
+                ft.add(R.id.main_fragment_container, targetFragment)
             }
             targetFragment
         }
@@ -149,86 +157,61 @@ class MainActivity : BaseActivity() {
     }
 
 
-
-    private fun switchPageByFragment(targetFragment:Fragment ?){
+    private fun switchPageByFragment(targetFragment: Fragment?) {
         val ft = fragmentManager.beginTransaction()
-        currentFragment = if(currentFragment == null ){
-            ft.add(R.id.main_fragment_container ,fragmentOne)
+        currentFragment = if (currentFragment == null) {
+            ft.add(R.id.main_fragment_container, fragmentOne)
             fragmentOne
-        }else{
+        } else {
             ft.hide(currentFragment)
-            if(targetFragment?.isAdded == true){
+            if (targetFragment?.isAdded == true) {
                 ft.show(targetFragment)
-            }else{
-                ft.add(R.id.main_fragment_container , targetFragment)
+            } else {
+                ft.add(R.id.main_fragment_container, targetFragment)
             }
             targetFragment
         }
         ft.commit()
     }
 
-    override fun displayHomeAsUpEnabled() :Boolean{
+    override fun displayHomeAsUpEnabled(): Boolean {
         return false
     }
 
-    private fun checkUpdate(){
+    private fun checkUpdate() {
         RetrofitHelper.instance.checkUpdate(object : ResultCallback<ResultBundle<UpdateInfo>> {
             override fun onSuccess(t: ResultBundle<UpdateInfo>?) {
                 val updateInfo = t?.item ?: return
-                if(updateInfo.latest_app_version
-                        != packageManager.getPackageInfo(packageName , 0).versionName)
-                    showUpdateDialog(updateInfo)
+                if (updateInfo.latest_app_version
+                        != packageManager.getPackageInfo(packageName, 0).versionName) {
+                    if(getSharedPreferences("settings", Context.MODE_PRIVATE).getBoolean("update" , false)){
+                        download(updateInfo.android_url ?: "")
+                        Toast.makeText(MyApplication.instance , R.string.auto_update_on_go , Toast.LENGTH_LONG).show()
+                    }else{
+                        showUpdateDialog(updateInfo)
+                    }
+                }
             }
 
             override fun onFailure(message: String, errorCode: Int) {
                 //do nothing
-                Log.i("CheckUpdate"  ,message)
+                Log.i("CheckUpdate", message)
             }
         })
     }
 
 
-    private fun showUpdateDialog( updateInfo : UpdateInfo?){
+    private fun showUpdateDialog(updateInfo: UpdateInfo?) {
         if (isFinishing) return
-        val dialogBuilder : AlertDialog.Builder = AlertDialog.Builder(this@MainActivity)
+        val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this@MainActivity)
                 .setTitle(R.string.update)
-                .setMessage(updateInfo?.version_info?:"test message")
+                .setMessage(updateInfo?.version_info ?: "test message")
                 .setNegativeButton(R.string.cancel) { dialog, _ ->
                     dialog.cancel()
-                }.setPositiveButton(R.string.update){dialog , _ ->
-                    run {
-                        dialog.cancel()
-                        download(updateInfo?.android_url?:"")
-                    }
+                }.setPositiveButton(R.string.update) { dialog, _ ->
+                    dialog.cancel()
+                    download(updateInfo?.android_url ?: "")
                 }
         dialogBuilder.create().show()
-    }
-
-    private fun download(downloadUrl : String ?){
-        val downloadManager :DownloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-        val downloadId = downloadManager.enqueue(
-                DownloadManager.Request(Uri.parse(downloadUrl))
-                        .setDestinationUri(Uri.fromFile(
-                                        File(applicationContext.externalCacheDir.absolutePath , "bzhi.apk")))
-                        .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI)
-                        .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-        )
-        val intentFilter = IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
-        downloadStatusReceiver =  object :BroadcastReceiver(){
-            override fun onReceive(context: Context?, intent: Intent?) {
-                val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
-                if(id == downloadId){
-                    Toast.makeText(context , R.string.download_complete_notify,Toast.LENGTH_LONG).show()
-                    unregisterReceiver(downloadStatusReceiver)
-                }
-            }
-        }
-        registerReceiver(downloadStatusReceiver , intentFilter)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        if(downloadStatusReceiver != null)
-            unregisterReceiver(downloadStatusReceiver)
     }
 }

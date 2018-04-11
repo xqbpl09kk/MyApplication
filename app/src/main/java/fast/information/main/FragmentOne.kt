@@ -3,6 +3,7 @@ package fast.information.main
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
+import android.support.annotation.StringRes
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -127,6 +128,14 @@ class FragmentOne : Fragment() {
         adapter.switchContent()
         if(adapter.showStar()){
             loadStarData()
+        }
+    }
+
+    @StringRes fun getTitle():Int{
+        return if(adapter.showStar()){
+            R.string.collection
+        }else{
+            R.string.title_home
         }
     }
 

@@ -2,6 +2,8 @@ package fast.information.main
 
 import android.graphics.Rect
 import android.os.Bundle
+import android.os.Handler
+import android.os.Message
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -26,11 +28,19 @@ import java.util.*
 */
 class FragmentTwo : Fragment() {
 
+
+
     private val size :Int = 20
     private var cursor :Int = 0
     val adapter = MuiltBoardAdapter(MyApplication.instance)
     private val layoutManager = LinearLayoutManager(MyApplication.instance)
     private var loading = false
+
+    private val handler :Handler = object : Handler() {
+        override fun handleMessage(msg: Message?) {
+            super.handleMessage(msg)
+        }
+    }
 
 
     companion object {

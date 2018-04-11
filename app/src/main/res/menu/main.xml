@@ -11,18 +11,6 @@
         android:icon="@drawable/ic_star_black_24dp"
         android:visible="true"
         app:showAsAction="ifRoom"
-        android:checked="false"
         android:title="@string/collection"/>
-    <item android:id="@+id/search"
-        android:icon="@drawable/ic_star_black_24dp"
-        android:visible="false"
-        app:showAsAction="ifRoom"
-        android:checked="false"
-        android:title="@string/search"/>
-    <item android:id="@+id/sort"
-        android:icon="@drawable/ic_star_black_24dp"
-        android:visible="false"
-        app:showAsAction="ifRoom"
-        android:checked="false"
-        android:title="@string/sort"/>
+
 </menu>

@@ -2,7 +2,9 @@ package fast.information
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.PatternMatcher
 import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
@@ -15,6 +17,8 @@ import fast.information.common.MyApplication
 import fast.information.network.bean.TickerListItem
 import kotlinx.android.synthetic.main.activity_coin_detail.*
 import kotlinx.android.synthetic.main.list_item_muilt_cardboard.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 /**
  * Created by xiaqibo on 2018/4/10.
@@ -34,7 +38,7 @@ class CoinDetailActivity : BaseActivity() {
 
     override fun registerViews() {
         super.registerViews()
-        val bundle: Bundle = intent.extras.get("data") as Bundle
+        val bundle: Bundle = intent.getBundleExtra("data")
         tickerItem = bundle.get("ticker_item") as TickerListItem?
         if (tickerItem == null) {
             Toast.makeText(MyApplication.instance, R.string.error_data, Toast.LENGTH_SHORT).show()
@@ -75,58 +79,68 @@ class CoinDetailActivity : BaseActivity() {
             else -> change_7d.text = tickerItem!!.percent_change_7d.plus("%/7d")
         }
 
-        introduction.text = tickerItem!!.introduction!!.replace("<p>" , "" ,false).replace("</p>" , "" ,false).trim()
-
+        val pattern = Pattern.compile("<[A-Z1-9a-z_\\W\\s\\r\":;',()-= \n]*>")
+        val matcher: Matcher = pattern.matcher(tickerItem!!.introduction)
+        introduction.text = matcher.replaceAll("").trim()
 
         used_amount.text = insertDot(StringBuilder(tickerItem!!.available_supply))
         total_amount.text = insertDot(StringBuilder(tickerItem!!.total_supply))
-        for (site :String in tickerItem!!.office_sites ?: ArrayList()){
+        max_amount.text = insertDot(StringBuilder(tickerItem!!.max_supply))
+        market_cap.text = insertDot(StringBuilder(tickerItem!!.market_cap_usd))
+
+        for (site: String in tickerItem!!.office_sites ?: ArrayList()) {
             val spanString = SpannableString(site)
-            val clickableSpan :ClickableSpan = object : ClickableSpan() {
+            val clickableSpan: ClickableSpan = object : ClickableSpan() {
                 override fun onClick(widget: View?) {
-                    startActivity(Intent.createChooser(Intent().setAction(Intent.ACTION_VIEW ) .setData(Uri.parse(site)) ,"sss"))
+                    startActivity(Intent.createChooser(Intent().setAction(Intent.ACTION_VIEW).setData(Uri.parse(site)), "sss"))
                 }
             }
-            spanString.setSpan(clickableSpan , 0 ,site.length , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            spanString.setSpan(clickableSpan, 0, site.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             office_sites.append(spanString)
-            if(tickerItem!!.office_sites!!.indexOf(site) != tickerItem!!.office_sites!!.size -1){
+            if (tickerItem!!.office_sites!!.indexOf(site) != tickerItem!!.office_sites!!.size - 1) {
                 block_sites.append(" ;\n")
             }
         }
         office_sites.movementMethod = LinkMovementMethod.getInstance()
-        for (block :String in tickerItem!!.block_sites ?: ArrayList()){
+        for (block: String in tickerItem!!.block_sites ?: ArrayList()) {
             val spanString = SpannableString(block)
-            val clickableSpan :ClickableSpan = object : ClickableSpan() {
+            val clickableSpan: ClickableSpan = object : ClickableSpan() {
                 override fun onClick(widget: View?) {
-                    startActivity(Intent.createChooser(Intent().setAction(Intent.ACTION_VIEW ) .setData(Uri.parse(block)) ,"sss"))
+                    startActivity(Intent.createChooser(Intent().setAction(Intent.ACTION_VIEW).setData(Uri.parse(block)), "sss"))
                 }
             }
-            spanString.setSpan(clickableSpan , 0 ,block.length , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            spanString.setSpan(clickableSpan, 0, block.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             block_sites.append(spanString)
-            if(tickerItem!!.block_sites!!.indexOf(block) != tickerItem!!.block_sites!!.size -1){
+            if (tickerItem!!.block_sites!!.indexOf(block) != tickerItem!!.block_sites!!.size - 1) {
                 block_sites.append(" ;\n")
             }
         }
         block_sites.movementMethod = LinkMovementMethod.getInstance()
 
-        if(!TextUtils.isEmpty(tickerItem!!.white_paper)){
+        if (!TextUtils.isEmpty(tickerItem!!.white_paper)) {
             val spanString = SpannableString(tickerItem!!.white_paper)
-            val clickableSpan :ClickableSpan = object : ClickableSpan() {
+            val clickableSpan: ClickableSpan = object : ClickableSpan() {
                 override fun onClick(widget: View?) {
-                    startActivity(Intent.createChooser(Intent().setAction(Intent.ACTION_VIEW ).setData(Uri.parse(tickerItem!!.white_paper)) ,"sss"))
+                    startActivity(Intent.createChooser(Intent().setAction(Intent.ACTION_VIEW).setData(Uri.parse(tickerItem!!.white_paper)), "sss"))
                 }
             }
-            spanString.setSpan(clickableSpan , 0 ,tickerItem!!.white_paper!!.length , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            spanString.setSpan(clickableSpan, 0, tickerItem!!.white_paper!!.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             white_paper.append(spanString)
             white_paper.movementMethod = LinkMovementMethod.getInstance()
         }
     }
 
+    override fun onBackPressed() {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            finishAfterTransition()
+        } else
+            finish()
+    }
 
-    private fun insertDot(str:StringBuilder):String{
-        var i : Int = str.length -3
-        while(i > 0){
-            str.insert(i , ",")
+    private fun insertDot(str: StringBuilder): String {
+        var i: Int = str.length - 3
+        while (i > 0) {
+            str.insert(i, ",")
             i -= 3
         }
         return str.toString()

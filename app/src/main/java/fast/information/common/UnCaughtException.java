@@ -46,8 +46,8 @@ public class UnCaughtException implements Thread.UncaughtExceptionHandler {
                 fos = null ;}catch (Throwable t){t.printStackTrace();}
             if(!BuildConfig.DEBUG){
                 Toast.makeText(MyApplication.instance, "遇到致命BUG， 请在文件系统查看LOG", Toast.LENGTH_LONG).show();
+                System.exit(0);
             }
-            System.exit(0);
         }
     }
 }

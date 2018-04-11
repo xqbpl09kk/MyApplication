@@ -32,7 +32,7 @@ class MarketActivity : BaseActivity() {
     val adapter = BoardAdapter(MyApplication.instance)
     private val layoutManager = LinearLayoutManager(MyApplication.instance)
 
-    private val size = 100
+    private val size = 20
     private var cursor = 0
     private var loading = false
 
@@ -63,7 +63,6 @@ class MarketActivity : BaseActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.market , menu)
-//        menu?.findItem(R.id.search)?.actionView?.onKeyPreIme( )
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -78,9 +77,10 @@ class MarketActivity : BaseActivity() {
                 }
                 dialogBuilder.create().show()
             }
-            R.id.search ->{
+//
 
-            }
+
+
 
         }
         return super.onOptionsItemSelected(item)

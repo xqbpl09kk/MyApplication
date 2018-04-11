@@ -4,7 +4,7 @@
     <string name="title_dashboard">行情</string>
     <string name="more">更多</string>
     <string name="star">收藏</string>
-    <string name="fast_information">快讯</string>
+    <string name="fast_information">资讯</string>
     <string name="slogan">传播币圈资讯</string>
     <string name="coming_soon">即将到来，敬请期待</string>
     <string name="share">分享</string>
@@ -28,7 +28,7 @@
     <string name="coin_name">币种</string>
     <string name="current_price_usdt">价格/USDT</string>
     <string name="change_volume">涨跌幅度</string>
-    <string name="format_update_items">更新了%d条</string>
+    <string name="format_update_items">获取了%d条</string>
     <string name="used_amount">流通总量</string>
     <string name="total_amount">发行总量</string>
     <string name="office_sites">官网</string>
@@ -36,4 +36,14 @@
     <string name="white_paper">白皮书</string>
     <string name="coin_detail">币概览</string>
     <string name="error_data">数据错误</string>
+    <string name="introduction">简介</string>
+    <string name="market_cap">总市值</string>
+    <string name="market_cap_usd">总市值(USD)</string>
+    <string name="max_amount">最大供应量</string>
+    <string name="email">Email:</string>
+    <string name="no_email_client_and_copy_to_clipboard">没找到邮箱客户端，已经复制地址</string>
+    <string name="websiteAddress">地址:</string>
+    <string name="version_code">版本号:</string>
+    <string name="auto_update_on_go">新版本已经加入下载序列(仅在Wifi连接的情况下会下载)</string>
+    <string name="already_new_version">已经是最新版本</string>
 </resources>
