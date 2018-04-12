@@ -38,6 +38,10 @@
 -dontwarn anetwork.channel.**
 -dontwarn anet.channel.**
 -dontwarn com.huawei.android.**
+-dontwarn com.umeng.analytics.**
+-dontwarn com.xiaomi.mipush.**
+-dontwarn com.org.android.agoo.**
+
 
 
 

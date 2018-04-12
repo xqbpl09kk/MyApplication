@@ -4,12 +4,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.PatternMatcher
 import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import fast.information.common.BaseActivity
@@ -88,7 +86,7 @@ class CoinDetailActivity : BaseActivity() {
         max_amount.text = insertDot(StringBuilder(tickerItem!!.max_supply))
         market_cap.text = insertDot(StringBuilder(tickerItem!!.market_cap_usd))
 
-        for (site: String in tickerItem!!.office_sites ?: ArrayList()) {
+        for (site: String in tickerItem!!.official_sites ?: ArrayList()) {
             val spanString = SpannableString(site)
             val clickableSpan: ClickableSpan = object : ClickableSpan() {
                 override fun onClick(widget: View?) {
@@ -97,8 +95,8 @@ class CoinDetailActivity : BaseActivity() {
             }
             spanString.setSpan(clickableSpan, 0, site.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             office_sites.append(spanString)
-            if (tickerItem!!.office_sites!!.indexOf(site) != tickerItem!!.office_sites!!.size - 1) {
-                block_sites.append(" ;\n")
+            if (tickerItem!!.official_sites!!.indexOf(site) != tickerItem!!.official_sites!!.size - 1) {
+                office_sites.append(" ;\n")
             }
         }
         office_sites.movementMethod = LinkMovementMethod.getInstance()

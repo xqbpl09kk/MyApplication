@@ -90,10 +90,7 @@ class ConcernActivity :BaseActivity() {
                     checkUpdate()
                 }
             }
-
             spanString2.setSpan(clickSpan2 , 0 , spanString2.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE )
-            website.append(spanString2)
-
             version.append(spanString2)
             version.movementMethod =  LinkMovementMethod.getInstance()
         } catch (e :Exception) {

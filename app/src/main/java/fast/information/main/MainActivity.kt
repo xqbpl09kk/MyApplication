@@ -215,7 +215,6 @@ class MainActivity : BaseActivity() ,TimerHandler.Timer{
             }
 
             override fun onFailure(message: String, errorCode: Int) {
-                //do nothing
                 Log.i("CheckUpdate", message)
             }
         })

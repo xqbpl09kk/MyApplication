@@ -13,8 +13,6 @@ import java.lang.ref.WeakReference
  */
 class TimerHandler(activity: Activity) : Handler() {
 
-
-
     interface Timer{
         fun onTime()
     }
