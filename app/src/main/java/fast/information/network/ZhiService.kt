@@ -33,4 +33,12 @@ interface ZhiService {
     fun tickerList(@Query("cursor") cursor :Int
                    ,@Query("size") size :Int)
             :Call<ResultListBundle<TickerListItem>>
+
+    @GET("")
+    fun search(@Query("key") key:String )
+            :Call<ResultListBundle<TickerListItem>>
+
+    @GET("")
+    fun getTickerItem(@Query("id") id :String)
+            :Call<ResultBundle<TickerListItem>>
 }

@@ -29,7 +29,7 @@ import java.io.OutputStream
 class RetrofitHelper private constructor(){
 
     private val baseUrl: String = BuildConfig.Base_Url
-    private val TAG = "RetrofitTracker"
+    private val tag = "RetrofitTracker"
     private val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create(
@@ -62,6 +62,16 @@ class RetrofitHelper private constructor(){
         handleRequest(call , result)
     }
 
+    fun tickerItem(id:String ,result : ResultCallback<ResultBundle<TickerListItem>>){
+        val call : Call<ResultBundle<TickerListItem>> = service.getTickerItem(id)
+        handleRequest(call , result)
+    }
+
+    fun search(key:String, result : ResultCallback<ResultListBundle<TickerListItem>>){
+        val call : Call<ResultListBundle<TickerListItem>> = service.search(key)
+        handleRequest(call , result)
+    }
+
 
     fun downloadApkFile(downloadUrl :String , result : ResultCallback<Int>){
         val call = service.downloadApkFile(downloadUrl)
@@ -84,17 +94,17 @@ class RetrofitHelper private constructor(){
     }
 
 
-    private fun<T > handleRequest(call :Call<T>  ,result:ResultCallback<T> ){
+    private fun<T> handleRequest(call :Call<T>  ,result:ResultCallback<T> ){
 
         call.enqueue(object : Callback<T> {
             override fun onResponse(call: Call<T>?, response: Response<T>?) {
                 result.onSuccess(response?.body())
-                Log.i(TAG.plus("-success"),response?.body().toString())
+                Log.i(tag.plus("-success"),response?.body().toString())
             }
 
             override fun onFailure(call: Call<T>?, t: Throwable?) {
                 t?.message?.let { result.onFailure(it,500 ) }
-                Log.i(TAG.plus("-error"), t?.message)
+                Log.i(tag.plus("-error"), t?.message)
             }
 
         })

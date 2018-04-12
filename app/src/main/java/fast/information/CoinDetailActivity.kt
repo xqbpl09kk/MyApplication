@@ -8,10 +8,13 @@ import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import fast.information.common.BaseActivity
 import fast.information.common.MyApplication
+import fast.information.network.RetrofitHelper
 import fast.information.network.bean.TickerListItem
 import kotlinx.android.synthetic.main.activity_coin_detail.*
 import kotlinx.android.synthetic.main.list_item_muilt_cardboard.*
@@ -32,6 +35,18 @@ class CoinDetailActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.coin_detail , menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if(item?.itemId == R.id.refresh){
+            refresh()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun registerViews() {
@@ -142,5 +157,10 @@ class CoinDetailActivity : BaseActivity() {
             i -= 3
         }
         return str.toString()
+    }
+
+    private fun refresh(){
+        Toast.makeText(MyApplication.instance , "Refreshing " , Toast.LENGTH_LONG).show()
+//     RetrofitHelper.instance.tickerList()
     }
 }

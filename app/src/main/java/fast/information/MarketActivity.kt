@@ -2,15 +2,18 @@ package fast.information
 
 import android.graphics.Rect
 import android.os.Bundle
+import android.support.v4.view.MenuItemCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.SearchView
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import fast.information.common.BaseActivity
 import fast.information.common.MyApplication
@@ -20,6 +23,7 @@ import fast.information.network.RetrofitHelper
 import fast.information.network.bean.TickerListItem
 import fast.information.network.bean.base.ResultCallback
 import fast.information.network.bean.base.ResultListBundle
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_market.*
 import java.util.*
 
@@ -35,6 +39,9 @@ class MarketActivity : BaseActivity() , TimerHandler.Timer{
 
     val adapter = BoardAdapter(MyApplication.instance)
     private val layoutManager = LinearLayoutManager(MyApplication.instance)
+
+    private var inSearch : Boolean = false
+    private var searchView :SearchView ?= null
 
     private val size = 20
     private var cursor = 0
@@ -71,8 +78,16 @@ class MarketActivity : BaseActivity() , TimerHandler.Timer{
         netStep(false)
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        menu?.findItem(R.id.sort)?.isVisible = !inSearch
+        return super.onPrepareOptionsMenu(menu)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.market , menu)
+        val searchMenu = menu?.findItem(R.id.search)
+        searchView = searchMenu?.actionView as SearchView
+        setupSearchView(searchView)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -87,10 +102,6 @@ class MarketActivity : BaseActivity() , TimerHandler.Timer{
                 }
                 dialogBuilder.create().show()
             }
-//
-
-
-
 
         }
         return super.onOptionsItemSelected(item)
@@ -107,6 +118,15 @@ class MarketActivity : BaseActivity() , TimerHandler.Timer{
     override fun onStop() {
         super.onStop()
         timerHandler?.sendEmptyMessage(TimerHandler.stop)
+        shrinkSearchView()
+    }
+
+    override fun onBackPressed() {
+        if(searchView?.isIconified == false){
+            searchView?.findViewById<TextView>(R.id.search_src_text)?.text = ""
+            searchView?.isIconified = true
+        }else
+            super.onBackPressed()
     }
 
     private fun netStep(loadMore: Boolean) {
@@ -198,4 +218,39 @@ class MarketActivity : BaseActivity() , TimerHandler.Timer{
     }
 
 
+
+    private fun setupSearchView(searchView :SearchView?){
+        if(searchView == null ) return
+        searchView.queryHint = getString(R.string.coin_symbol)
+        searchView.setOnCloseListener ({
+            inSearch = false
+            invalidateOptionsMenu()
+            false
+        })
+        searchView.setOnSearchClickListener({
+            inSearch = true
+            invalidateOptionsMenu()
+        })
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                doSearch(query)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+
+        })
+    }
+
+    private fun shrinkSearchView(){
+        searchView?.findViewById<TextView>(R.id.search_src_text)?.text = ""
+        searchView?.isIconified = true
+    }
+
+    private fun doSearch(query :String ?){
+        Toast.makeText(MyApplication.instance , "in Search " , Toast.LENGTH_LONG).show()
+        //TODO search
+    }
 }

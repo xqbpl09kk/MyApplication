@@ -25,6 +25,7 @@
     <string name="collection">收藏</string>
     <string name="review_all">查看更多</string>
     <string name="market">行情</string>
+    <string name="all_market">全部行情</string>
     <string name="coin_name">币种</string>
     <string name="current_price_usdt">价格/USDT</string>
     <string name="change_volume">涨跌幅度</string>
@@ -48,4 +49,6 @@
     <string name="already_new_version">已经是最新版本</string>
     <string name="already_enqueued">已经在下载队列</string>
     <string name="data_updated">数据已更新</string>
+    <string name="coin_symbol">币名称</string>
+    <string name="refresh">刷新</string>
 </resources>

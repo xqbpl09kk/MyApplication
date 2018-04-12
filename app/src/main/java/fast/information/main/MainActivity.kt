@@ -12,9 +12,12 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.SearchView
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import fast.information.R
 import fast.information.common.BaseActivity
@@ -25,6 +28,7 @@ import fast.information.network.bean.base.ResultCallback
 import fast.information.network.RetrofitHelper
 import fast.information.network.bean.UpdateInfo
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_share.view.*
 import java.io.File
 
 class MainActivity : BaseActivity() ,TimerHandler.Timer{
@@ -43,6 +47,7 @@ class MainActivity : BaseActivity() ,TimerHandler.Timer{
     private var isStarChecked: Boolean = false
     private val bottomMenuIds: IntArray = intArrayOf(R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
 
+    private var searchView : SearchView ?= null
     private var timerHandler :TimerHandler ?=null
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -73,18 +78,17 @@ class MainActivity : BaseActivity() ,TimerHandler.Timer{
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        if (navigation.selectedItemId == R.id.navigation_home) {
-            menu?.findItem(R.id.scroll)?.isVisible = true;
-            menu?.findItem(R.id.scroll)?.isVisible = true;
-        } else {
-            menu?.findItem(R.id.scroll)?.isVisible = false;
-            menu?.findItem(R.id.scroll)?.isVisible = false;
-        }
+        menu?.findItem(R.id.scroll)?.isVisible = navigation.selectedItemId == R.id.navigation_home
+        menu?.findItem(R.id.star)?.isVisible = navigation.selectedItemId == R.id.navigation_home
+        menu?.findItem(R.id.search)?.isVisible = navigation.selectedItemId == R.id.navigation_dashboard
         return super.onPrepareOptionsMenu(menu)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main, menu)
+        val searchMenu = menu?.findItem(R.id.search)
+        searchView = searchMenu?.actionView as SearchView
+        setupSearchView(searchView)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -94,20 +98,19 @@ class MainActivity : BaseActivity() ,TimerHandler.Timer{
                 fragmentOne?.scrollToTop()
             }
         } else if (item?.itemId ?: 0 == R.id.star) {
-            navigation.selectedItemId = bottomMenuIds[0]
-//            switchPageByIndex(0)
             isStarChecked = !isStarChecked
             if (isStarChecked) {
-                item?.icon = ContextCompat.getDrawable(this, R.drawable.ic_home_white_24dp)
+                item?.setIcon(R.drawable.ic_home_white_24dp)
                 setTitle(R.string.star)
             } else {
-                item?.icon = ContextCompat.getDrawable(this, R.drawable.ic_star_black_24dp)
+                item?.setIcon(R.drawable.ic_star_black_24dp)
                 setTitle(R.string.fast_information)
             }
-            invalidateOptionsMenu()
             fragmentOne?.switchContent()
+        }else if(item?.itemId ?:0 == android.R.id.home){
+            if(currentFragment == fragmentTwo) shrinkSearchView()
         }
-        return super.onOptionsItemSelected(item)
+        return true
     }
 
 
@@ -127,6 +130,15 @@ class MainActivity : BaseActivity() ,TimerHandler.Timer{
     override fun onStop() {
         super.onStop()
         timerHandler?.sendEmptyMessage(TimerHandler.stop)
+        shrinkSearchView()
+    }
+
+
+    override fun onBackPressed() {
+        if(searchView?.isIconified == false){
+            shrinkSearchView()
+        }else
+            super.onBackPressed()
     }
 
     override fun onTime() {
@@ -233,5 +245,38 @@ class MainActivity : BaseActivity() ,TimerHandler.Timer{
                     download(updateInfo.android_url,updateInfo.latest_app_version)
                 }
         dialogBuilder.create().show()
+    }
+
+    private fun setupSearchView(searchView :SearchView?){
+        if(searchView == null ) return
+        searchView.queryHint = getString(R.string.coin_symbol)
+        searchView.setOnCloseListener ({
+            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+            false
+        })
+        searchView.setOnSearchClickListener({
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        })
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                doSearch(query)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+
+        })
+    }
+
+
+    private fun shrinkSearchView(){
+        searchView?.findViewById<TextView>(R.id.search_src_text)?.text = ""
+        searchView?.isIconified = true
+    }
+    private fun doSearch(query :String ?){
+        Toast.makeText(MyApplication.instance , "in Search " , Toast.LENGTH_LONG).show()
+        //TODO search
     }
 }
