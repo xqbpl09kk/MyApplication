@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import fast.information.common.MyApplication
 import fast.information.R
+import fast.information.common.BaseFragment
 import fast.information.main.adapter.BoardAdapter
 import fast.information.main.adapter.MuiltBoardAdapter
 import fast.information.network.RetrofitHelper
@@ -26,22 +27,16 @@ import java.util.*
 * MyApplication
 * Created by xiaqibo on 2018/3/1-0:19.
 */
-class FragmentTwo : Fragment() {
-
-
+class FragmentTwo : BaseFragment() {
+    override fun getLayoutRes(): Int {
+        return R.layout.fragment_second
+    }
 
     private val size :Int = 20
     private var cursor :Int = 0
     val adapter = MuiltBoardAdapter(MyApplication.instance)
     private val layoutManager = LinearLayoutManager(MyApplication.instance)
     private var loading = false
-
-    private val handler :Handler = object : Handler() {
-        override fun handleMessage(msg: Message?) {
-            super.handleMessage(msg)
-        }
-    }
-
 
     companion object {
 
@@ -52,11 +47,6 @@ class FragmentTwo : Fragment() {
         }
 
     }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_second ,container , false )
-    }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -81,6 +71,7 @@ class FragmentTwo : Fragment() {
         loading = true
         RetrofitHelper.instance.tickerList(cursor , size , object : ResultCallback<ResultListBundle<TickerListItem>> {
             override fun onSuccess(t: ResultListBundle<TickerListItem>?) {
+                if(activity?.isFinishing == true ) return
                 if(loadMore){
                     t?.items?.let { adapter.add(it) }
                 }else{
@@ -94,6 +85,7 @@ class FragmentTwo : Fragment() {
             }
 
             override fun onFailure(message: String, errorCode: Int) {
+                if(activity?.isFinishing == true ) return
                 Toast.makeText(MyApplication.instance , message , Toast.LENGTH_SHORT).show()
                 refresh_layout.isRefreshing = false
                 loading = false

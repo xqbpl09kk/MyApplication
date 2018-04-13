@@ -3,6 +3,7 @@ package fast.information.main.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.support.annotation.IntegerRes
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import fast.information.R
 import fast.information.ShareActivity
 import fast.information.network.bean.MessageItem
 import kotlinx.android.synthetic.main.list_item_main.view.*
+import android.support.v4.app.ActivityOptionsCompat
 
 
 /**
@@ -28,6 +30,7 @@ class HomeAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerV
     private var showData = stared
 
     private var showStar = true
+    private var focusItemIndex :Int = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater: LayoutInflater = LayoutInflater.from(context)
@@ -45,6 +48,11 @@ class HomeAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerV
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val itemData: MessageItem = showData[position]
         holder.itemView.time_text.text = itemData.getDate(false)
+        if(focusItemIndex == position){
+            holder.itemView.content_text.maxLines = Integer.MAX_VALUE
+        }else{
+            holder.itemView.content_text.maxLines = 5
+        }
         holder.itemView.content_text.text = Integer.toString(position +1 )
                 .plus("、").plus(itemData.title).plus(itemData.content)
         holder.itemView.action1_text.isSelected = staredId.contains(itemData.content.hashCode())
@@ -61,14 +69,24 @@ class HomeAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerV
                             .putExtra("message_item", itemData)
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     , null)
+
         })
         holder.itemView.setOnClickListener({
-            MyApplication.instance
-                    .startActivity(Intent(context, ShareActivity::class.java)
-                            .putExtra("message_item", itemData)
-                            .putExtra("share", false)
-                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            , null)
+//            MyApplication.instance
+//                    .startActivity(Intent(context, ShareActivity::class.java)
+//                            .putExtra("message_item", itemData)
+//                            .putExtra("share", false)
+//                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//                            , null)
+//            val intent = Intent(MyApplication.instance ,  ShareActivity::class.java)
+//            intent.putExtra("message_item" , itemData) .putExtra("share", false)
+//            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(MyApplication.instance.getLastActivity()!!,
+//                    holder.itemView.content_text,
+////                    ViewCompat.getTransitionName("simple_activity_transition"))
+//                    "simple_activity_transition")
+//            MyApplication.instance.getLastActivity()!!.startActivity(intent, options.toBundle())
+            focusItemIndex = position
+            notifyDataSetChanged()
         })
         holder.itemView.action1_text.setOnClickListener({
             if (it.isSelected) {

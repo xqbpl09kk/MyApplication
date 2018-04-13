@@ -1,6 +1,8 @@
 package fast.information
 
+import android.app.PendingIntent.getActivity
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -34,7 +36,7 @@ class CoinDetailActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        window.setBackgroundDrawableResource(R.color.half_trans)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

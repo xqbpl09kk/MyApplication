@@ -3,6 +3,7 @@ package fast.information.main.adapter
 import android.annotation.SuppressLint
 import android.app.ActivityOptions
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -98,7 +99,16 @@ class MuiltBoardAdapter(private val context: Context) : RecyclerView.Adapter<Rec
                 holder.itemView.setOnClickListener({
                     val bundle  =Bundle()
                     bundle.putSerializable("ticker_item" , itemData)
-                    MyApplication.instance.jumpActivity(CoinDetailActivity::class.java , bundle)
+//                    MyApplication.instance.jumpActivity(CoinDetailActivity::class.java , bundle)
+
+                    val intent = Intent(MyApplication.instance ,  CoinDetailActivity::class.java)
+//                    Bundle().putSerializable("ticker_item" , itemData)
+                    intent.putExtra("data" ,bundle)
+                    val options = ActivityOptionsCompat.makeSceneTransitionAnimation(MyApplication.instance.getLastActivity()!!,
+                            holder.itemView,
+        //                    ViewCompat.getTransitionName("simple_activity_transition"))
+                            "shared_view")
+                    MyApplication.instance.getLastActivity()!!.startActivity(intent, options.toBundle())
                 })
             }
             else -> holder.itemView.setOnClickListener({MyApplication.instance.jumpActivity(MarketActivity::class.java , null) })

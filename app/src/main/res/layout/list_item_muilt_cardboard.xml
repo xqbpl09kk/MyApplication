@@ -6,10 +6,12 @@
     android:layout_height="wrap_content"
     android:padding="10dp"
     android:clickable="true"
+    android:transitionName="shared_view"
     android:focusable="true"
     android:background="@color/white"
 
-    android:foreground="?android:attr/selectableItemBackground" >
+    android:foreground="?android:attr/selectableItemBackground"
+    tools:targetApi="lollipop">
 
 
         <TextView

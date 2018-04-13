@@ -31,7 +31,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_share.view.*
 import java.io.File
 
-class MainActivity : BaseActivity() ,TimerHandler.Timer{
+class MainActivity : BaseActivity(),TimerHandler.Timer{
 
 
     override fun getLayoutRes(): Int {
@@ -114,11 +114,6 @@ class MainActivity : BaseActivity() ,TimerHandler.Timer{
     }
 
 
-    @SuppressLint("MissingSuperCall")
-    override fun onSaveInstanceState(outState: Bundle?) {
-        outState!!.putInt("position", fragmentList.indexOf(currentFragment))
-        Log.e("tag", "onSaveInstanceState")
-    }
 
     override fun onResume() {
         super.onResume()
@@ -146,13 +141,20 @@ class MainActivity : BaseActivity() ,TimerHandler.Timer{
             fragmentTwo?.netStep(false)
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        Log.e("tag", "onRestoreInstanceState")
-        val position = savedInstanceState.getInt("position")
-        switchPageByIndex(position)
-        navigation.selectedItemId = bottomMenuIds[position]
-        super.onRestoreInstanceState(savedInstanceState)
-    }
+//    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+//        Log.e("tag", "onRestoreInstanceState")
+//        val position = savedInstanceState.getInt("position")
+//        switchPageByIndex(position)
+//        navigation.selectedItemId = bottomMenuIds[position]
+//        super.onRestoreInstanceState(savedInstanceState)
+//    }
+//
+//
+//    override fun onSaveInstanceState(outState: Bundle?) {
+//        super.onSaveInstanceState(outState)
+//        outState!!.putInt("position", fragmentList.indexOf(currentFragment))
+//        Log.e("tag", "onSaveInstanceState")
+//    }
 
     private fun initFragments() {
 
@@ -268,6 +270,7 @@ class MainActivity : BaseActivity() ,TimerHandler.Timer{
             }
 
         })
+
     }
 
 

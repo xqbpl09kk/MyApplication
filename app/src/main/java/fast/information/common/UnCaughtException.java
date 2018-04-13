@@ -1,5 +1,7 @@
 package fast.information.common;
 
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -45,9 +47,14 @@ public class UnCaughtException implements Thread.UncaughtExceptionHandler {
                 }
                 fos = null ;}catch (Throwable t){t.printStackTrace();}
             if(!BuildConfig.DEBUG){
+
+
+            }else{
                 Toast.makeText(MyApplication.instance, "遇到致命BUG， 请在文件系统查看LOG", Toast.LENGTH_LONG).show();
-                System.exit(0);
+                ClipboardManager clipboardManager = (ClipboardManager) MyApplication.instance.getSystemService(Context.CLIPBOARD_SERVICE);
+                clipboardManager.setText(info) ;
             }
+            System.exit(0);
         }
     }
 }

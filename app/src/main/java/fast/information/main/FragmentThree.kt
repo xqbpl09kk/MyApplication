@@ -12,6 +12,7 @@ import fast.information.ConcernActivity
 import fast.information.common.MyApplication
 import fast.information.R
 import fast.information.SettingsActivity
+import fast.information.common.BaseFragment
 
 import kotlinx.android.synthetic.main.fragment_more.*
 
@@ -19,7 +20,10 @@ import kotlinx.android.synthetic.main.fragment_more.*
 * MyApplication
 * Created by xiaqibo on 2018/3/1-0:18.
 */
-class FragmentThree : Fragment() {
+class FragmentThree : BaseFragment() {
+    override fun getLayoutRes(): Int {
+         return R.layout.fragment_more
+    }
 
     companion object {
 
@@ -29,10 +33,6 @@ class FragmentThree : Fragment() {
             return instance
         }
 
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_more ,container , false )
     }
 
 

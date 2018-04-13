@@ -67,11 +67,11 @@ class ShareActivity :Activity() {
                 file.delete()
         }
     }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        startActivity(Intent(this@ShareActivity, MainActivity::class.java)
-                .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
-    }
+//
+//    override fun onBackPressed() {
+//        super.onBackPressed()
+//        startActivity(Intent(this@ShareActivity, MainActivity::class.java)
+//                .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
+//    }
 
 }

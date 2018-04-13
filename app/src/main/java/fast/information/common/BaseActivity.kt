@@ -14,17 +14,15 @@ import android.view.MenuItem
 import android.widget.Toast
 import fast.information.BuildConfig
 import fast.information.R
+import retrofit2.Call
 import java.io.File
 
 /**
  * Created by xiaqibo on 2018/4/10.
  */
-@SuppressLint("Registered")
 abstract class BaseActivity : AppCompatActivity() {
 
-    companion object {
 
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +34,6 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         MyApplication.instance.onActivityDestroy(this)
-
     }
 
     open fun displayHomeAsUpEnabled (): Boolean{

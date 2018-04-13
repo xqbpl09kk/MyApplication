@@ -26,8 +26,8 @@ class TickerListItem : Serializable {
     var percent_change_7d :String ? = null
     var official_sites :ArrayList<String> ? = null
     var block_sites :ArrayList<String> ?= null
-    var white_paper :String ?= null
-    var introduction :String ?= null
+    var white_paper :String ?= ""
+    var introduction :String ?= ""
 
 
 }

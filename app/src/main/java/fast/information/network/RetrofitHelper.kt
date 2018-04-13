@@ -38,6 +38,7 @@ class RetrofitHelper private constructor(){
                             .create()))
             .build()
 
+
     private val service: ZhiService = retrofit.create(ZhiService::class.java)
 
 
@@ -45,31 +46,38 @@ class RetrofitHelper private constructor(){
         val instance: RetrofitHelper = RetrofitHelper()
     }
 
-    fun getMessage(cursor: Int, size: Int, result: ResultCallback<ResultListBundle<MessageItem>>) {
+    fun getMessage(cursor: Int, size: Int, result: ResultCallback<ResultListBundle<MessageItem>>): Call<ResultListBundle<MessageItem>>{
         val call : Call<ResultListBundle<MessageItem>> = service.getMessage(cursor , size )
         handleRequest(call , result)
+        return call
     }
 
 
-    fun checkUpdate(result : ResultCallback<ResultBundle<UpdateInfo>>){
+    fun checkUpdate(result : ResultCallback<ResultBundle<UpdateInfo>>) : Call<ResultBundle<UpdateInfo>>{
         val call : Call<ResultBundle<UpdateInfo>> = service.checkUpdate()
         handleRequest(call , result)
+
+        return call
     }
 
 
-    fun tickerList(cursor:Int , size:Int , result : ResultCallback<ResultListBundle<TickerListItem>>){
+    fun tickerList(cursor:Int , size:Int , result : ResultCallback<ResultListBundle<TickerListItem>>):Call<ResultListBundle<TickerListItem>>{
         val call : Call<ResultListBundle<TickerListItem>> = service.tickerList(cursor , size )
         handleRequest(call , result)
+
+        return call
     }
 
-    fun tickerItem(id:String ,result : ResultCallback<ResultBundle<TickerListItem>>){
+    fun tickerItem(id:String ,result : ResultCallback<ResultBundle<TickerListItem>>):Call<ResultBundle<TickerListItem>> {
         val call : Call<ResultBundle<TickerListItem>> = service.getTickerItem(id)
         handleRequest(call , result)
+        return call
     }
 
-    fun search(key:String, result : ResultCallback<ResultListBundle<TickerListItem>>){
+    fun search(key:String, result : ResultCallback<ResultListBundle<TickerListItem>>) :Call<ResultListBundle<TickerListItem>>{
         val call : Call<ResultListBundle<TickerListItem>> = service.search(key)
         handleRequest(call , result)
+        return call
     }
 
 
@@ -98,13 +106,26 @@ class RetrofitHelper private constructor(){
 
         call.enqueue(object : Callback<T> {
             override fun onResponse(call: Call<T>?, response: Response<T>?) {
-                result.onSuccess(response?.body())
-                Log.i(tag.plus("-success"),response?.body().toString())
+                if(call?.isCanceled != false) return
+                try{
+                    result.onSuccess(response?.body())
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }finally {
+                    Log.i(tag.plus("-success"),response?.body().toString())
+                }
             }
 
             override fun onFailure(call: Call<T>?, t: Throwable?) {
-                t?.message?.let { result.onFailure(it,500 ) }
-                Log.i(tag.plus("-error"), t?.message)
+                if(call?.isCanceled != false) return
+                try{
+                    t?.message?.let { result.onFailure(it,500 ) }
+
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }finally {
+                    Log.i(tag.plus("-error"), t?.message)
+                }
             }
 
         })

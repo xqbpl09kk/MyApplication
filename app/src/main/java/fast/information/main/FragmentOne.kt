@@ -14,6 +14,7 @@ import android.widget.Toast
 import com.google.gson.Gson
 import fast.information.common.MyApplication
 import fast.information.R
+import fast.information.common.BaseFragment
 import fast.information.main.adapter.HomeAdapter
 import fast.information.network.bean.MessageItem
 import fast.information.network.bean.base.ResultCallback
@@ -25,7 +26,11 @@ import kotlinx.android.synthetic.main.fragment_one.*
 * MyApplication
 * Created by xiaqibo on 2018/3/1-0:19.
 */
-class FragmentOne : Fragment() {
+class FragmentOne : BaseFragment() {
+
+    override fun getLayoutRes(): Int {
+        return R.layout.fragment_one
+    }
 
     private var cursor : Int = 0
     private val size : Int = 20
@@ -40,10 +45,6 @@ class FragmentOne : Fragment() {
             return instance
         }
 
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_one, container, false )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

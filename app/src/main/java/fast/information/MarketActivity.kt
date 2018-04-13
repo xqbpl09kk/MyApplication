@@ -30,7 +30,7 @@ import java.util.*
 /**
  * Created by xiaqibo on 2018/4/10.
  */
-class MarketActivity : BaseActivity() , TimerHandler.Timer{
+class MarketActivity : BaseActivity(), TimerHandler.Timer {
 
 
     override fun getLayoutRes(): Int {
@@ -40,14 +40,14 @@ class MarketActivity : BaseActivity() , TimerHandler.Timer{
     val adapter = BoardAdapter(MyApplication.instance)
     private val layoutManager = LinearLayoutManager(MyApplication.instance)
 
-    private var inSearch : Boolean = false
-    private var searchView :SearchView ?= null
+    private var inSearch: Boolean = false
+    private var searchView: SearchView? = null
 
     private val size = 20
     private var cursor = 0
     private var loading = false
 
-    private var timerHandler :TimerHandler ?=null
+    private var timerHandler: TimerHandler? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +55,7 @@ class MarketActivity : BaseActivity() , TimerHandler.Timer{
         recycler_view.layoutManager = layoutManager
         recycler_view.addItemDecoration(object : RecyclerView.ItemDecoration() {
             override fun getItemOffsets(outRect: Rect?, view: View?, parent: RecyclerView?, state: RecyclerView.State?) {
-                outRect?.set( 0, 0 , 0 , 2)
+                outRect?.set(0, 0, 0, 2)
             }
         })
         recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -71,6 +71,7 @@ class MarketActivity : BaseActivity() , TimerHandler.Timer{
         refresh_layout.setOnRefreshListener({
             netStep(false)
         })
+        netStep(false)
     }
 
 
@@ -84,7 +85,7 @@ class MarketActivity : BaseActivity() , TimerHandler.Timer{
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.market , menu)
+        menuInflater.inflate(R.menu.market, menu)
         val searchMenu = menu?.findItem(R.id.search)
         searchView = searchMenu?.actionView as SearchView
         setupSearchView(searchView)
@@ -93,10 +94,10 @@ class MarketActivity : BaseActivity() , TimerHandler.Timer{
 
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId){
-            R.id.sort ->{
-                val dialogBuilder : AlertDialog.Builder = AlertDialog.Builder(this@MarketActivity)
-                dialogBuilder.setSingleChoiceItems(R.array.sort_name , adapter.currentSortMode) { dialog, which ->
+        when (item?.itemId) {
+            R.id.sort -> {
+                val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this@MarketActivity)
+                dialogBuilder.setSingleChoiceItems(R.array.sort_name, adapter.currentSortMode) { dialog, which ->
                     sort(which)
                     dialog?.dismiss()
                 }
@@ -109,10 +110,9 @@ class MarketActivity : BaseActivity() , TimerHandler.Timer{
 
     override fun onResume() {
         super.onResume()
-        netStep(false)
-        if(timerHandler == null)
+        if (timerHandler == null)
             timerHandler = TimerHandler(this)
-        timerHandler!!.sendEmptyMessageDelayed(TimerHandler.move , TimerHandler.delayMillis)
+        timerHandler!!.sendEmptyMessageDelayed(TimerHandler.move, TimerHandler.delayMillis)
     }
 
     override fun onStop() {
@@ -122,10 +122,10 @@ class MarketActivity : BaseActivity() , TimerHandler.Timer{
     }
 
     override fun onBackPressed() {
-        if(searchView?.isIconified == false){
+        if (searchView?.isIconified == false) {
             searchView?.findViewById<TextView>(R.id.search_src_text)?.text = ""
             searchView?.isIconified = true
-        }else
+        } else
             super.onBackPressed()
     }
 
@@ -137,21 +137,24 @@ class MarketActivity : BaseActivity() , TimerHandler.Timer{
         loading = true
         RetrofitHelper.instance.tickerList(cursor, size, object : ResultCallback<ResultListBundle<TickerListItem>> {
             override fun onSuccess(t: ResultListBundle<TickerListItem>?) {
+                if (this@MarketActivity.isFinishing) return
                 if (loadMore) {
                     t?.items?.let {
                         adapter.add(it)
-                        Toast.makeText(MyApplication.instance,String.format(getString(R.string.format_update_items) ,it.size ), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(MyApplication.instance, String.format(getString(R.string.format_update_items), it.size), Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     adapter.currentSortMode = 0
                     t?.items?.let { adapter.update(it) }
-                    Toast.makeText(MyApplication.instance, R.string.data_updated , Toast.LENGTH_SHORT).show()
+                    Toast.makeText(MyApplication.instance, R.string.data_updated, Toast.LENGTH_SHORT).show()
                 }
                 cursor = t?.nextCursor ?: 0
                 refresh_layout.isRefreshing = false
                 loading = false
             }
+
             override fun onFailure(message: String, errorCode: Int) {
+                if (isFinishing) return
                 Toast.makeText(MyApplication.instance, message, Toast.LENGTH_SHORT).show()
                 refresh_layout.isRefreshing = false
                 loading = false
@@ -159,12 +162,13 @@ class MarketActivity : BaseActivity() , TimerHandler.Timer{
         })
     }
 
-    private fun sort(mode : Int){
-        if(adapter.itemCount == 0) return
-        when(mode){
-            0 ->{ //默认市值
+    private fun sort(mode: Int) {
+        if (adapter.itemCount == 0) return
+        when (mode) {
+            0 -> { //默认市值
                 adapter.data.sortWith(Comparator { o1, o2 ->
-                    val result :Long= (o1?.market_cap_usd?.toLong() ?: 0 ) - (o2?.market_cap_usd?.toLong()?:0)
+                    val result: Long = (o1?.market_cap_usd?.toLong()
+                            ?: 0) - (o2?.market_cap_usd?.toLong() ?: 0)
                     when {
                         result > 0 -> -1
                         result < 0 -> 1
@@ -172,9 +176,11 @@ class MarketActivity : BaseActivity() , TimerHandler.Timer{
                     }
                 })
             }
-            1 ->{ //1小时增幅
+            1 -> { //1小时增幅
                 adapter.data.sortWith(Comparator { o1, o2 ->
-                    val result :Float= (o1.percent_change_1h?.toFloat()?:Float.MIN_VALUE) - (o2.percent_change_1h?.toFloat()?:Float.MIN_VALUE)
+                    val result: Float = (o1.percent_change_1h?.toFloat()
+                            ?: Float.MIN_VALUE) - (o2.percent_change_1h?.toFloat()
+                            ?: Float.MIN_VALUE)
                     when {
                         result > 0 -> -1
                         result < 0 -> 1
@@ -182,9 +188,11 @@ class MarketActivity : BaseActivity() , TimerHandler.Timer{
                     }
                 })
             }
-            2->{ //24h增幅
+            2 -> { //24h增幅
                 adapter.data.sortWith(Comparator { o1, o2 ->
-                    val result :Float= (o1.percent_change_24h?.toFloat()?:Float.MIN_VALUE)  - (o2.percent_change_24h?.toFloat()?:Float.MIN_VALUE)
+                    val result: Float = (o1.percent_change_24h?.toFloat()
+                            ?: Float.MIN_VALUE) - (o2.percent_change_24h?.toFloat()
+                            ?: Float.MIN_VALUE)
                     when {
                         result > 0 -> -1
                         result < 0 -> 1
@@ -192,9 +200,11 @@ class MarketActivity : BaseActivity() , TimerHandler.Timer{
                     }
                 })
             }
-            3->{ // 7d 增幅
+            3 -> { // 7d 增幅
                 adapter.data.sortWith(Comparator { o1, o2 ->
-                    val result :Float= (o1.percent_change_7d?.toFloat()?:Float.MIN_VALUE) - (o2.percent_change_7d?.toFloat()?:Float.MIN_VALUE)
+                    val result: Float = (o1.percent_change_7d?.toFloat()
+                            ?: Float.MIN_VALUE) - (o2.percent_change_7d?.toFloat()
+                            ?: Float.MIN_VALUE)
                     when {
                         result > 0 -> -1
                         result < 0 -> 1
@@ -202,9 +212,10 @@ class MarketActivity : BaseActivity() , TimerHandler.Timer{
                     }
                 })
             }
-            4->{ //交易量
+            4 -> { //交易量
                 adapter.data.sortWith(Comparator { o1, o2 ->
-                    val result :Long= (o1?.__h_volume_usd?.toLong() ?: 0 ) - (o2?.__h_volume_usd?.toLong()?:0)
+                    val result: Long = (o1?.__h_volume_usd?.toLong()
+                            ?: 0) - (o2?.__h_volume_usd?.toLong() ?: 0)
                     when {
                         result > 0 -> -1
                         result < 0 -> 1
@@ -218,39 +229,25 @@ class MarketActivity : BaseActivity() , TimerHandler.Timer{
     }
 
 
-
-    private fun setupSearchView(searchView :SearchView?){
-        if(searchView == null ) return
+    private fun setupSearchView(searchView: SearchView?) {
+        if (searchView == null) return
         searchView.queryHint = getString(R.string.coin_symbol)
-        searchView.setOnCloseListener ({
-            inSearch = false
-            invalidateOptionsMenu()
-            false
-        })
-        searchView.setOnSearchClickListener({
-            inSearch = true
-            invalidateOptionsMenu()
-        })
+        searchView.setOnCloseListener({ !inSearch })
+        searchView.setOnSearchClickListener({ inSearch = true })
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                doSearch(query)
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                return false
-            }
-
+            override fun onQueryTextSubmit(query: String?): Boolean { return doSearch(query) }
+            override fun onQueryTextChange(newText: String?): Boolean { return false }
         })
     }
 
-    private fun shrinkSearchView(){
+    private fun shrinkSearchView() {
         searchView?.findViewById<TextView>(R.id.search_src_text)?.text = ""
         searchView?.isIconified = true
     }
 
-    private fun doSearch(query :String ?){
-        Toast.makeText(MyApplication.instance , "in Search " , Toast.LENGTH_LONG).show()
+    private fun doSearch(query: String?) :Boolean {
+        Toast.makeText(MyApplication.instance, "in Search ", Toast.LENGTH_LONG).show()
         //TODO search
+        return false
     }
 }
