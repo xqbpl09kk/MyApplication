@@ -6,4 +6,9 @@
         android:visible="true"
         app:showAsAction="ifRoom"
         android:title="@string/refresh"/>
+    <item android:id="@+id/collection"
+        android:icon="@drawable/ic_star_black_24dp"
+        android:visible="true"
+        app:showAsAction="ifRoom"
+        android:title="@string/collection"/>
 </menu>

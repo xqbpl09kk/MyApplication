@@ -1,6 +1,7 @@
 package fast.information
 
 import android.app.PendingIntent.getActivity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -41,12 +42,34 @@ class CoinDetailActivity : BaseActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.coin_detail , menu)
+        val sharedPreferences = getSharedPreferences("settings" , Context.MODE_PRIVATE)
+        val collectionCoins = sharedPreferences.getStringSet("collection_coins" , HashSet<String>())
+        val symbol = tickerItem?.symbol
+        if(collectionCoins.contains(symbol)){
+            menu?.findItem(R.id.collection)?.setIcon(R.drawable.ic_star_white_24dp)
+        }
+        else{
+            menu?.findItem(R.id.collection)?.setIcon(R.drawable.ic_star_black_24dp)
+        }
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if(item?.itemId == R.id.refresh){
             refresh()
+        }else if(item?.itemId == R.id.collection){
+            val sharedPreferences = getSharedPreferences("settings" , Context.MODE_PRIVATE)
+            val collectionCoins = sharedPreferences.getStringSet("collection_coins" , HashSet<String>())
+            val symbol = tickerItem?.symbol
+            if(collectionCoins.contains(symbol)){
+                collectionCoins.remove(symbol)
+                item.setIcon(R.drawable.ic_star_white_24dp)
+            }
+            else{
+                collectionCoins.add(symbol)
+                item.setIcon(R.drawable.ic_star_black_24dp)
+            }
+            sharedPreferences.edit().putStringSet("collection_coins" , collectionCoins).apply()
         }
         return super.onOptionsItemSelected(item)
     }

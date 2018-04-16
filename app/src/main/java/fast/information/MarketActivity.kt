@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
+import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
@@ -20,6 +21,7 @@ import fast.information.common.MyApplication
 import fast.information.common.TimerHandler
 import fast.information.main.adapter.BoardAdapter
 import fast.information.network.RetrofitHelper
+import fast.information.network.bean.SearchResult
 import fast.information.network.bean.TickerListItem
 import fast.information.network.bean.base.ResultCallback
 import fast.information.network.bean.base.ResultListBundle
@@ -49,8 +51,17 @@ class MarketActivity : BaseActivity(), TimerHandler.Timer {
 
     private var timerHandler: TimerHandler? = null
 
+    private var key :String  ?= null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+    }
+
+
+    override fun registerViews() {
+        super.registerViews()
         recycler_view.adapter = adapter
         recycler_view.layoutManager = layoutManager
         recycler_view.addItemDecoration(object : RecyclerView.ItemDecoration() {
@@ -72,6 +83,7 @@ class MarketActivity : BaseActivity(), TimerHandler.Timer {
             netStep(false)
         })
         netStep(false)
+
     }
 
 
@@ -235,7 +247,12 @@ class MarketActivity : BaseActivity(), TimerHandler.Timer {
         searchView.setOnCloseListener({ !inSearch })
         searchView.setOnSearchClickListener({ inSearch = true })
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean { return doSearch(query) }
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                val bundle = Bundle()
+                bundle.putString("key" , query)
+                MyApplication.instance.jumpActivity(SearchActivity::class.java , bundle )
+                return false
+            }
             override fun onQueryTextChange(newText: String?): Boolean { return false }
         })
     }
@@ -245,9 +262,5 @@ class MarketActivity : BaseActivity(), TimerHandler.Timer {
         searchView?.isIconified = true
     }
 
-    private fun doSearch(query: String?) :Boolean {
-        Toast.makeText(MyApplication.instance, "in Search ", Toast.LENGTH_LONG).show()
-        //TODO search
-        return false
-    }
+
 }

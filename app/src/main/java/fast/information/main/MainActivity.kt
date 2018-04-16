@@ -13,20 +13,25 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
+import android.text.TextUtils
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import fast.information.MarketActivity
 import fast.information.R
+import fast.information.SearchActivity
 import fast.information.common.BaseActivity
 import fast.information.common.MyApplication
 import fast.information.common.TimerHandler
 import fast.information.network.bean.base.ResultBundle
 import fast.information.network.bean.base.ResultCallback
 import fast.information.network.RetrofitHelper
+import fast.information.network.bean.TickerListItem
 import fast.information.network.bean.UpdateInfo
+import fast.information.network.bean.base.ResultListBundle
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_share.view.*
 import java.io.File
@@ -279,7 +284,20 @@ class MainActivity : BaseActivity(),TimerHandler.Timer{
         searchView?.isIconified = true
     }
     private fun doSearch(query :String ?){
-        Toast.makeText(MyApplication.instance , "in Search " , Toast.LENGTH_LONG).show()
-        //TODO search
+
+        if(TextUtils.isEmpty(query)) return
+        val bundle = Bundle()
+        bundle.putString("key" , query)
+        MyApplication.instance.jumpActivity(SearchActivity::class.java , bundle)
+//        RetrofitHelper.instance.search(query!! , object : ResultCallback<ResultListBundle<TickerListItem>> {
+//            override fun onSuccess(t: ResultListBundle<TickerListItem>?) {
+//
+//            }
+//
+//            override fun onFailure(message: String, errorCode: Int) {
+//
+//            }
+//        })
+
     }
 }

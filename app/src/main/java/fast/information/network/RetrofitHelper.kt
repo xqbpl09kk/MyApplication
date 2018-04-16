@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder
 import fast.information.BuildConfig
 import fast.information.common.MyApplication
 import fast.information.network.bean.MessageItem
+import fast.information.network.bean.SearchResult
 import fast.information.network.bean.TickerListItem
 import fast.information.network.bean.UpdateInfo
 import fast.information.network.bean.base.ResultBundle
@@ -46,38 +47,31 @@ class RetrofitHelper private constructor(){
         val instance: RetrofitHelper = RetrofitHelper()
     }
 
-    fun getMessage(cursor: Int, size: Int, result: ResultCallback<ResultListBundle<MessageItem>>): Call<ResultListBundle<MessageItem>>{
+    fun getMessage(cursor: Int, size: Int, result: ResultCallback<ResultListBundle<MessageItem>>){
         val call : Call<ResultListBundle<MessageItem>> = service.getMessage(cursor , size )
         handleRequest(call , result)
-        return call
     }
 
 
-    fun checkUpdate(result : ResultCallback<ResultBundle<UpdateInfo>>) : Call<ResultBundle<UpdateInfo>>{
+    fun checkUpdate(result : ResultCallback<ResultBundle<UpdateInfo>>){
         val call : Call<ResultBundle<UpdateInfo>> = service.checkUpdate()
         handleRequest(call , result)
-
-        return call
     }
 
 
-    fun tickerList(cursor:Int , size:Int , result : ResultCallback<ResultListBundle<TickerListItem>>):Call<ResultListBundle<TickerListItem>>{
+    fun tickerList(cursor:Int , size:Int , result : ResultCallback<ResultListBundle<TickerListItem>>){
         val call : Call<ResultListBundle<TickerListItem>> = service.tickerList(cursor , size )
         handleRequest(call , result)
-
-        return call
     }
 
-    fun tickerItem(id:String ,result : ResultCallback<ResultBundle<TickerListItem>>):Call<ResultBundle<TickerListItem>> {
-        val call : Call<ResultBundle<TickerListItem>> = service.getTickerItem(id)
+    fun tickerItem(symbol:String ,result : ResultCallback<ResultBundle<TickerListItem>>){
+        val call : Call<ResultBundle<TickerListItem>> = service.getTickerItem(symbol)
         handleRequest(call , result)
-        return call
     }
 
-    fun search(key:String, result : ResultCallback<ResultListBundle<TickerListItem>>) :Call<ResultListBundle<TickerListItem>>{
-        val call : Call<ResultListBundle<TickerListItem>> = service.search(key)
+    fun search(key:String, result : ResultCallback<ResultListBundle<SearchResult>>){
+        val call : Call<ResultListBundle<SearchResult>> = service.search(key)
         handleRequest(call , result)
-        return call
     }
 
 

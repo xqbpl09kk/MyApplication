@@ -8,9 +8,23 @@ import java.io.Serializable
  * Created by xiaqibo on 2018/4/8.
  */
 class TickerListItem : Serializable {
-
+//    {
+//            "symbol":"ETH",
+//　　　　　　"official_sites":[
+//　　　　　　　　"https://www.ethereum.org/"
+//　　　　　　],
+//　　　　　　"block_sites":[
+//　　　　　　　　"https://etherscan.io/",
+//　　　　　　　　"https://ethplorer.io/",
+//　　　　　　　　"https://etherchain.org/"
+//　　　　　　],
+//　　　　　　"white_paper":"https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-White-Paper",
+//　　　　　　"introduction":"<p>
+//　　　　　　"icon":"http://bzhionline.test.upcdn.net/image/icons/ethereum_icon.png"
+//    }
     var id : String ?= null
     var coin :String ?= null
+    var icon :String ?= null
     var symbol :String ?= null
     var currency :String ?= null
     var site_key :String ?= null
