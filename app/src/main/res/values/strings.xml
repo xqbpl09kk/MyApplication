@@ -52,4 +52,5 @@
     <string name="coin_symbol">币名称</string>
     <string name="refresh">刷新</string>
     <string name="coin_collection">收藏的币</string>
+    <string name="link">链接</string>
 </resources>

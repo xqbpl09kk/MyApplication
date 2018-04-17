@@ -3,6 +3,7 @@ package fast.information.main.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.support.annotation.IntegerRes
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
@@ -16,6 +17,7 @@ import fast.information.ShareActivity
 import fast.information.network.bean.MessageItem
 import kotlinx.android.synthetic.main.list_item_main.view.*
 import android.support.v4.app.ActivityOptionsCompat
+import android.text.TextUtils
 
 
 /**
@@ -55,6 +57,16 @@ class HomeAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerV
         }
         holder.itemView.content_text.text = Integer.toString(position +1 )
                 .plus("、").plus(itemData.title).plus(itemData.content)
+        if(TextUtils.isEmpty(itemData.link) || !itemData.link!!.startsWith("http")){
+            holder.itemView.action0_text .visibility = View.INVISIBLE
+        }else{
+            holder.itemView.action0_text.visibility = View.VISIBLE
+            holder.itemView.action0_text.setOnClickListener({
+                MyApplication.instance.getLastActivity()
+                        ?.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(itemData.link)))
+            })
+        }
+
         holder.itemView.action1_text.isSelected = staredId.contains(itemData.content.hashCode())
 
         holder.itemView.content_text.setTextColor(
