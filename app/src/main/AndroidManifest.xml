@@ -51,6 +51,8 @@
 
         <activity android:name=".SearchActivity"
             android:label="@string/search"/>
+        <activity android:name=".CollectionCoinsActivity"
+            android:label="@string/collection"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"

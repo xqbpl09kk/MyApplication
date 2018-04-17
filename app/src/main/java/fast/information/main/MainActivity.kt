@@ -20,6 +20,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import fast.information.CollectionCoinsActivity
 import fast.information.MarketActivity
 import fast.information.R
 import fast.information.SearchActivity
@@ -86,6 +87,7 @@ class MainActivity : BaseActivity(),TimerHandler.Timer{
         menu?.findItem(R.id.scroll)?.isVisible = navigation.selectedItemId == R.id.navigation_home
         menu?.findItem(R.id.star)?.isVisible = navigation.selectedItemId == R.id.navigation_home
         menu?.findItem(R.id.search)?.isVisible = navigation.selectedItemId == R.id.navigation_dashboard
+        menu?.findItem(R.id.coin_collection)?.isVisible =  navigation.selectedItemId == R.id.navigation_dashboard
         return super.onPrepareOptionsMenu(menu)
     }
 
@@ -114,6 +116,8 @@ class MainActivity : BaseActivity(),TimerHandler.Timer{
             fragmentOne?.switchContent()
         }else if(item?.itemId ?:0 == android.R.id.home){
             if(currentFragment == fragmentTwo) shrinkSearchView()
+        }else if(item?.itemId == R.id.coin_collection){
+             MyApplication.instance.jumpActivity(CollectionCoinsActivity::class.java , null)
         }
         return true
     }
@@ -283,21 +287,13 @@ class MainActivity : BaseActivity(),TimerHandler.Timer{
         searchView?.findViewById<TextView>(R.id.search_src_text)?.text = ""
         searchView?.isIconified = true
     }
+
+
     private fun doSearch(query :String ?){
 
         if(TextUtils.isEmpty(query)) return
         val bundle = Bundle()
         bundle.putString("key" , query)
         MyApplication.instance.jumpActivity(SearchActivity::class.java , bundle)
-//        RetrofitHelper.instance.search(query!! , object : ResultCallback<ResultListBundle<TickerListItem>> {
-//            override fun onSuccess(t: ResultListBundle<TickerListItem>?) {
-//
-//            }
-//
-//            override fun onFailure(message: String, errorCode: Int) {
-//
-//            }
-//        })
-
     }
 }

@@ -51,4 +51,5 @@
     <string name="data_updated">数据已更新</string>
     <string name="coin_symbol">币名称</string>
     <string name="refresh">刷新</string>
+    <string name="coin_collection">收藏的币</string>
 </resources>

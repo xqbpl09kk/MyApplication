@@ -46,10 +46,9 @@ class CoinDetailActivity : BaseActivity() {
         val collectionCoins = sharedPreferences.getStringSet("collection_coins" , HashSet<String>())
         val symbol = tickerItem?.symbol
         if(collectionCoins.contains(symbol)){
-            menu?.findItem(R.id.collection)?.setIcon(R.drawable.ic_star_white_24dp)
-        }
-        else{
             menu?.findItem(R.id.collection)?.setIcon(R.drawable.ic_star_black_24dp)
+        }  else{
+            menu?.findItem(R.id.collection)?.setIcon(R.drawable.ic_star_white_24dp)
         }
         return super.onCreateOptionsMenu(menu)
     }
@@ -64,8 +63,7 @@ class CoinDetailActivity : BaseActivity() {
             if(collectionCoins.contains(symbol)){
                 collectionCoins.remove(symbol)
                 item.setIcon(R.drawable.ic_star_white_24dp)
-            }
-            else{
+            }else{
                 collectionCoins.add(symbol)
                 item.setIcon(R.drawable.ic_star_black_24dp)
             }
@@ -117,9 +115,10 @@ class CoinDetailActivity : BaseActivity() {
             else -> change_7d.text = tickerItem!!.percent_change_7d.plus("%/7d")
         }
 
-        val pattern = Pattern.compile("<[A-Z1-9a-z_\\W\\s\\r\":;',()-= \n]*>")
-        val matcher: Matcher = pattern.matcher(tickerItem!!.introduction)
-        introduction.text = matcher.replaceAll("").trim()
+//        val pattern = Pattern.compile("<[A-Z1-9a-z_\\W\\s\\r\":;',()-= \n]*>")
+//        val matcher: Matcher = pattern.matcher(tickerItem!!.introduction)
+//        introduction.text = matcher.replaceAll("").trim()
+        introduction.text = Html.fromHtml(tickerItem!!.introduction ).trim()
 
         used_amount.text = insertDot(StringBuilder(tickerItem!!.available_supply))
         total_amount.text = insertDot(StringBuilder(tickerItem!!.total_supply))

@@ -21,4 +21,10 @@
         android:title="@string/search"
         app:actionViewClass="android.support.v7.widget.SearchView" />
 
+
+    <item android:id="@+id/coin_collection"
+        android:icon="@drawable/ic_star_black_24dp"
+        app:showAsAction ="ifRoom"
+        android:checked="false"
+        android:title="@string/coin_collection"/>
 </menu>

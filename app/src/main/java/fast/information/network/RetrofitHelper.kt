@@ -69,6 +69,21 @@ class RetrofitHelper private constructor(){
         handleRequest(call , result)
     }
 
+    fun tickerItemSync(symbol:String ,result : ResultCallback<ResultBundle<TickerListItem>>){
+        val call : Call<ResultBundle<TickerListItem>> = service.getTickerItem(symbol)
+        var  response : Response<ResultBundle<TickerListItem>> ? = null
+        try{
+            response = call.execute()
+            if(call.isCanceled) return
+            result.onSuccess(response.body())
+        }catch (e : Exception){
+            result.onFailure(response?.message()?:"Connection error " , 500)
+            e.printStackTrace()
+        }finally {
+            Log.i(tag.plus("-success"),response?.body().toString())
+        }
+    }
+
     fun search(key:String, result : ResultCallback<ResultListBundle<SearchResult>>){
         val call : Call<ResultListBundle<SearchResult>> = service.search(key)
         handleRequest(call , result)
@@ -114,7 +129,6 @@ class RetrofitHelper private constructor(){
                 if(call?.isCanceled != false) return
                 try{
                     t?.message?.let { result.onFailure(it,500 ) }
-
                 }catch (e:Exception){
                     e.printStackTrace()
                 }finally {
