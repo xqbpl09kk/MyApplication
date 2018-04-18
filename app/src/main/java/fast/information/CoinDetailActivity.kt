@@ -131,7 +131,7 @@ class CoinDetailActivity : BaseActivity() {
 //        val pattern = Pattern.compile("<[A-Z1-9a-z_\\W\\s\\r\":;',()-= \n]*>")
 //        val matcher: Matcher = pattern.matcher(tickerItem!!.introduction)
 //        introduction.text = matcher.replaceAll("").trim()
-        introduction.text = Html.fromHtml(tickerItem!!.introduction ).trim()
+        introduction.text = Html.fromHtml(tickerItem!!.introduction ).trim().toString()
 
         used_amount.text = insertDot(StringBuilder(tickerItem!!.available_supply))
         total_amount.text = insertDot(StringBuilder(tickerItem!!.total_supply))
