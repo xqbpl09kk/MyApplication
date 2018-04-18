@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.bumptech.glide.Glide
@@ -45,7 +46,9 @@ class SearchAdapter(private val context: Context) : RecyclerView.Adapter<Recycle
         holder.itemView.index.text = (position + 1) .toString()
         holder.itemView.name.text =  itemData.symbol
         if(TextUtils.isEmpty(itemData.icon)){
+            holder.itemView.icon.visibility = View.GONE
         }else{
+            holder.itemView.icon.visibility = View.VISIBLE
             Glide.with(context).load(itemData.icon).into(holder.itemView.icon)
         }
 //        holder.itemView.description.text = itemData.introduction

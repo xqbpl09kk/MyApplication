@@ -15,10 +15,13 @@ import android.support.v4.view.ViewCompat
 import android.support.v7.widget.RecyclerView
 import android.text.Spannable
 import android.text.SpannableStringBuilder
+import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import fast.information.CoinDetailActivity
 import fast.information.MarketActivity
 import fast.information.R
@@ -63,9 +66,15 @@ class MuiltBoardAdapter(private val context: Context) : RecyclerView.Adapter<Rec
         when{
             (position < data.size)->{
                 val itemData = data[position]
-                val drawable  = ContextCompat.getDrawable(context ,getIcon(itemData.symbol))
-                drawable?.setBounds(0, 0, drawable.minimumWidth , drawable.minimumHeight )
-                holder.itemView.name.setCompoundDrawables(drawable , null, null , null )
+//                val drawable  = ContextCompat.getDrawable(context ,getIcon(itemData.symbol))
+//                drawable?.setBounds(0, 0, drawable.minimumWidth , drawable.minimumHeight )
+//                holder.itemView.name.setCompoundDrawables(drawable , null, null , null )
+                if(TextUtils.isEmpty(itemData.icon)){
+                    holder.itemView.icon.visibility = View.GONE
+                }else{
+                    holder.itemView.icon.visibility = View.VISIBLE
+                    Glide.with(context).load(itemData.icon).into(holder.itemView.icon)
+                }
                 holder.itemView.name.text = itemData.symbol
                 holder.itemView.volume_24h.text ="24H:".plus(String.format("%.02f",(itemData.__h_volume_usd?.toLong() ?: 0) /1000000000f).plus("B"))
                 holder.itemView.cap.text = "TAL:".plus(String.format("%.02f",(itemData.market_cap_usd?.toLong() ?: 0) /1000000000f).plus("B"))

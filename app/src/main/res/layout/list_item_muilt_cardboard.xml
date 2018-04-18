@@ -13,13 +13,19 @@
     android:foreground="?android:attr/selectableItemBackground"
     tools:targetApi="lollipop">
 
+        <ImageView android:layout_height="14dp"
+            android:id="@+id/icon"
+            android:visibility="gone"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="3dp"
+            android:layout_width="14dp"/>
 
         <TextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="BTC"
-            android:drawablePadding="3dp"
+            android:layout_toRightOf="@id/icon"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             />
 

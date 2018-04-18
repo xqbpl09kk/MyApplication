@@ -142,7 +142,7 @@ class MainActivity : BaseActivity(),TimerHandler.Timer{
         if(searchView?.isIconified == false){
             shrinkSearchView()
         }else
-            super.onBackPressed()
+            moveTaskToBack(true)
     }
 
     override fun onTime() {

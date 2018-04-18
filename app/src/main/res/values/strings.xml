@@ -53,4 +53,7 @@
     <string name="refresh">刷新</string>
     <string name="coin_collection">收藏的币</string>
     <string name="link">链接</string>
+    <string name="refresh_success">已更新</string>
+    <string name="no_browser_client_and_copy_to_clipboard">没有找到浏览器，已经复制链接地址</string>
+    <string name="friendly_link">友情链接</string>
 </resources>

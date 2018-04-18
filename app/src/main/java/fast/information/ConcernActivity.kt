@@ -66,7 +66,7 @@ class ConcernActivity :BaseActivity() {
                     val intent = Intent(ACTION_VIEW, uri)
                     startActivity(intent)
                 }catch (e:Exception){
-                    Toast.makeText(MyApplication.instance , R.string.no_email_client_and_copy_to_clipboard , Toast.LENGTH_SHORT).show()
+                    Toast.makeText(MyApplication.instance , R.string.no_browser_client_and_copy_to_clipboard , Toast.LENGTH_SHORT).show()
                     val clipboardManager : ClipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                     clipboardManager.text = websiteAddress
                 }

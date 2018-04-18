@@ -15,12 +15,16 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import fast.information.common.BaseActivity
 import fast.information.common.MyApplication
 import fast.information.network.RetrofitHelper
 import fast.information.network.bean.TickerListItem
+import fast.information.network.bean.base.ResultBundle
+import fast.information.network.bean.base.ResultCallback
 import kotlinx.android.synthetic.main.activity_coin_detail.*
 import kotlinx.android.synthetic.main.list_item_muilt_cardboard.*
+import kotlinx.android.synthetic.main.list_item_muilt_cardboard.view.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -67,19 +71,28 @@ class CoinDetailActivity : BaseActivity() {
                 collectionCoins.add(symbol)
                 item.setIcon(R.drawable.ic_star_black_24dp)
             }
-            sharedPreferences.edit().putStringSet("collection_coins" , collectionCoins).apply()
+            sharedPreferences.edit().clear().putStringSet("collection_coins" , collectionCoins).apply()
         }
         return super.onOptionsItemSelected(item)
     }
 
     override fun registerViews() {
         super.registerViews()
-        val bundle: Bundle = intent.getBundleExtra("data")
-        tickerItem = bundle.get("ticker_item") as TickerListItem?
+
+        if(tickerItem == null){
+            val bundle: Bundle = intent.getBundleExtra("data")
+            tickerItem = bundle.get("ticker_item") as TickerListItem?
+        }
         if (tickerItem == null) {
             Toast.makeText(MyApplication.instance, R.string.error_data, Toast.LENGTH_SHORT).show()
             finish()
             return
+        }
+        if(TextUtils.isEmpty(tickerItem?.icon)){
+            icon.visibility = View.GONE
+        }else{
+          icon.visibility = View.VISIBLE
+            Glide.with(MyApplication.instance).load(tickerItem?.icon).into(icon)
         }
         name.text = tickerItem!!.symbol
         volume_24h.text = "24H:".plus(String.format("%.02f", (tickerItem!!.__h_volume_usd?.toLong()
@@ -125,6 +138,7 @@ class CoinDetailActivity : BaseActivity() {
         max_amount.text = insertDot(StringBuilder(tickerItem!!.max_supply))
         market_cap.text = insertDot(StringBuilder(tickerItem!!.market_cap_usd))
 
+        office_sites.text = ""
         for (site: String in tickerItem!!.official_sites ?: ArrayList()) {
             val spanString = SpannableString(site)
             val clickableSpan: ClickableSpan = object : ClickableSpan() {
@@ -139,6 +153,9 @@ class CoinDetailActivity : BaseActivity() {
             }
         }
         office_sites.movementMethod = LinkMovementMethod.getInstance()
+
+
+        block_sites.text = ""
         for (block: String in tickerItem!!.block_sites ?: ArrayList()) {
             val spanString = SpannableString(block)
             val clickableSpan: ClickableSpan = object : ClickableSpan() {
@@ -154,6 +171,7 @@ class CoinDetailActivity : BaseActivity() {
         }
         block_sites.movementMethod = LinkMovementMethod.getInstance()
 
+        white_paper.text = ""
         if (!TextUtils.isEmpty(tickerItem!!.white_paper)) {
             val spanString = SpannableString(tickerItem!!.white_paper)
             val clickableSpan: ClickableSpan = object : ClickableSpan() {
@@ -184,7 +202,19 @@ class CoinDetailActivity : BaseActivity() {
     }
 
     private fun refresh(){
-        Toast.makeText(MyApplication.instance , "Refreshing " , Toast.LENGTH_LONG).show()
-//     RetrofitHelper.instance.tickerList()
+       RetrofitHelper.instance.tickerItem(tickerItem!!.symbol!! , object : ResultCallback<ResultBundle<TickerListItem>>{
+           override fun onSuccess(t: ResultBundle<TickerListItem>?) {
+               Toast.makeText(MyApplication.instance ,  R.string.refresh_success , Toast.LENGTH_LONG).show()
+               tickerItem = t?.item
+               registerViews()
+           }
+
+           override fun onFailure(message: String, errorCode: Int) {
+               Toast.makeText(MyApplication.instance , message , Toast.LENGTH_LONG).show()
+           }
+
+       })
+
+
     }
 }

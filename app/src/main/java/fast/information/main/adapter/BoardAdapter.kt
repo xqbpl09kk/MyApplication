@@ -6,8 +6,11 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import fast.information.CoinDetailActivity
 import fast.information.R
 import fast.information.common.MyApplication
@@ -36,6 +39,12 @@ class BoardAdapter(private val context: Context) : RecyclerView.Adapter<Recycler
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val itemData = data[position]
         holder.itemView.index.text = (position + 1) .toString()
+        if(TextUtils.isEmpty(itemData.icon)){
+            holder.itemView.icon.visibility = View.GONE
+        }else{
+            holder.itemView.icon.visibility = View.VISIBLE
+            Glide.with(context).load(itemData.icon).into(holder.itemView.icon)
+        }
         holder.itemView.name.text =  itemData.symbol
         holder.itemView.price.text = itemData.price
         var change = itemData.percent_change_24h?.toFloat() ?: Float.MIN_VALUE
