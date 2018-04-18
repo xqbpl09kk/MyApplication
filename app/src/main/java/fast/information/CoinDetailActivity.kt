@@ -37,12 +37,12 @@ class CoinDetailActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.setBackgroundDrawableResource(R.color.half_trans)
+//        window.setBackgroundDrawableResource(R.color.half_trans)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.coin_detail , menu)
-        val sharedPreferences = getSharedPreferences("settings" , Context.MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences("cache" , Context.MODE_PRIVATE)
         val collectionCoins = sharedPreferences.getStringSet("collection_coins" , HashSet<String>())
         val symbol = tickerItem?.symbol
         if(collectionCoins.contains(symbol)){
@@ -57,7 +57,7 @@ class CoinDetailActivity : BaseActivity() {
         if(item?.itemId == R.id.refresh){
             refresh()
         }else if(item?.itemId == R.id.collection){
-            val sharedPreferences = getSharedPreferences("settings" , Context.MODE_PRIVATE)
+            val sharedPreferences = getSharedPreferences("cache" , Context.MODE_PRIVATE)
             val collectionCoins = sharedPreferences.getStringSet("collection_coins" , HashSet<String>())
             val symbol = tickerItem?.symbol
             if(collectionCoins.contains(symbol)){
@@ -167,12 +167,12 @@ class CoinDetailActivity : BaseActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-            finishAfterTransition()
-        } else
-            finish()
-    }
+//    override fun onBackPressed() {
+//        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+//            finishAfterTransition()
+//        } else
+//            finish()
+//    }
 
     private fun insertDot(str: StringBuilder): String {
         var i: Int = str.length - 3

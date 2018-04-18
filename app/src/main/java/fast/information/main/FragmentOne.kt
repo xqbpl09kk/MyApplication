@@ -36,7 +36,7 @@ class FragmentOne : BaseFragment() {
     private val size : Int = 20
     private var loading : Boolean = false
     private lateinit var  adapter :HomeAdapter
-
+private val layoutManager = LinearLayoutManager(MyApplication.instance)
     companion object {
 
         fun createInstance(argBundle : Bundle) : FragmentOne {
@@ -51,7 +51,6 @@ class FragmentOne : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         adapter = HomeAdapter(context!!)
         recycler_view.adapter = adapter
-        val layoutManager = LinearLayoutManager(MyApplication.instance)
         recycler_view.layoutManager = layoutManager
 
         recycler_view.addOnScrollListener(object: RecyclerView.OnScrollListener(){
@@ -122,7 +121,11 @@ class FragmentOne : BaseFragment() {
     }
 
     fun scrollToTop() {
-        recycler_view.smoothScrollToPosition( 0 )
+        if(layoutManager.findFirstVisibleItemPosition() <50){
+            recycler_view.smoothScrollToPosition( 0 )
+        }else{
+            recycler_view.scrollToPosition(0)
+        }
     }
 
     fun switchContent(){

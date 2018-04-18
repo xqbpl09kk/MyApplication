@@ -35,7 +35,7 @@ class CollectionCoinsActivity : BaseActivity() {
         refresh_layout.setOnRefreshListener { netStep() }
         recycler_view.adapter = adapter
         recycler_view.layoutManager = LinearLayoutManager(MyApplication.instance)
-        sharedPreferences = getSharedPreferences("settings" , Context.MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences("cache" , Context.MODE_PRIVATE)
         netStep()
     }
 
