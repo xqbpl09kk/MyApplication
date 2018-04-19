@@ -6,9 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import fast.information.ConcernActivity
 import fast.information.common.MyApplication
@@ -30,16 +28,6 @@ class FragmentThree : BaseFragment() {
         return R.layout.fragment_more
     }
 
-    companion object {
-
-        fun createInstance(argBundle: Bundle): FragmentThree {
-            val instance = FragmentThree()
-            instance.arguments = argBundle
-            return instance
-        }
-
-    }
-
     private val nameList = Arrays.asList("巴比特", "以太坊爱好者"
             , "链世界", "区块链中文网", "coinmarketcap")
     private val linkList = Arrays.asList("http://www.8btc.com/"
@@ -49,6 +37,7 @@ class FragmentThree : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(false)
         concern.setOnClickListener({ startActivity(Intent(context, ConcernActivity::class.java)) })
         settings.setOnClickListener({ startActivity(Intent(context, SettingsActivity::class.java)) })
         comment.setOnClickListener({
@@ -76,6 +65,10 @@ class FragmentThree : BaseFragment() {
             })
         }
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.coin_detail , menu)
     }
 
 }

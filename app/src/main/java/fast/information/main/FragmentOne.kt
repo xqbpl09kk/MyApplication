@@ -38,19 +38,9 @@ class FragmentOne : BaseFragment() {
     private lateinit var adapter: HomeAdapter
     private val layoutManager = LinearLayoutManager(MyApplication.instance)
 
-    companion object {
-
-        fun createInstance(argBundle: Bundle): FragmentOne {
-            val instance = FragmentOne()
-            instance.arguments = argBundle
-            return instance
-        }
-
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         adapter = HomeAdapter(context!!)
         recycler_view.adapter = adapter
         recycler_view.layoutManager = layoutManager

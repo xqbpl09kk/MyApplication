@@ -67,7 +67,10 @@ class MainActivity : BaseActivity(),TimerHandler.Timer{
             }
             R.id.navigation_notifications -> {
                 switchPageByFragment(fragmentThree)
-                setTitle(R.string.settings)
+                setTitle(R.string.more
+
+
+                )
             }
         }
         invalidateOptionsMenu()
@@ -75,6 +78,7 @@ class MainActivity : BaseActivity(),TimerHandler.Timer{
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        savedInstanceState?.putParcelable("android:support:fragments", null)
         super.onCreate(savedInstanceState)
         Log.e("tag", "onCreate")
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
@@ -168,15 +172,20 @@ class MainActivity : BaseActivity(),TimerHandler.Timer{
     private fun initFragments() {
 
         val bundle1 = Bundle()
-        fragmentOne = FragmentOne.createInstance(bundle1)
+//        fragmentOne = FragmentOne.createInstance(bundle1)
+        fragmentOne = Fragment.instantiate(MyApplication.instance
+                , "fast.information.main.FragmentOne" , bundle1 ) as FragmentOne
         fragmentList.add(fragmentOne!!)
 
         val bundle2 = Bundle()
-        fragmentTwo = FragmentTwo.createInstance(bundle2)
+        fragmentTwo = Fragment.instantiate(MyApplication.instance
+                , "fast.information.main.FragmentTwo" , bundle2 ) as FragmentTwo
         fragmentList.add(fragmentTwo!!)
 
         val bundle3 = Bundle()
-        fragmentThree = FragmentThree.createInstance(bundle3)
+        fragmentThree = Fragment.instantiate(MyApplication.instance
+                , "fast.information.main.FragmentThree" , bundle3 ) as FragmentThree
+
         fragmentList.add(fragmentThree!!)
         switchPageByIndex(0)
     }
