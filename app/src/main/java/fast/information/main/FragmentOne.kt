@@ -23,23 +23,24 @@ import fast.information.network.RetrofitHelper
 import kotlinx.android.synthetic.main.fragment_one.*
 
 /**
-* MyApplication
-* Created by xiaqibo on 2018/3/1-0:19.
-*/
+ * MyApplication
+ * Created by xiaqibo on 2018/3/1-0:19.
+ */
 class FragmentOne : BaseFragment() {
 
     override fun getLayoutRes(): Int {
         return R.layout.fragment_one
     }
 
-    private var cursor : Int = 0
-    private val size : Int = 20
-    private var loading : Boolean = false
-    private lateinit var  adapter :HomeAdapter
-private val layoutManager = LinearLayoutManager(MyApplication.instance)
+    private var cursor: Int = 0
+    private val size: Int = 20
+    private var loading: Boolean = false
+    private lateinit var adapter: HomeAdapter
+    private val layoutManager = LinearLayoutManager(MyApplication.instance)
+
     companion object {
 
-        fun createInstance(argBundle : Bundle) : FragmentOne {
+        fun createInstance(argBundle: Bundle): FragmentOne {
             val instance = FragmentOne()
             instance.arguments = argBundle
             return instance
@@ -49,96 +50,99 @@ private val layoutManager = LinearLayoutManager(MyApplication.instance)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         adapter = HomeAdapter(context!!)
         recycler_view.adapter = adapter
         recycler_view.layoutManager = layoutManager
 
-        recycler_view.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+        recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
-                if(adapter.showStar()) return
-                val visibleCount : Int = layoutManager.childCount
-                val totalCount : Int = layoutManager.itemCount
-                val pastCount : Int =  layoutManager.findFirstVisibleItemPosition()
-                if(!loading && pastCount + visibleCount >= totalCount){
+                if (adapter.showStar()) return
+                val visibleCount: Int = layoutManager.childCount
+                val totalCount: Int = layoutManager.itemCount
+                val pastCount: Int = layoutManager.findFirstVisibleItemPosition()
+                if (!loading && pastCount + visibleCount >= totalCount) {
                     loading = true
                     netStep(true)
                 }
             }
         })
         refresh_layout.setOnRefreshListener({
-            if(adapter.showStar()){
+            if (adapter.showStar()) {
                 loadStarData()
-            }else{
+            } else {
                 netStep(false)
-            } })
-        Handler().postDelayed({ netStep(false)} , 200)
+            }
+        })
+        Handler().postDelayed({ netStep(false) }, 200)
     }
 
-    private fun netStep (loadMore:Boolean){
-        if(!loadMore){
+    private fun netStep(loadMore: Boolean) {
+        if (!loadMore) {
             cursor = 0
             loadStarData()
         }
         loading = true
         refresh_layout.isRefreshing = true
-        RetrofitHelper.instance.getMessage(cursor , size
+        RetrofitHelper.instance.getMessage(cursor, size
                 , object : ResultCallback<ResultListBundle<MessageItem>> {
-            override fun onSuccess(t : ResultListBundle<MessageItem>?) {
-                if(activity?.isFinishing == true) return
-                if(adapter.showStar())
+            override fun onSuccess(t: ResultListBundle<MessageItem>?) {
+                if (activity?.isFinishing == true) return
+                if (adapter.showStar())
                     adapter.switchContent()
-                val items : ArrayList<MessageItem> = (t ?: return).items ?: return
+                val items: ArrayList<MessageItem> = (t ?: return).items ?: return
                 cursor = t.nextCursor
-                if(loadMore) adapter.addItems(items)
+                if (loadMore) adapter.addItems(items)
                 else adapter.update(items)
                 refresh_layout.isRefreshing = false
-                loading= false
+                loading = false
             }
 
             override fun onFailure(message: String, errorCode: Int) {
-                if(activity?.isFinishing == true) return
+                if (activity?.isFinishing == true) return
                 refresh_layout.isRefreshing = false
                 loading = false
-                Toast.makeText(MyApplication.instance , "Error:".plus(message)
+                Toast.makeText(MyApplication.instance, "Error:".plus(message)
                         .plus("\t Code :")
                         .plus(Integer.toString(errorCode))
-                        ,Toast.LENGTH_SHORT).show()
+                        , Toast.LENGTH_SHORT).show()
             }
 
         })
     }
 
-    private fun loadStarData(){
-        val list =  Gson().fromJson<Array<MessageItem>>(
-                MyApplication.instance.getSharedPreferences("stared" , Context.MODE_PRIVATE)
-                        ?.getString("star" , "")
+    private fun loadStarData() {
+        val list = Gson().fromJson<Array<MessageItem>>(
+                MyApplication.instance.getSharedPreferences("stared", Context.MODE_PRIVATE)
+                        ?.getString("star", "")
                 , Array<MessageItem>::class.java)
         val stared = ArrayList<MessageItem>()
-        if(list != null)
+        if (list != null)
             stared.addAll(list)
         adapter.update(stared)
         refresh_layout.isRefreshing = false
     }
 
     fun scrollToTop() {
-        if(layoutManager.findFirstVisibleItemPosition() <50){
-            recycler_view.smoothScrollToPosition( 0 )
-        }else{
+        if (layoutManager.findFirstVisibleItemPosition() < 50) {
+            recycler_view.smoothScrollToPosition(0)
+        } else {
             recycler_view.scrollToPosition(0)
         }
     }
 
-    fun switchContent(){
+    fun switchContent() {
         adapter.switchContent()
-        if(adapter.showStar()){
+        if (adapter.showStar()) {
             loadStarData()
         }
     }
 
-    @StringRes fun getTitle():Int{
-        return if(adapter.showStar()){
+    @StringRes
+    fun getTitle(): Int {
+        return if (adapter.showStar()) {
             R.string.collection
-        }else{
+        } else {
             R.string.title_home
         }
     }

@@ -65,7 +65,7 @@ class MyApplication  : Application(){
 
 
     private fun initUmengPush(){
-        if(BuildConfig.DEBUG) return
+//        if(BuildConfig.DEBUG) return
         UMConfigure.init(this@MyApplication , UMConfigure.DEVICE_TYPE_PHONE , "88f7edf62d3a92c69092d60a77b73729")
         val mPushAgent = PushAgent.getInstance(this)
 
@@ -79,7 +79,6 @@ class MyApplication  : Application(){
                 Log.i("MyApplication" , "error message is $s and $s1")
             }
         })
-
 
         HuaWeiRegister.register(this@MyApplication)
         MiPushRegistar.register(this@MyApplication , miPushId , miPushSecret)

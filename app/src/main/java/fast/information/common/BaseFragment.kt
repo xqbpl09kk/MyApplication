@@ -23,6 +23,8 @@ abstract class BaseFragment: Fragment(){
             parent.removeView(contentView)
         }else
             contentView = inflater.inflate(getLayoutRes() , container , false)
+        super.onCreateView(inflater, container, savedInstanceState)
+        retainInstance = true
         return contentView
     }
 

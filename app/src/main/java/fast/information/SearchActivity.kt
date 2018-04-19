@@ -32,6 +32,7 @@ class SearchActivity : BaseActivity() {
         recycler_view.adapter = adapter
         recycler_view.layoutManager = LinearLayoutManager(MyApplication.instance)
         key= intent.getBundleExtra("data").getString("key")
+        title = getString(R.string.search).plus(key?.toUpperCase())
         search()
     }
 
