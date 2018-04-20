@@ -81,8 +81,8 @@ class MyApplication  : Application(){
         })
 
         HuaWeiRegister.register(this@MyApplication)
-        MiPushRegistar.register(this@MyApplication , miPushId , miPushSecret)
-        MeizuRegister.register(this@MyApplication , meiZuId , meizuKey)
+//        MiPushRegistar.register(this@MyApplication , miPushId , miPushSecret)
+//        MeizuRegister.register(this@MyApplication , meiZuId , meizuKey)
 
     }
 

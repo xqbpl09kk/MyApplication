@@ -1,27 +1,19 @@
 package fast.information.main
 
-import android.annotation.SuppressLint
-import android.app.DownloadManager
 import android.content.*
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.text.TextUtils
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import fast.information.CollectionCoinsActivity
-import fast.information.MarketActivity
 import fast.information.R
 import fast.information.SearchActivity
 import fast.information.common.BaseActivity
@@ -30,12 +22,8 @@ import fast.information.common.TimerHandler
 import fast.information.network.bean.base.ResultBundle
 import fast.information.network.bean.base.ResultCallback
 import fast.information.network.RetrofitHelper
-import fast.information.network.bean.TickerListItem
 import fast.information.network.bean.UpdateInfo
-import fast.information.network.bean.base.ResultListBundle
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_share.view.*
-import java.io.File
 
 class MainActivity : BaseActivity(),TimerHandler.Timer{
 
@@ -55,7 +43,7 @@ class MainActivity : BaseActivity(),TimerHandler.Timer{
 
     private var searchView : SearchView ?= null
     private var timerHandler :TimerHandler ?=null
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+    private val navListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
                 switchPageByFragment(fragmentOne)
@@ -81,7 +69,7 @@ class MainActivity : BaseActivity(),TimerHandler.Timer{
         savedInstanceState?.putParcelable("android:support:fragments", null)
         super.onCreate(savedInstanceState)
         Log.e("tag", "onCreate")
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        navigation.setOnNavigationItemSelectedListener(navListener)
         initFragments()
         checkUpdate()
 

@@ -69,6 +69,7 @@ class FragmentThree : BaseFragment() {
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.coin_detail , menu)
+
     }
 
 }
