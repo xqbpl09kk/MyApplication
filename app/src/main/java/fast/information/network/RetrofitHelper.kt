@@ -84,8 +84,8 @@ class RetrofitHelper private constructor(){
         }
     }
 
-    fun search(key:String, result : ResultCallback<ResultListBundle<SearchResult>>){
-        val call : Call<ResultListBundle<SearchResult>> = service.search(key)
+    fun search(key:String, result : ResultCallback<ResultListBundle<TickerListItem>>){
+        val call : Call<ResultListBundle<TickerListItem>> = service.search(key)
         handleRequest(call , result)
     }
 

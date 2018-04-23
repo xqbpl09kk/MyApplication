@@ -38,7 +38,15 @@ class FragmentTwo : BaseFragment() {
     private val layoutManager = LinearLayoutManager(MyApplication.instance)
     private var loading = false
 
+    companion object {
 
+        fun createInstance(argBundle : Bundle) : FragmentTwo {
+            val instance = FragmentTwo()
+            instance.arguments = argBundle
+            return instance
+        }
+
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

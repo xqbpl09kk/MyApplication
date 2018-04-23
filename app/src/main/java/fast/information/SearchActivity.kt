@@ -9,6 +9,7 @@ import fast.information.main.adapter.BoardAdapter
 import fast.information.main.adapter.SearchAdapter
 import fast.information.network.RetrofitHelper
 import fast.information.network.bean.SearchResult
+import fast.information.network.bean.TickerListItem
 import fast.information.network.bean.base.ResultCallback
 import fast.information.network.bean.base.ResultListBundle
 import kotlinx.android.synthetic.main.activity_search.*
@@ -19,7 +20,7 @@ import kotlinx.android.synthetic.main.activity_search.*
 class SearchActivity : BaseActivity() {
 
 
-    private val adapter = SearchAdapter(MyApplication.instance)
+    private val adapter = BoardAdapter(MyApplication.instance)
     private var key :String  ? = null
 
     override fun getLayoutRes(): Int {
@@ -39,8 +40,8 @@ class SearchActivity : BaseActivity() {
 
     private fun search(){
         if(TextUtils.isEmpty(key)) return
-        RetrofitHelper.instance.search(key!! , object : ResultCallback<ResultListBundle<SearchResult>> {
-            override fun onSuccess(t: ResultListBundle<SearchResult>?) {
+        RetrofitHelper.instance.search(key!! , object : ResultCallback<ResultListBundle<TickerListItem>> {
+            override fun onSuccess(t: ResultListBundle<TickerListItem>?) {
                 t?.items?.let { adapter.update(it) }
             }
 

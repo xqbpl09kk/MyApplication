@@ -27,7 +27,7 @@ import java.util.regex.Pattern
  */
 class SearchAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    val data : ArrayList<SearchResult> = ArrayList()
+    val data : ArrayList<TickerListItem> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(context)
@@ -70,13 +70,13 @@ class SearchAdapter(private val context: Context) : RecyclerView.Adapter<Recycle
         })
     }
 
-    fun update(d: ArrayList<SearchResult>){
+    fun update(d: ArrayList<TickerListItem>){
         data.clear()
         data.addAll(d)
         notifyDataSetChanged()
     }
 
-    fun add(d: ArrayList<SearchResult>){
+    fun add(d: ArrayList<TickerListItem>){
         data.addAll(d)
         notifyDataSetChanged()
     }

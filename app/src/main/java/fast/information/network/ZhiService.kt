@@ -38,7 +38,7 @@ interface ZhiService {
 
     @GET(" v1/ticker/{key}/search")
     fun search(@Path("key") key:String )
-            :Call<ResultListBundle<SearchResult>>
+            :Call<ResultListBundle<TickerListItem>>
 
     @GET("/v1/ticker/{symbol}")
     fun getTickerItem(@Path("symbol") symbol :String)

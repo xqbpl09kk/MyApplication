@@ -51,6 +51,7 @@
 #-keep class com.google.gson.stream.** { *; }
 -keep class fast.information.network.bean.**{ *; }
 -keep class com.umeng.commonsdk.** {*;}
+-keep class android.support.v7.widget.SearchView { *; }
 
 #-keepattributes Signature
 #-keepattributes Exceptions

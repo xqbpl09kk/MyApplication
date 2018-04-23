@@ -26,7 +26,8 @@
             android:layout_height="wrap_content"
             android:text="BTC"
             android:layout_toRightOf="@id/icon"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/text_normal"
+
             />
 
         <TextView

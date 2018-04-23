@@ -45,33 +45,33 @@ class CoinDetailActivity : BaseActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.coin_detail , menu)
-        val sharedPreferences = getSharedPreferences("cache" , Context.MODE_PRIVATE)
-        val collectionCoins = sharedPreferences.getStringSet("collection_coins" , HashSet<String>())
+        menuInflater.inflate(R.menu.coin_detail, menu)
+        val sharedPreferences = getSharedPreferences("cache", Context.MODE_PRIVATE)
+        val collectionCoins = sharedPreferences.getStringSet("collection_coins", HashSet<String>())
         val symbol = tickerItem?.symbol
-        if(collectionCoins.contains(symbol)){
+        if (collectionCoins.contains(symbol)) {
             menu?.findItem(R.id.collection)?.setIcon(R.drawable.ic_star_black_24dp)
-        }  else{
+        } else {
             menu?.findItem(R.id.collection)?.setIcon(R.drawable.ic_star_white_24dp)
         }
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if(item?.itemId == R.id.refresh){
+        if (item?.itemId == R.id.refresh) {
             refresh()
-        }else if(item?.itemId == R.id.collection){
-            val sharedPreferences = getSharedPreferences("cache" , Context.MODE_PRIVATE)
-            val collectionCoins = sharedPreferences.getStringSet("collection_coins" , HashSet<String>())
+        } else if (item?.itemId == R.id.collection) {
+            val sharedPreferences = getSharedPreferences("cache", Context.MODE_PRIVATE)
+            val collectionCoins = sharedPreferences.getStringSet("collection_coins", HashSet<String>())
             val symbol = tickerItem?.symbol
-            if(collectionCoins.contains(symbol)){
+            if (collectionCoins.contains(symbol)) {
                 collectionCoins.remove(symbol)
                 item.setIcon(R.drawable.ic_star_white_24dp)
-            }else{
+            } else {
                 collectionCoins.add(symbol)
                 item.setIcon(R.drawable.ic_star_black_24dp)
             }
-            sharedPreferences.edit().clear().putStringSet("collection_coins" , collectionCoins).apply()
+            sharedPreferences.edit().clear().putStringSet("collection_coins", collectionCoins).apply()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -79,7 +79,7 @@ class CoinDetailActivity : BaseActivity() {
     override fun registerViews() {
         super.registerViews()
 
-        if(tickerItem == null){
+        if (tickerItem == null) {
             val bundle: Bundle = intent.getBundleExtra("data")
             tickerItem = bundle.get("ticker_item") as TickerListItem?
         }
@@ -88,10 +88,10 @@ class CoinDetailActivity : BaseActivity() {
             finish()
             return
         }
-        if(TextUtils.isEmpty(tickerItem?.icon)){
+        if (TextUtils.isEmpty(tickerItem?.icon)) {
             icon.visibility = View.GONE
-        }else{
-          icon.visibility = View.VISIBLE
+        } else {
+            icon.visibility = View.VISIBLE
             Glide.with(MyApplication.instance).load(tickerItem?.icon).into(icon)
         }
         name.text = tickerItem!!.symbol
@@ -131,15 +131,16 @@ class CoinDetailActivity : BaseActivity() {
 //        val pattern = Pattern.compile("<[A-Z1-9a-z_\\W\\s\\r\":;',()-= \n]*>")
 //        val matcher: Matcher = pattern.matcher(tickerItem!!.introduction)
 //        introduction.text = matcher.replaceAll("").trim()
-        introduction.text = Html.fromHtml(tickerItem!!.introduction ).trim().toString()
+        introduction.text = Html.fromHtml(tickerItem!!.introduction).trim().toString()
 
-        used_amount.text = insertDot(StringBuilder(tickerItem!!.available_supply))
-        total_amount.text = insertDot(StringBuilder(tickerItem!!.total_supply))
-        max_amount.text = insertDot(StringBuilder(tickerItem!!.max_supply))
-        market_cap.text = insertDot(StringBuilder(tickerItem!!.market_cap_usd))
+        used_amount.text = insertDot(StringBuilder(tickerItem!!.available_supply ?:""))
+        total_amount.text = insertDot(StringBuilder(tickerItem!!.total_supply?:""))
+        max_amount.text = insertDot(StringBuilder(tickerItem!!.max_supply?:""))
+        market_cap.text = insertDot(StringBuilder(tickerItem!!.market_cap_usd?:""))
 
         office_sites.text = ""
         for (site: String in tickerItem!!.official_sites ?: ArrayList()) {
+            if (TextUtils.isEmpty(site)) continue
             val spanString = SpannableString(site)
             val clickableSpan: ClickableSpan = object : ClickableSpan() {
                 override fun onClick(widget: View?) {
@@ -157,6 +158,7 @@ class CoinDetailActivity : BaseActivity() {
 
         block_sites.text = ""
         for (block: String in tickerItem!!.block_sites ?: ArrayList()) {
+            if (TextUtils.isEmpty(block)) continue
             val spanString = SpannableString(block)
             val clickableSpan: ClickableSpan = object : ClickableSpan() {
                 override fun onClick(widget: View?) {
@@ -193,6 +195,7 @@ class CoinDetailActivity : BaseActivity() {
 //    }
 
     private fun insertDot(str: StringBuilder): String {
+        if (TextUtils.isEmpty(str)) return str.toString()
         var i: Int = str.length - 3
         while (i > 0) {
             str.insert(i, ",")
@@ -201,19 +204,19 @@ class CoinDetailActivity : BaseActivity() {
         return str.toString()
     }
 
-    private fun refresh(){
-       RetrofitHelper.instance.tickerItem(tickerItem!!.symbol!! , object : ResultCallback<ResultBundle<TickerListItem>>{
-           override fun onSuccess(t: ResultBundle<TickerListItem>?) {
-               Toast.makeText(MyApplication.instance ,  R.string.refresh_success , Toast.LENGTH_LONG).show()
-               tickerItem = t?.item
-               registerViews()
-           }
+    private fun refresh() {
+        RetrofitHelper.instance.tickerItem(tickerItem!!.symbol!!, object : ResultCallback<ResultBundle<TickerListItem>> {
+            override fun onSuccess(t: ResultBundle<TickerListItem>?) {
+                Toast.makeText(MyApplication.instance, R.string.refresh_success, Toast.LENGTH_LONG).show()
+                tickerItem = t?.item
+                registerViews()
+            }
 
-           override fun onFailure(message: String, errorCode: Int) {
-               Toast.makeText(MyApplication.instance , message , Toast.LENGTH_LONG).show()
-           }
+            override fun onFailure(message: String, errorCode: Int) {
+                Toast.makeText(MyApplication.instance, message, Toast.LENGTH_LONG).show()
+            }
 
-       })
+        })
 
 
     }
