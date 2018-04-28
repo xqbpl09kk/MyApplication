@@ -1,5 +1,6 @@
 package fast.information.main
 
+import android.arch.lifecycle.LifecycleObserver
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
@@ -11,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import fast.information.ConcernActivity
+import fast.information.LinkEditActivity
 import fast.information.common.MyApplication
 import fast.information.R
 import fast.information.SettingsActivity
@@ -40,11 +42,8 @@ class FragmentThree : BaseFragment() {
 
     }
 
-    private val nameList = Arrays.asList("巴比特", "以太坊爱好者"
-            , "链世界", "区块链中文网", "coinmarketcap")
-    private val linkList = Arrays.asList("http://www.8btc.com/"
-            , "https://ethfans.org/", "https://www.7234.cn/"
-            , "http://www.qukuainews.cn/", "https://coinmarketcap.com/zh/")
+    private val nameList = Arrays.asList("以太坊爱好者", "coinmarketcap")
+    private val linkList = Arrays.asList("https://ethfans.org/", "https://coinmarketcap.com/zh/")
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -75,6 +74,8 @@ class FragmentThree : BaseFragment() {
                 }
             })
         }
+
+        link_title.setOnClickListener({startActivity(Intent(context , LinkEditActivity::class.java))})
 
     }
 

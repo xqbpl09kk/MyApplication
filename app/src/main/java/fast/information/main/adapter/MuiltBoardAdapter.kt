@@ -109,14 +109,14 @@ class MuiltBoardAdapter(private val context: Context) : RecyclerView.Adapter<Rec
                 holder.itemView.setOnClickListener({
                     val bundle  =Bundle()
                     bundle.putSerializable("ticker_item" , itemData)
-                    MyApplication.instance.jumpActivity(CoinDetailActivity::class.java , bundle)
+//                    MyApplication.instance.jumpActivity(CoinDetailActivity::class.java , bundle)
 
-//                    val intent = Intent(MyApplication.instance ,  CoinDetailActivity::class.java)
-//                    intent.putExtra("data" ,bundle)
-//                    val options = ActivityOptionsCompat.makeSceneTransitionAnimation(MyApplication.instance.getLastActivity()!!,
-//                            holder.itemView,
-//                            "shared_view")
-//                    MyApplication.instance.getLastActivity()!!.startActivity(intent, options.toBundle())
+                    val intent = Intent(MyApplication.instance ,  CoinDetailActivity::class.java)
+                    intent.putExtra("data" ,bundle)
+                    val options = ActivityOptionsCompat.makeSceneTransitionAnimation(MyApplication.instance.getLastActivity()!!,
+                            holder.itemView,
+                            "shared_view")
+                    MyApplication.instance.getLastActivity()!!.startActivity(intent, options.toBundle())
                 })
             }
             else -> holder.itemView.setOnClickListener({MyApplication.instance.jumpActivity(MarketActivity::class.java , null) })

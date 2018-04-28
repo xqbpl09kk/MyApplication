@@ -4,10 +4,13 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
         <!--<item name="android:windowBackground">@color/windowBackground</item>-->
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowContentTransitions">true</item>
+        <!--<item name="android:actionBarStyle">@style/Toolbar</item>-->
+        <!--<item name="actionBarSize">40dp</item>-->
+        <item name="android:actionBarSize">45dp</item>
         <!--<item name="android:windowBackground">@android:color/transparent</item>-->
     </style>
 
@@ -18,5 +21,9 @@
         <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
         <item name="android:windowBackground">@color/half_trans</item>
         <item name="windowActionBar">@null</item>
+    </style>
+
+    <style name="Toolbar" parent = "Widget.AppCompat.Toolbar" >
+        <item name="actionBarSize">40dp</item>
     </style>
 </resources>

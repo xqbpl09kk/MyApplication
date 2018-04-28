@@ -7,6 +7,8 @@ import android.support.annotation.StringRes
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.SimpleItemAnimator
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +28,10 @@ import kotlinx.android.synthetic.main.fragment_one.*
  * MyApplication
  * Created by xiaqibo on 2018/3/1-0:19.
  */
-class FragmentOne : BaseFragment() {
+class FragmentOne : BaseFragment() , HomeAdapter.OnItemClick {
+    override fun onItemClicked(position : Int ) {
+        recycler_view.smoothScrollToPosition(position)
+    }
 
     override fun getLayoutRes(): Int {
         return R.layout.fragment_one
@@ -52,9 +57,81 @@ class FragmentOne : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = HomeAdapter(context!!)
+        adapter.setClickListener(this@FragmentOne)
+
         recycler_view.adapter = adapter
         recycler_view.layoutManager = layoutManager
+//        recycler_view.itemAnimator = object : RecyclerView.ItemAnimator() {
+//            override fun isRunning(): Boolean {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//            }
+//
+//            override fun animatePersistence(viewHolder: RecyclerView.ViewHolder, preLayoutInfo: ItemHolderInfo, postLayoutInfo: ItemHolderInfo): Boolean {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//            }
+//
+//            override fun runPendingAnimations() {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//            }
+//
+//            override fun endAnimation(item: RecyclerView.ViewHolder?) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//            }
+//
+//            override fun animateDisappearance(viewHolder: RecyclerView.ViewHolder, preLayoutInfo: ItemHolderInfo, postLayoutInfo: ItemHolderInfo?): Boolean {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//            }
+//
+//            override fun animateChange(oldHolder: RecyclerView.ViewHolder, newHolder: RecyclerView.ViewHolder, preLayoutInfo: ItemHolderInfo, postLayoutInfo: ItemHolderInfo): Boolean {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//            }
+//
+//            override fun animateAppearance(viewHolder: RecyclerView.ViewHolder, preLayoutInfo: ItemHolderInfo?, postLayoutInfo: ItemHolderInfo): Boolean {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//            }
+//
+//            override fun endAnimations() {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//            }
+//
+//        }
 
+//        recycler_view.itemAnimator = object: SimpleItemAnimator(){
+//            override fun animateAdd(holder: RecyclerView.ViewHolder?): Boolean {
+//                return false
+//            }
+//
+//            override fun runPendingAnimations() {
+//            }
+//
+//            override fun animateMove(holder: RecyclerView.ViewHolder?, fromX: Int, fromY: Int, toX: Int, toY: Int): Boolean {
+//                return false
+//            }
+//
+//            override fun isRunning(): Boolean {
+//                return false
+//            }
+//
+//            override fun endAnimation(item: RecyclerView.ViewHolder?) {
+//            }
+//
+//            override fun animateRemove(holder: RecyclerView.ViewHolder?): Boolean {
+//                return false
+//            }
+//
+//            override fun endAnimations() {
+//            }
+//
+//            override fun animateChange(oldHolder: RecyclerView.ViewHolder?, newHolder: RecyclerView.ViewHolder?
+//                                       , fromLeft: Int, fromTop: Int, toLeft: Int, toTop: Int): Boolean {
+//                Toast.makeText(context , "current position " , Toast.LENGTH_SHORT).show()
+//                Log.i("HOLDER" , "oldHolder height ".plus(oldHolder?.itemView?.height).plus(" width ").plus(oldHolder?.itemView?.width))
+//                Log.i("HOLDER" , "newHolder height ".plus(newHolder?.itemView?.height).plus(" width ").plus(newHolder?.itemView?.width))
+//                return false
+//            }
+//
+//
+//        }
         recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
                 if (adapter.showStar()) return

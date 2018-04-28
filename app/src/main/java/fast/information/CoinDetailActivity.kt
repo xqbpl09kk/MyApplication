@@ -41,7 +41,7 @@ class CoinDetailActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        window.setBackgroundDrawableResource(R.color.half_trans)
+        window.setBackgroundDrawableResource(R.color.half_trans)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -33,6 +33,7 @@ class HomeAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerV
 
     private var showStar = true
     private var focusItemIndex :Int = -1
+    private var listener : OnItemClick ?= null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater: LayoutInflater = LayoutInflater.from(context)
@@ -50,6 +51,7 @@ class HomeAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerV
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val itemData: MessageItem = showData[position]
         holder.itemView.time_text.text = itemData.getDate(false)
+//        if(itemData.isExpended){
         if(focusItemIndex == position){
             holder.itemView.content_text.maxLines = Integer.MAX_VALUE
         }else{
@@ -81,7 +83,6 @@ class HomeAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerV
                             .putExtra("message_item", itemData)
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     , null)
-
         })
         holder.itemView.setOnClickListener({
 //            MyApplication.instance
@@ -97,8 +98,13 @@ class HomeAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerV
 ////                    ViewCompat.getTransitionName("simple_activity_transition"))
 //                    "simple_activity_transition")
 //            MyApplication.instance.getLastActivity()!!.startActivity(intent, options.toBundle())
+            notifyItemChanged(focusItemIndex)
+//            itemData.isExpended = !itemData.isExpended
             focusItemIndex = position
-            notifyDataSetChanged()
+//            notifyDataSetChanged()
+            notifyItemChanged(position)
+
+            listener?.onItemClicked(position)
         })
         holder.itemView.action1_text.setOnClickListener({
             if (it.isSelected) {
@@ -163,4 +169,14 @@ class HomeAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerV
         return showStar
     }
 
+
+
+    fun setClickListener(l:OnItemClick){
+        listener = l
+    }
+
+
+    interface OnItemClick{
+        fun onItemClicked(p:Int)
+    }
 }

@@ -38,6 +38,9 @@ open class MessageItem :Serializable{
     private var createdAt:String ?= null
 
 
+    var isExpended = false
+
+
     fun getDate(showAll :Boolean):String{
         dateFormat.parse(createdAt)
         val calendar : Calendar = dateFormat.calendar
