@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:theme="@style/dialogTheme"
+    android:layout_height="wrap_content">
 
-</android.support.constraint.ConstraintLayout>
+    <EditText android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:hint="@string/link_name_hint"
+        android:textColor="@color/text_normal"
+        android:lines="1"
+        android:id="@+id/name_edit"/>
+
+    <EditText android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:hint="@string/link_url_hint"
+        android:inputType="textUri"
+        android:maxLines="5"
+        android:textColor="@color/text_normal"
+        android:layout_marginTop="5dp"
+        android:id="@+id/url_edit"/>
+
+</LinearLayout>

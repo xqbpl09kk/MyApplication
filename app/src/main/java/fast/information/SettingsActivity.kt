@@ -3,20 +3,27 @@ package fast.information
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
+import android.view.View
 import android.widget.CompoundButton
+import android.widget.PopupMenu
 import android.widget.Toast
+import com.google.gson.Gson
 import com.umeng.message.IUmengCallback
 import com.umeng.message.PushAgent
 import fast.information.common.BaseActivity
+import fast.information.common.MyApplication
 import kotlinx.android.synthetic.main.activity_settings.*
+import java.util.*
 
 /**
  * Created by xiaqibo on 2018/3/23.
  */
-class SettingsActivity :BaseActivity() {
+class SettingsActivity :BaseActivity() , PopupMenu.OnMenuItemClickListener {
+
 
     private var push_enabled_at_activity_create = false
-
+    private val rateArray = Arrays.asList(2 * 60 , 5 * 60 , 10 * 60 , 15 *60 )
     override fun getLayoutRes(): Int {
         return (R.layout.activity_settings)
     }
@@ -29,6 +36,14 @@ class SettingsActivity :BaseActivity() {
         push_switch.setOnCheckedChangeListener { _, isChecked -> sharedPreference.edit().putBoolean("push" , isChecked).apply() }
         auto_update.isChecked = sharedPreference.getBoolean("update" , false)
         auto_update.setOnCheckedChangeListener { _, isChecked -> sharedPreference.edit().putBoolean("update" , isChecked).apply() }
+        rate_container.setOnClickListener({ createMenu(refresh_rate_selector) })
+        val refreshRate = getSharedPreferences("settings" , Context.MODE_PRIVATE).getInt("refresh_rate" , 2*60)
+        when(refreshRate){
+            rateArray[0] -> refresh_rate_selector.setText(R.string.two_second)
+            rateArray[1] -> refresh_rate_selector.setText(R.string.five_second)
+            rateArray[2] -> refresh_rate_selector.setText(R.string.ten_second)
+            rateArray[3] -> refresh_rate_selector.setText(R.string.fiveteen_second)
+        }
     }
 
     override fun onBackPressed() {
@@ -48,5 +63,36 @@ class SettingsActivity :BaseActivity() {
                 })
             }
         }
+    }
+
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.item1 -> {
+                getSharedPreferences("settings" , Context.MODE_PRIVATE).edit().putInt("refresh_rate" , rateArray[0]).apply()
+                refresh_rate_selector.setText(R.string.two_second)
+            }
+            R.id.item2 -> {
+                getSharedPreferences("settings" , Context.MODE_PRIVATE).edit().putInt("refresh_rate" , rateArray[1]).apply()
+                refresh_rate_selector.setText(R.string.five_second)
+            }
+            R.id.item3 -> {
+                getSharedPreferences("settings" , Context.MODE_PRIVATE).edit().putInt("refresh_rate" , rateArray[2]).apply()
+                refresh_rate_selector.setText(R.string.ten_second)
+            }
+            R.id.item4 -> {
+                getSharedPreferences("settings" , Context.MODE_PRIVATE).edit().putInt("refresh_rate" , rateArray[3]).apply()
+                refresh_rate_selector.setText(R.string.fiveteen_second)
+            }
+        }
+        return true
+    }
+
+
+    private fun createMenu(view : View){
+        val popupMenu = PopupMenu(MyApplication.instance, view)
+        val inflater = popupMenu.menuInflater
+        inflater.inflate(R.menu.refresh_rate_items, popupMenu.menu)
+        popupMenu.show()
+        popupMenu.setOnMenuItemClickListener(this@SettingsActivity)
     }
 }

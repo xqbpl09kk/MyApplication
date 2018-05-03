@@ -1,26 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:paddingTop="10dp"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/windowBackground" />
 
     <Switch
-        android:textSize="18sp"
         android:id="@+id/push_switch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:selectableItemBackground"
+        android:drawableLeft="@drawable/notification"
+        android:drawablePadding="5dp"
         android:padding="@dimen/common_padding"
-        android:text="@string/push_message"/>
+        android:text="@string/push_message"
+        android:textColor="@color/text_normal"
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/windowBackground" />
 
     <Switch
-        android:textSize="18sp"
         android:id="@+id/auto_update"
         android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/common_padding"
         android:layout_height="wrap_content"
         android:background="?android:selectableItemBackground"
+        android:drawableLeft="@drawable/update"
+        android:drawablePadding="5dp"
         android:padding="@dimen/common_padding"
-        android:text="@string/auto_update"/>
+        android:text="@string/auto_update"
+        android:textColor="@color/text_normal"
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/windowBackground" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rate_container"
+        android:background="?android:selectableItemBackground"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/refresh"
+            android:drawablePadding="5dp"
+            android:padding="@dimen/common_padding"
+            android:text="@string/update_rate"
+            android:textColor="@color/text_normal"
+            android:textSize="18sp" />
+
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp"
+            android:id="@+id/refresh_rate_selector"
+            android:gravity="center"
+            android:drawableRight="@drawable/down"
+            android:text="15分钟"/>
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/windowBackground" />
+
 </LinearLayout>

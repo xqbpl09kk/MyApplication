@@ -1,27 +1,34 @@
 package fast.information.main
 
+import android.app.Activity
 import android.arch.lifecycle.LifecycleObserver
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import fast.information.ConcernActivity
 import fast.information.LinkEditActivity
 import fast.information.common.MyApplication
 import fast.information.R
 import fast.information.SettingsActivity
 import fast.information.common.BaseFragment
+import kotlinx.android.synthetic.main.activity_share.view.*
 
 import kotlinx.android.synthetic.main.fragment_more.*
-import kotlinx.android.synthetic.main.more_link_item.*
 import kotlinx.android.synthetic.main.more_link_item.view.*
 import java.util.*
+import java.util.EnumSet.range
+import kotlin.collections.ArrayList
 
 /**
  * MyApplication
@@ -42,7 +49,7 @@ class FragmentThree : BaseFragment() {
 
     }
 
-    private val nameList = Arrays.asList("以太坊爱好者", "coinmarketcap")
+    private val nameList  = Arrays.asList("以太坊爱好者", "coinmarketcap")
     private val linkList = Arrays.asList("https://ethfans.org/", "https://coinmarketcap.com/zh/")
 
 
@@ -59,24 +66,48 @@ class FragmentThree : BaseFragment() {
                 Toast.makeText(MyApplication.instance, R.string.no_market_app, Toast.LENGTH_SHORT).show()
             }
         })
+
         for (i in nameList.indices) {
-            val contentView = LayoutInflater.from(MyApplication.instance).inflate(R.layout.more_link_item, link_layout, false)
-            contentView.name.text = nameList[i]
-            contentView.link.text = linkList[i]
-            link_layout.addView(contentView)
-            contentView.setOnClickListener({
-                try {
-                    val uri = Uri.parse(linkList[i])
-                    val intent = Intent(Intent.ACTION_VIEW, uri)
-                    startActivity(intent)
-                } catch (e: Exception) {
-                    Toast.makeText(MyApplication.instance, R.string.no_browser_client_and_copy_to_clipboard, Toast.LENGTH_SHORT).show()
-                }
-            })
+            addItem(nameList[i] , linkList[i])
         }
+        initStoreItems()
+        link_title.setOnClickListener({startActivityForResult(Intent(context , LinkEditActivity::class.java) , 1001)})
+    }
 
-        link_title.setOnClickListener({startActivity(Intent(context , LinkEditActivity::class.java))})
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if(requestCode == 1001 && resultCode == Activity.RESULT_OK){
+            Handler().postDelayed({ initStoreItems() }, 500)
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
 
+    private fun initStoreItems(){
+        link_layout.removeViews(3 , link_layout.childCount -3)
+        val urls = MyApplication.instance.getSharedPreferences("links" , Context.MODE_PRIVATE).getString("data" , "")
+        if(!TextUtils.isEmpty(urls)){
+            val gson  = Gson()
+            val data = gson.fromJson<ArrayList<LinkEditActivity.Companion.Item>>(urls
+                    , object : TypeToken<ArrayList<LinkEditActivity.Companion.Item>>() {}.type)
+            for(item  in data){
+                addItem(item.name , item.url)
+            }
+        }
+    }
+
+    private fun addItem(name :String ? , url :String ?){
+        val contentView = LayoutInflater.from(MyApplication.instance).inflate(R.layout.more_link_item, link_layout, false)
+        contentView.name.text = name
+        contentView.link.text = url
+        link_layout.addView(contentView)
+        contentView.setOnClickListener({
+            try {
+                val uri = Uri.parse(url)
+                val intent = Intent(Intent.ACTION_VIEW, uri)
+                startActivity(intent)
+            } catch (e: Exception) {
+                Toast.makeText(MyApplication.instance, R.string.no_browser_client_and_copy_to_clipboard, Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
 }

@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/edit"
+        android:id="@+id/create"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_edit_black_24dp"
         android:title="@string/coin_collection" />

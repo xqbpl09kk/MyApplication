@@ -18,9 +18,10 @@
         <item name="windowActionBar">@null</item>
     </style>
 
-
-    <style name="TextViewBlack" >
-        <item name="android:textColor">@color/text_normal</item>
+    <style name="dialogTheme" parent="Theme.AppCompat.Dialog">
+        <item name="colorControlActivated">@color/colorPrimary</item>
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="android:textColorHint">@color/text_hint</item>
     </style>
 
 </resources>

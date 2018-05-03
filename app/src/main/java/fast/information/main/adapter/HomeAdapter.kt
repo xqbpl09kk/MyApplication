@@ -98,7 +98,7 @@ class HomeAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerV
 ////                    ViewCompat.getTransitionName("simple_activity_transition"))
 //                    "simple_activity_transition")
 //            MyApplication.instance.getLastActivity()!!.startActivity(intent, options.toBundle())
-            notifyItemChanged(focusItemIndex)
+//            notifyItemChanged(focusItemIndex)
 //            itemData.isExpended = !itemData.isExpended
             focusItemIndex = position
 //            notifyDataSetChanged()

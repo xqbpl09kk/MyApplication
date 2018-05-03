@@ -1,6 +1,7 @@
 package fast.information.common
 
 import android.app.Activity
+import android.content.Context
 import android.os.Handler
 import android.os.Message
 import java.lang.ref.WeakReference
@@ -18,10 +19,11 @@ class TimerHandler(activity: Activity) : Handler() {
     }
 
     companion object {
-
+        val delayMillis = MyApplication.instance.getSharedPreferences("settings" , Context.MODE_PRIVATE)
+                .getInt("refresh_rate" , 2* 60)* 1000L //Fetch last data every 2 minutes
         const val stop: Int = 1
         const val move : Int = 2
-        const val delayMillis = 2 * 60 * 1000L //Fetch last data every 2 minutes
+
     }
 
 

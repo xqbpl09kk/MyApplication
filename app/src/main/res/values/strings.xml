@@ -55,7 +55,18 @@
     <string name="link">链接</string>
     <string name="refresh_success">已更新</string>
     <string name="no_browser_client_and_copy_to_clipboard">没有找到浏览器，已经复制链接地址</string>
-    <string name="friendly_link">友情链接</string>
+    <string name="friendly_link">其他链接</string>
     <string name="collected_link">收藏网址</string>
     <string name="save">保存</string>
+    <string name="link_name_hint">网站名称</string>
+    <string name="link_url_hint">网站地址(http开头)</string>
+    <string name="url_none_empty">请输入地址</string>
+    <string name="url_invalidate">输入的地址无效</string>
+    <string name="edit">编辑</string>
+    <string name="delete">删除</string>
+    <string name="update_rate">行情更新频率</string>
+    <string name="two_second">两分钟</string>
+    <string name="five_second">五分钟</string>
+    <string name="ten_second">十分钟</string>
+    <string name="fiveteen_second">十五分钟</string>
 </resources>
