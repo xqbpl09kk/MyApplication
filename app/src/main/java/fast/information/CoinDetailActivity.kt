@@ -18,6 +18,7 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import fast.information.common.BaseActivity
 import fast.information.common.MyApplication
+import fast.information.common.TimerHandler
 import fast.information.network.RetrofitHelper
 import fast.information.network.bean.TickerListItem
 import fast.information.network.bean.base.ResultBundle
@@ -31,13 +32,15 @@ import java.util.regex.Pattern
 /**
  * Created by xiaqibo on 2018/4/10.
  */
-class CoinDetailActivity : BaseActivity() {
+class CoinDetailActivity : BaseActivity() , TimerHandler.Timer{
+
+
     override fun getLayoutRes(): Int {
         return R.layout.activity_coin_detail
     }
 
     private var tickerItem: TickerListItem? = null
-
+    private var timerHandler : TimerHandler?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,9 +92,9 @@ class CoinDetailActivity : BaseActivity() {
             return
         }
         if (TextUtils.isEmpty(tickerItem?.icon)) {
-            icon.visibility = View.GONE
+            icon?.visibility = View.GONE
         } else {
-            icon.visibility = View.VISIBLE
+            icon?.visibility = View.VISIBLE
             Glide.with(MyApplication.instance).load(tickerItem?.icon).into(icon)
         }
         name.text = tickerItem!!.symbol
@@ -106,7 +109,6 @@ class CoinDetailActivity : BaseActivity() {
             change1h > 0 -> change_1h.text = "+".plus(tickerItem!!.percent_change_1h.plus("%/1h"))
             else -> change_1h.text = tickerItem!!.percent_change_1h.plus("%/1h")
         }
-
         val change24h = tickerItem!!.percent_change_24h?.toFloat() ?: Float.MIN_VALUE
         when {
             change24h > 0 -> {
@@ -122,21 +124,25 @@ class CoinDetailActivity : BaseActivity() {
             else -> change_24h.text = tickerItem!!.percent_change_24h.plus("%/24h")
         }
 
+
+
         val change7d = tickerItem!!.percent_change_7d?.toFloat() ?: Float.MIN_VALUE
         when {
             change7d > 0 -> change_7d.text = "+".plus(tickerItem!!.percent_change_7d.plus("%/7d"))
             else -> change_7d.text = tickerItem!!.percent_change_7d.plus("%/7d")
         }
 
+        change_group.setOnClickListener({refresh()})
+
 //        val pattern = Pattern.compile("<[A-Z1-9a-z_\\W\\s\\r\":;',()-= \n]*>")
 //        val matcher: Matcher = pattern.matcher(tickerItem!!.introduction)
 //        introduction.text = matcher.replaceAll("").trim()
         introduction.text = Html.fromHtml(tickerItem!!.introduction).trim().toString()
 
-        used_amount.text = insertDot(StringBuilder(tickerItem!!.available_supply ?:""))
-        total_amount.text = insertDot(StringBuilder(tickerItem!!.total_supply?:""))
-        max_amount.text = insertDot(StringBuilder(tickerItem!!.max_supply?:""))
-        market_cap.text = insertDot(StringBuilder(tickerItem!!.market_cap_usd?:""))
+        used_amount.text = insertDot(StringBuilder(tickerItem!!.available_supply ?: ""))
+        total_amount.text = insertDot(StringBuilder(tickerItem!!.total_supply ?: ""))
+        max_amount.text = insertDot(StringBuilder(tickerItem!!.max_supply ?: ""))
+        market_cap.text = insertDot(StringBuilder(tickerItem!!.market_cap_usd ?: ""))
 
         office_sites.text = ""
         for (site: String in tickerItem!!.official_sites ?: ArrayList()) {
@@ -194,6 +200,25 @@ class CoinDetailActivity : BaseActivity() {
 //            finish()
 //    }
 
+
+    override fun onResume() {
+        super.onResume()
+        if(timerHandler == null)
+            timerHandler = TimerHandler(this)
+        timerHandler!!.sendEmptyMessageDelayed(TimerHandler.move , TimerHandler.delayMillis)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        timerHandler?.removeMessages(TimerHandler.move)
+    }
+
+
+    override fun onTime() {
+        refresh()
+    }
+
+
     private fun insertDot(str: StringBuilder): String {
         if (TextUtils.isEmpty(str)) return str.toString()
         var i: Int = str.length - 3
@@ -207,13 +232,13 @@ class CoinDetailActivity : BaseActivity() {
     private fun refresh() {
         RetrofitHelper.instance.tickerItem(tickerItem!!.symbol!!, object : ResultCallback<ResultBundle<TickerListItem>> {
             override fun onSuccess(t: ResultBundle<TickerListItem>?) {
-                Toast.makeText(MyApplication.instance, R.string.refresh_success, Toast.LENGTH_LONG).show()
+                Toast.makeText(MyApplication.instance, R.string.refresh_success, Toast.LENGTH_SHORT).show()
                 tickerItem = t?.item
                 registerViews()
             }
 
             override fun onFailure(message: String, errorCode: Int) {
-                Toast.makeText(MyApplication.instance, message, Toast.LENGTH_LONG).show()
+                Toast.makeText(MyApplication.instance, message, Toast.LENGTH_SHORT).show()
             }
 
         })

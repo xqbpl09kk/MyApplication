@@ -59,7 +59,7 @@
     <string name="collected_link">收藏网址</string>
     <string name="save">保存</string>
     <string name="link_name_hint">网站名称</string>
-    <string name="link_url_hint">网站地址(http开头)</string>
+    <string name="link_url_hint">网站地址(以http/https/ftp开头)</string>
     <string name="url_none_empty">请输入地址</string>
     <string name="url_invalidate">输入的地址无效</string>
     <string name="edit">编辑</string>
@@ -69,4 +69,5 @@
     <string name="five_second">五分钟</string>
     <string name="ten_second">十分钟</string>
     <string name="fiveteen_second">十五分钟</string>
+    <string name="url_exist">地址已经存在</string>
 </resources>

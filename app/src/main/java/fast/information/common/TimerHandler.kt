@@ -19,11 +19,15 @@ class TimerHandler(activity: Activity) : Handler() {
     }
 
     companion object {
-        val delayMillis = MyApplication.instance.getSharedPreferences("settings" , Context.MODE_PRIVATE)
+        var delayMillis = MyApplication.instance.getSharedPreferences("settings" , Context.MODE_PRIVATE)
                 .getInt("refresh_rate" , 2* 60)* 1000L //Fetch last data every 2 minutes
-        const val stop: Int = 1
+
         const val move : Int = 2
 
+        fun resetDelay(){
+            delayMillis = MyApplication.instance.getSharedPreferences("settings" , Context.MODE_PRIVATE)
+                    .getInt("refresh_rate" , 2* 60)* 1000L
+        }
     }
 
 
@@ -44,9 +48,6 @@ class TimerHandler(activity: Activity) : Handler() {
             move -> {
                 runnable.run()
                 sendEmptyMessageDelayed(move , delayMillis)
-            }
-            stop -> {
-                removeMessages(2)
             }
         }
     }

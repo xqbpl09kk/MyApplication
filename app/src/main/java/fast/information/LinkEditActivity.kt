@@ -23,6 +23,8 @@ import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.create_link_content.view.*
 import kotlinx.android.synthetic.main.list_item_link.view.*
 import java.util.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 
 /**
@@ -125,19 +127,26 @@ class LinkEditActivity : BaseActivity(), PopupMenu.OnMenuItemClickListener {
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setOnClickListener({
             if (TextUtils.isEmpty(contentView.url_edit.text)) {
                 Toast.makeText(MyApplication.instance, R.string.url_none_empty, Toast.LENGTH_SHORT).show()
-            } else if (!contentView.url_edit.text.startsWith("http:")) {
+            }else if (!matchUrl(contentView.url_edit.text.toString())) {
                 Toast.makeText(MyApplication.instance, R.string.url_invalidate, Toast.LENGTH_SHORT).show()
-            } else {
-                alertDialog.dismiss()
+            }else {
                 if (TextUtils.isEmpty(url)) {
-                    data.add(0, Item(contentView.name_edit.text.trim().toString(), contentView.url_edit.text.trim().toString()))
-                    getSharedPreferences("links", Context.MODE_PRIVATE).edit().putString("data", Gson().toJson(data)).apply()
-                    recycler_view.adapter.notifyItemInserted(0)
+                    if(checkExist(contentView.url_edit.text.toString())){
+                        Toast.makeText(MyApplication.instance, R.string.url_exist , Toast.LENGTH_SHORT).show()
+                    }else{
+                        alertDialog.dismiss()
+                        data.add(0, Item(contentView.name_edit.text.trim().toString(), contentView.url_edit.text.trim().toString()))
+                        getSharedPreferences("links", Context.MODE_PRIVATE).edit().putString("data", Gson().toJson(data)).apply()
+                        recycler_view.adapter.notifyItemInserted(0)
+                        recycler_view.scrollToPosition(0)
+                    }
                 } else {
+                    alertDialog.dismiss()
                     data[position].name = contentView.name_edit.text.trim().toString()
                     data[position].url = contentView.url_edit.text.trim().toString()
                     getSharedPreferences("links", Context.MODE_PRIVATE).edit().putString("data", Gson().toJson(data)).apply()
                     recycler_view.adapter.notifyItemChanged(position)
+                    recycler_view.scrollToPosition(position)
                 }
                 changed = true
             }
@@ -146,6 +155,21 @@ class LinkEditActivity : BaseActivity(), PopupMenu.OnMenuItemClickListener {
         val inputMethod: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         contentView.name_edit.requestFocus()
         inputMethod.showSoftInput(contentView.name_edit, InputMethodManager.SHOW_FORCED)
+    }
+
+
+    private fun matchUrl(str :String):Boolean{
+        val pattern = Pattern.compile(
+                "(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]")
+        val matcher: Matcher = pattern.matcher(str)
+        return matcher.matches()
+    }
+
+    private fun checkExist(str:String):Boolean{
+        val pattern = Pattern.compile(str)
+        val matcher: Matcher = pattern.matcher(
+                getSharedPreferences("links" ,Context.MODE_PRIVATE).getString("data" , ""))
+        return matcher.find()
     }
 
     override fun onBackPressed() {

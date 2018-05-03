@@ -23,6 +23,8 @@ import fast.information.network.bean.base.ResultCallback
 import fast.information.network.bean.base.ResultListBundle
 import fast.information.network.RetrofitHelper
 import kotlinx.android.synthetic.main.fragment_one.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 /**
  * MyApplication
@@ -61,77 +63,6 @@ class FragmentOne : BaseFragment() , HomeAdapter.OnItemClick {
 
         recycler_view.adapter = adapter
         recycler_view.layoutManager = layoutManager
-//        recycler_view.itemAnimator = object : RecyclerView.ItemAnimator() {
-//            override fun isRunning(): Boolean {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//            }
-//
-//            override fun animatePersistence(viewHolder: RecyclerView.ViewHolder, preLayoutInfo: ItemHolderInfo, postLayoutInfo: ItemHolderInfo): Boolean {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//            }
-//
-//            override fun runPendingAnimations() {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//            }
-//
-//            override fun endAnimation(item: RecyclerView.ViewHolder?) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//            }
-//
-//            override fun animateDisappearance(viewHolder: RecyclerView.ViewHolder, preLayoutInfo: ItemHolderInfo, postLayoutInfo: ItemHolderInfo?): Boolean {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//            }
-//
-//            override fun animateChange(oldHolder: RecyclerView.ViewHolder, newHolder: RecyclerView.ViewHolder, preLayoutInfo: ItemHolderInfo, postLayoutInfo: ItemHolderInfo): Boolean {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//            }
-//
-//            override fun animateAppearance(viewHolder: RecyclerView.ViewHolder, preLayoutInfo: ItemHolderInfo?, postLayoutInfo: ItemHolderInfo): Boolean {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//            }
-//
-//            override fun endAnimations() {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//            }
-//
-//        }
-
-//        recycler_view.itemAnimator = object: SimpleItemAnimator(){
-//            override fun animateAdd(holder: RecyclerView.ViewHolder?): Boolean {
-//                return false
-//            }
-//
-//            override fun runPendingAnimations() {
-//            }
-//
-//            override fun animateMove(holder: RecyclerView.ViewHolder?, fromX: Int, fromY: Int, toX: Int, toY: Int): Boolean {
-//                return false
-//            }
-//
-//            override fun isRunning(): Boolean {
-//                return false
-//            }
-//
-//            override fun endAnimation(item: RecyclerView.ViewHolder?) {
-//            }
-//
-//            override fun animateRemove(holder: RecyclerView.ViewHolder?): Boolean {
-//                return false
-//            }
-//
-//            override fun endAnimations() {
-//            }
-//
-//            override fun animateChange(oldHolder: RecyclerView.ViewHolder?, newHolder: RecyclerView.ViewHolder?
-//                                       , fromLeft: Int, fromTop: Int, toLeft: Int, toTop: Int): Boolean {
-//                Toast.makeText(context , "current position " , Toast.LENGTH_SHORT).show()
-//                Log.i("HOLDER" , "oldHolder height ".plus(oldHolder?.itemView?.height).plus(" width ").plus(oldHolder?.itemView?.width))
-//                Log.i("HOLDER" , "newHolder height ".plus(newHolder?.itemView?.height).plus(" width ").plus(newHolder?.itemView?.width))
-//                return false
-//            }
-//
-//
-//        }
         recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
                 if (adapter.showStar()) return
@@ -158,20 +89,19 @@ class FragmentOne : BaseFragment() , HomeAdapter.OnItemClick {
         if (!loadMore) {
             cursor = 0
             loadStarData()
+            refresh_layout.isRefreshing = true
         }
         loading = true
-        refresh_layout.isRefreshing = true
         RetrofitHelper.instance.getMessage(cursor, size
                 , object : ResultCallback<ResultListBundle<MessageItem>> {
             override fun onSuccess(t: ResultListBundle<MessageItem>?) {
                 if (activity?.isFinishing == true) return
+                refresh_layout.isRefreshing = false
                 if (adapter.showStar())
                     adapter.switchContent()
-                val items: ArrayList<MessageItem> = (t ?: return).items ?: return
-                cursor = t.nextCursor
-                if (loadMore) adapter.addItems(items)
-                else adapter.update(items)
-                refresh_layout.isRefreshing = false
+                cursor = t?.nextCursor?:cursor
+                if (loadMore) adapter.addItems(deduplication( t?.items ?: return))
+                else adapter.update(deduplication( t?.items ?: return))
                 loading = false
             }
 
@@ -186,6 +116,35 @@ class FragmentOne : BaseFragment() , HomeAdapter.OnItemClick {
             }
 
         })
+    }
+
+    private fun deduplication(input : ArrayList<MessageItem>) : List<MessageItem>{
+        for(index in input.indices)
+            when {
+                index >0 -> input[index].unique = !match(input[index - 1] ,input[index])
+                adapter.itemCount != 0 -> input[0].unique = !match( input[0] , adapter.getLast())
+                else -> input[0].unique = true
+            }
+        return input.filter { it.unique }
+    }
+
+
+    private fun match(a :MessageItem , b : MessageItem ) :Boolean{
+//        val lengthA = a.content.length
+//        val lengthB = b.content.length
+//        if(lengthA <10 ) {
+//            a.unique = false
+//            return true
+//        }
+//        if(lengthB <10){
+//            b.unique = false
+//            return true
+//        }
+//        if((lengthA / lengthB) >1.3 && lengthA / lengthB <0.7) return false
+//        val pattern = Pattern.compile(a.content.substring(0 , lengthA/))
+//        val matcher :Matcher
+        //TODO Realize the matching algorithm
+        return a.content == b.content
     }
 
     private fun loadStarData() {

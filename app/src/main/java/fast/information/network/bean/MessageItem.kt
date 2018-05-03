@@ -39,6 +39,7 @@ open class MessageItem :Serializable{
 
 
     var isExpended = false
+    var unique = false
 
 
     fun getDate(showAll :Boolean):String{

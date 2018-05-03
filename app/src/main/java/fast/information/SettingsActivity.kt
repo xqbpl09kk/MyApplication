@@ -13,6 +13,7 @@ import com.umeng.message.IUmengCallback
 import com.umeng.message.PushAgent
 import fast.information.common.BaseActivity
 import fast.information.common.MyApplication
+import fast.information.common.TimerHandler
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
 
@@ -84,6 +85,7 @@ class SettingsActivity :BaseActivity() , PopupMenu.OnMenuItemClickListener {
                 refresh_rate_selector.setText(R.string.fiveteen_second)
             }
         }
+        TimerHandler.resetDelay()
         return true
     }
 

@@ -4,105 +4,104 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
-    android:clickable="true"
-    android:transitionName="shared_view"
-    android:focusable="true"
     android:background="@color/white"
-
+    android:clickable="true"
+    android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
+    android:padding="10dp"
+    android:transitionName="shared_view"
     tools:targetApi="lollipop">
 
-        <ImageView android:layout_height="14dp"
-            android:id="@+id/icon"
-            android:visibility="gone"
-            android:layout_marginRight="3dp"
-            android:layout_marginTop="3dp"
-            android:layout_width="14dp"/>
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginTop="3dp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/icon"
+        android:text="BTC"
+        android:textColor="@color/text_normal"
+
+        />
+
+    <TextView
+        android:id="@+id/volume_24h"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/name"
+        android:layout_marginTop="5dp"
+        android:text="24小时交易量"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/cap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/volume_24h"
+        android:layout_marginTop="5dp"
+        android:text="总市值"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:gravity="right"
+        android:text="current price"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/price"
+        android:layout_below="@id/price"
+        android:gravity="right"
+        android:text="USDT"
+        android:textSize="12sp" />
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:gravity="right"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/change_24h"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="BTC"
-            android:layout_toRightOf="@id/icon"
-            android:textColor="@color/text_normal"
 
-            />
+            android:text="change_24h"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/volume_24h"
+            android:id="@+id/change_1h"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/name"
             android:layout_marginTop="5dp"
-            android:text="24小时交易量"
+            android:text="change_1h"
             android:textSize="12sp" />
 
+
         <TextView
-            android:id="@+id/cap"
+            android:id="@+id/change_7d"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/volume_24h"
             android:layout_marginTop="5dp"
-            android:text="总市值"
+            android:text="change_7d"
             android:textSize="12sp" />
 
-        <TextView
-            android:id="@+id/price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="current price"
-            android:layout_marginTop="15dp"
-            android:gravity="right"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+    </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="USDT"
-            android:gravity="right"
-            android:textSize="12sp"
-            android:layout_below="@id/price"
-            android:layout_alignRight="@id/price"
-            />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:gravity="right"
-            android:id="@+id/container"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/change_24h"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:text="change_24h"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:textSize="14sp" />
-            <TextView
-                android:id="@+id/change_1h"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="change_1h"
-                android:textSize="12sp" />
-
-
-
-
-            <TextView
-                android:id="@+id/change_7d"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="change_7d"
-                android:textSize="12sp" />
-
-        </LinearLayout>
-
-    </RelativeLayout>
-<!--</android.support.v7.widget.CardView>-->
+</RelativeLayout><!--</android.support.v7.widget.CardView>-->

@@ -36,7 +36,7 @@ interface ZhiService {
                    ,@Query("size") size :Int)
             :Call<ResultListBundle<TickerListItem>>
 
-    @GET(" v1/ticker/{key}/search")
+    @GET("/v1/ticker/{key}/search")
     fun search(@Path("key") key:String )
             :Call<ResultListBundle<TickerListItem>>
 

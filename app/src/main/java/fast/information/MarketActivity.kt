@@ -129,7 +129,7 @@ class MarketActivity : BaseActivity(), TimerHandler.Timer {
 
     override fun onStop() {
         super.onStop()
-        timerHandler?.sendEmptyMessage(TimerHandler.stop)
+        timerHandler?.removeMessages(TimerHandler.move)
         shrinkSearchView()
     }
 

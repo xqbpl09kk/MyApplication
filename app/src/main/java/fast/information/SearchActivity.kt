@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.activity_search.*
 class SearchActivity : BaseActivity() {
 
 
-    private val adapter = BoardAdapter(MyApplication.instance)
+    private val adapter = SearchAdapter(MyApplication.instance)
     private var key :String  ? = null
 
     override fun getLayoutRes(): Int {

@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include layout="@layout/list_item_muilt_cardboard"/>
+        <include layout="@layout/list_item_muilt_cardboard"
+            android:id="@+id/change_group"/>
 
 
         <TextView android:layout_height="wrap_content"

@@ -20,13 +20,11 @@ import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.bumptech.glide.Glide
 import fast.information.CoinDetailActivity
 import fast.information.MarketActivity
 import fast.information.R
 import fast.information.common.MyApplication
-import fast.information.main.MainActivity
 import fast.information.network.bean.TickerListItem
 import kotlinx.android.synthetic.main.list_item_muilt_cardboard.view.*
 import java.util.*
@@ -36,19 +34,19 @@ import java.util.*
  */
 class MuiltBoardAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    val data : ArrayList<TickerListItem> = ArrayList()
+    val data: ArrayList<TickerListItem> = ArrayList()
     var currentSortMode = 0
 
-    private val iconRes = Arrays.asList(R.drawable.btc, R.drawable.eth , R.drawable.xrp , R.drawable.bch
-                ,R.drawable.ltc , R.drawable.eos , R.drawable.ada , R.drawable.xlm , R.drawable.neo
-                ,R.drawable.miota , R.drawable.xmr , R.drawable.dash , R.drawable.trx , R.drawable.usdt
-                ,R.drawable.xem, R.drawable.bnb , R.drawable.etc  , R.drawable.ven ,R.drawable.xvg, R.drawable.qtum)
+    private val iconRes = Arrays.asList(R.drawable.btc, R.drawable.eth, R.drawable.xrp, R.drawable.bch
+            , R.drawable.ltc, R.drawable.eos, R.drawable.ada, R.drawable.xlm, R.drawable.neo
+            , R.drawable.miota, R.drawable.xmr, R.drawable.dash, R.drawable.trx, R.drawable.usdt
+            , R.drawable.xem, R.drawable.bnb, R.drawable.etc, R.drawable.ven, R.drawable.xvg, R.drawable.qtum)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(context)
-        val contentView  = when(viewType){
-            1 -> layoutInflater.inflate(R.layout.list_more_text , parent , false )
-            else ->  layoutInflater.inflate(R.layout.list_item_muilt_cardboard , parent , false)
+        val contentView = when (viewType) {
+            1 -> layoutInflater.inflate(R.layout.list_more_text, parent, false)
+            else -> layoutInflater.inflate(R.layout.list_item_muilt_cardboard, parent, false)
         }
         return object : RecyclerView.ViewHolder(contentView) {}
     }
@@ -58,26 +56,28 @@ class MuiltBoardAdapter(private val context: Context) : RecyclerView.Adapter<Rec
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if(position < data.size) 0 else 1
+        return if (position < data.size) 0 else 1
     }
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when{
-            (position < data.size)->{
+        when {
+            (position < data.size) -> {
                 val itemData = data[position]
 //                val drawable  = ContextCompat.getDrawable(context ,getIcon(itemData.symbol))
 //                drawable?.setBounds(0, 0, drawable.minimumWidth , drawable.minimumHeight )
 //                holder.itemView.name.setCompoundDrawables(drawable , null, null , null )
-                if(TextUtils.isEmpty(itemData.icon)){
+                if (TextUtils.isEmpty(itemData.icon)) {
                     holder.itemView.icon.visibility = View.GONE
-                }else{
+                } else {
                     holder.itemView.icon.visibility = View.VISIBLE
                     Glide.with(context).load(itemData.icon).into(holder.itemView.icon)
                 }
                 holder.itemView.name.text = itemData.symbol
-                holder.itemView.volume_24h.text ="24H:".plus(String.format("%.02f",(itemData.__h_volume_usd?.toLong() ?: 0) /1000000000f).plus("B"))
-                holder.itemView.cap.text = "TAL:".plus(String.format("%.02f",(itemData.market_cap_usd?.toLong() ?: 0) /1000000000f).plus("B"))
+                holder.itemView.volume_24h.text = "24H:".plus(String.format("%.02f", (itemData.__h_volume_usd?.toLong()
+                        ?: 0) / 1000000000f).plus("B"))
+                holder.itemView.cap.text = "TAL:".plus(String.format("%.02f", (itemData.market_cap_usd?.toLong()
+                        ?: 0) / 1000000000f).plus("B"))
                 holder.itemView.price.text = itemData.price
 
                 val change1h = itemData.percent_change_1h?.toFloat() ?: Float.MIN_VALUE
@@ -90,12 +90,12 @@ class MuiltBoardAdapter(private val context: Context) : RecyclerView.Adapter<Rec
                 when {
                     change24h > 0 -> {
                         val spanStringBuilder = SpannableStringBuilder("+".plus(itemData.percent_change_24h).plus("%"))
-                        spanStringBuilder.setSpan(ForegroundColorSpan(MyApplication.instance.colorGreen!!) ,0 , spanStringBuilder.length , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                        spanStringBuilder.setSpan(ForegroundColorSpan(MyApplication.instance.colorGreen!!), 0, spanStringBuilder.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
                         holder.itemView.change_24h.text = spanStringBuilder.append("/24h")
                     }
-                    change24h <0 -> {
+                    change24h < 0 -> {
                         val spanStringBuilder = SpannableStringBuilder(itemData.percent_change_24h.plus("%"))
-                        spanStringBuilder.setSpan(ForegroundColorSpan(MyApplication.instance.colorRed!!) ,0 , spanStringBuilder.length , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                        spanStringBuilder.setSpan(ForegroundColorSpan(MyApplication.instance.colorRed!!), 0, spanStringBuilder.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
                         holder.itemView.change_24h.text = spanStringBuilder.append("/24h")
                     }
                     else -> holder.itemView.change_24h.text = itemData.percent_change_24h.plus("%/24h")
@@ -107,35 +107,35 @@ class MuiltBoardAdapter(private val context: Context) : RecyclerView.Adapter<Rec
                     else -> holder.itemView.change_7d.text = itemData.percent_change_7d.plus("%/7d")
                 }
                 holder.itemView.setOnClickListener({
-                    val bundle  =Bundle()
-                    bundle.putSerializable("ticker_item" , itemData)
+                    val bundle = Bundle()
+                    bundle.putSerializable("ticker_item", itemData)
 //                    MyApplication.instance.jumpActivity(CoinDetailActivity::class.java , bundle)
 
-                    val intent = Intent(MyApplication.instance ,  CoinDetailActivity::class.java)
-                    intent.putExtra("data" ,bundle)
+                    val intent = Intent(MyApplication.instance, CoinDetailActivity::class.java)
+                    intent.putExtra("data", bundle)
                     val options = ActivityOptionsCompat.makeSceneTransitionAnimation(MyApplication.instance.getLastActivity()!!,
                             holder.itemView,
                             "shared_view")
                     MyApplication.instance.getLastActivity()!!.startActivity(intent, options.toBundle())
                 })
             }
-            else -> holder.itemView.setOnClickListener({MyApplication.instance.jumpActivity(MarketActivity::class.java , null) })
+            else -> holder.itemView.setOnClickListener({ MyApplication.instance.jumpActivity(MarketActivity::class.java, null) })
         }
     }
 
-    fun update(d: ArrayList<TickerListItem>){
+    fun update(d: ArrayList<TickerListItem>) {
         data.clear()
         data.addAll(d)
         notifyDataSetChanged()
     }
 
-    fun add(d: ArrayList<TickerListItem>){
+    fun add(d: ArrayList<TickerListItem>) {
         data.addAll(d)
         notifyDataSetChanged()
     }
 
-    private fun getIcon(name : String ?):Int {
-        when(name){
+    private fun getIcon(name: String?): Int {
+        when (name) {
             "BTC" -> return iconRes[0]
             "ETH" -> return iconRes[1]
             "XRP" -> return iconRes[2]

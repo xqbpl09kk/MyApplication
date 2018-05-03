@@ -125,8 +125,9 @@ class MainActivity : BaseActivity(),TimerHandler.Timer{
 
     override fun onStop() {
         super.onStop()
-        timerHandler?.sendEmptyMessage(TimerHandler.stop)
+        timerHandler?.removeMessages(TimerHandler.move)
         shrinkSearchView()
+        updateDialog?.cancel()
     }
 
 
@@ -242,6 +243,7 @@ class MainActivity : BaseActivity(),TimerHandler.Timer{
         })
     }
 
+    private var updateDialog : AlertDialog ? = null
 
     private fun showUpdateDialog(updateInfo: UpdateInfo) {
         if (isFinishing) return
@@ -250,12 +252,18 @@ class MainActivity : BaseActivity(),TimerHandler.Timer{
                 .setMessage(updateInfo?.version_info ?: "test message")
                 .setNegativeButton(R.string.cancel) { dialog, _ ->
                     dialog.cancel()
+                    updateDialog = null
                 }.setPositiveButton(R.string.update) { dialog, _ ->
                     dialog.cancel()
+                    updateDialog = null
                     download(updateInfo.android_url,updateInfo.latest_app_version)
-                }
-        dialogBuilder.create().show()
+                }.setOnCancelListener({ updateDialog = null  })
+        updateDialog = dialogBuilder.create()
+        updateDialog?.show()
     }
+
+
+
 
     private fun setupSearchView(searchView :SearchView?){
         if(searchView == null ) return

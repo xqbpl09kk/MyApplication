@@ -1,18 +1,14 @@
 package fast.information.main
 
 import android.app.Activity
-import android.arch.lifecycle.LifecycleObserver
-import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
-import android.support.v4.app.Fragment
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -22,12 +18,9 @@ import fast.information.common.MyApplication
 import fast.information.R
 import fast.information.SettingsActivity
 import fast.information.common.BaseFragment
-import kotlinx.android.synthetic.main.activity_share.view.*
-
 import kotlinx.android.synthetic.main.fragment_more.*
 import kotlinx.android.synthetic.main.more_link_item.view.*
 import java.util.*
-import java.util.EnumSet.range
 import kotlin.collections.ArrayList
 
 /**
@@ -49,7 +42,7 @@ class FragmentThree : BaseFragment() {
 
     }
 
-    private val nameList  = Arrays.asList("以太坊爱好者", "coinmarketcap")
+    private val nameList  = Arrays.asList("以太坊爱好者", "CoinMarketCap")
     private val linkList = Arrays.asList("https://ethfans.org/", "https://coinmarketcap.com/zh/")
 
 
@@ -68,7 +61,7 @@ class FragmentThree : BaseFragment() {
         })
 
         for (i in nameList.indices) {
-            addItem(nameList[i] , linkList[i])
+            addItem(nameList[i] , linkList[i] , true)
         }
         initStoreItems()
         link_title.setOnClickListener({startActivityForResult(Intent(context , LinkEditActivity::class.java) , 1001)})
@@ -89,15 +82,16 @@ class FragmentThree : BaseFragment() {
             val data = gson.fromJson<ArrayList<LinkEditActivity.Companion.Item>>(urls
                     , object : TypeToken<ArrayList<LinkEditActivity.Companion.Item>>() {}.type)
             for(item  in data){
-                addItem(item.name , item.url)
+                addItem(item.name , item.url , false)
             }
         }
     }
 
-    private fun addItem(name :String ? , url :String ?){
+    private fun addItem(name :String ? , url :String ? , showPin:Boolean ){
         val contentView = LayoutInflater.from(MyApplication.instance).inflate(R.layout.more_link_item, link_layout, false)
         contentView.name.text = name
         contentView.link.text = url
+        contentView.pin.visibility = if(showPin) View.VISIBLE else View.GONE
         link_layout.addView(contentView)
         contentView.setOnClickListener({
             try {

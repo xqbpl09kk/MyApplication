@@ -20,7 +20,7 @@
         android:padding="@dimen/common_padding"
         android:text="@string/push_message"
         android:textColor="@color/text_normal"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <View
         android:layout_width="match_parent"
@@ -32,12 +32,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:selectableItemBackground"
-        android:drawableLeft="@drawable/update"
+        android:drawableLeft="@drawable/refresh"
         android:drawablePadding="5dp"
         android:padding="@dimen/common_padding"
         android:text="@string/auto_update"
         android:textColor="@color/text_normal"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <View
         android:layout_width="match_parent"
@@ -55,12 +55,12 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/refresh"
+            android:drawableLeft="@drawable/update"
             android:drawablePadding="5dp"
             android:padding="@dimen/common_padding"
             android:text="@string/update_rate"
             android:textColor="@color/text_normal"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <TextView android:layout_height="wrap_content"
             android:layout_width="wrap_content"
@@ -68,6 +68,7 @@
             android:paddingRight="10dp"
             android:id="@+id/refresh_rate_selector"
             android:gravity="center"
+            android:textSize="14sp"
             android:drawableRight="@drawable/down"
             android:text="15分钟"/>
 

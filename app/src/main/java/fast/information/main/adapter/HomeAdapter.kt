@@ -58,7 +58,7 @@ class HomeAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerV
             holder.itemView.content_text.maxLines = 5
         }
         holder.itemView.content_text.text = Integer.toString(position +1 )
-                .plus("、").plus(itemData.title).plus(itemData.content)
+                .plus("、").plus(itemData.title?.removePrefix("】")).plus(itemData.content)
         if(TextUtils.isEmpty(itemData.link) || !itemData.link!!.startsWith("http")){
             holder.itemView.action0_text .visibility = View.INVISIBLE
         }else{
@@ -122,7 +122,7 @@ class HomeAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerV
         })
     }
 
-    fun update(items: ArrayList<MessageItem>) {
+    fun update(items: List<MessageItem>) {
         if (!showStar) {
             data.clear()
             data.addAll(items)
@@ -135,7 +135,7 @@ class HomeAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerV
         notifyDataSetChanged()
     }
 
-    fun addItems(items: ArrayList<MessageItem>) {
+    fun addItems(items: List<MessageItem>) {
         if (!showStar) {
             data.addAll(items)
         } else {
@@ -153,6 +153,10 @@ class HomeAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerV
                 break
             }
         }
+    }
+
+    fun getLast():MessageItem{
+        return data[data.lastIndex]
     }
 
     fun switchContent() {
