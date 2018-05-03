@@ -37,7 +37,7 @@ class ShareActivity :Activity() {
         title_text.text = messageItem.title?.removePrefix("【")?.removeSuffix("】") ?: ""
         content_text.setOnClickListener({  imageShare()  })
         if(share)
-            Handler().postDelayed({ imageShare() },200)
+            Handler().postDelayed({ imageShare() },100)
     }
 
     private fun imageShare(){

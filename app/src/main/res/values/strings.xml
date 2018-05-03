@@ -70,4 +70,7 @@
     <string name="ten_second">十分钟</string>
     <string name="fiveteen_second">十五分钟</string>
     <string name="url_exist">地址已经存在</string>
+    <string name="notification_not">第一时间获取资讯通知</string>
+    <string name="update_not">不消耗流量</string>
+
 </resources>
