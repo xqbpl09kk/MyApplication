@@ -37,10 +37,6 @@ class MuiltBoardAdapter(private val context: Context) : RecyclerView.Adapter<Rec
     val data: ArrayList<TickerListItem> = ArrayList()
     var currentSortMode = 0
 
-    private val iconRes = Arrays.asList(R.drawable.btc, R.drawable.eth, R.drawable.xrp, R.drawable.bch
-            , R.drawable.ltc, R.drawable.eos, R.drawable.ada, R.drawable.xlm, R.drawable.neo
-            , R.drawable.miota, R.drawable.xmr, R.drawable.dash, R.drawable.trx, R.drawable.usdt
-            , R.drawable.xem, R.drawable.bnb, R.drawable.etc, R.drawable.ven, R.drawable.xvg, R.drawable.qtum)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(context)
@@ -134,30 +130,6 @@ class MuiltBoardAdapter(private val context: Context) : RecyclerView.Adapter<Rec
         notifyDataSetChanged()
     }
 
-    private fun getIcon(name: String?): Int {
-        when (name) {
-            "BTC" -> return iconRes[0]
-            "ETH" -> return iconRes[1]
-            "XRP" -> return iconRes[2]
-            "BCH" -> return iconRes[3]
-            "LTC" -> return iconRes[4]
-            "EOS" -> return iconRes[5]
-            "ADA" -> return iconRes[6]
-            "XLM" -> return iconRes[7]
-            "NEO" -> return iconRes[8]
-            "MIOTA" -> return iconRes[9]
-            "XMR" -> return iconRes[10]
-            "DASH" -> return iconRes[11]
-            "TRX" -> return iconRes[12]
-            "USDT" -> return iconRes[13]
-            "XEM" -> return iconRes[14]
-            "BNB" -> return iconRes[15]
-            "ETC" -> return iconRes[16]
-            "VEN" -> return iconRes[17]
-            "XVG" -> return iconRes[18]
-            "QTUM" -> return iconRes[19]
-        }
-        return R.drawable.btc
-    }
+
 
 }

@@ -78,7 +78,6 @@ class ConcernActivity :BaseActivity() {
         website.append(spanString1)
         website.movementMethod =  LinkMovementMethod.getInstance()
 
-
         try {
             val manager = packageManager
             val info = manager.getPackageInfo(packageName, 0)
