@@ -8,8 +8,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.provider.MediaStore
+import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
 import com.google.gson.Gson
+import fast.information.common.MyApplication
 import fast.information.main.MainActivity
 import fast.information.network.bean.MessageItem
 import kotlinx.android.synthetic.main.activity_share.*
@@ -25,6 +27,7 @@ class ShareActivity :Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_share)
+        window.decorView.background =ContextCompat.getDrawable(MyApplication.instance , R.drawable.share_bg)
         var message  = intent .getSerializableExtra("message_item")
         if(message == null){
             val messageString : String = intent.getStringExtra("message")
@@ -33,7 +36,7 @@ class ShareActivity :Activity() {
         val messageItem = message as MessageItem
         val share :Boolean = intent.getBooleanExtra("share" , true)
         time_text.text = messageItem.getDate(true)
-        content_text.text = messageItem.content
+        content_text.text = getString(R.string.bz_share).plus(messageItem.content)
         title_text.text = messageItem.title?.removePrefix("【")?.removeSuffix("】") ?: ""
         content_text.setOnClickListener({  imageShare()  })
         if(share)

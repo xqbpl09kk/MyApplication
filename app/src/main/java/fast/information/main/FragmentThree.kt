@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -55,11 +56,11 @@ class FragmentThree : BaseFragment() {
                 startActivity(Intent(Intent.ACTION_VIEW)
                         .setData(Uri.parse("market://details?id="
                                 .plus(MyApplication.instance.packageName))))
-            } catch (e: Exception) {
+            }catch (e: Exception){
                 Toast.makeText(MyApplication.instance, R.string.no_market_app, Toast.LENGTH_SHORT).show()
             }
         })
-
+        share.setOnClickListener({ shareApp() })
         for (i in nameList.indices) {
             addItem(nameList[i] , linkList[i] , true)
         }
@@ -74,8 +75,21 @@ class FragmentThree : BaseFragment() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+
+    private fun shareApp(){
+//        val imageUri = makeImageFile()
+        val shareIntent = Intent()
+        shareIntent.action = Intent.ACTION_SEND
+//        shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
+//        shareIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+        shareIntent.putExtra(Intent.EXTRA_TEXT , getString(R.string.share_text))
+        shareIntent.type = "text/*"
+        startActivity(Intent.createChooser(shareIntent, "分享到"))
+    }
+
+
     private fun initStoreItems(){
-        link_layout.removeViews(3 , link_layout.childCount -3)
+        link_layout.removeViews(4 , link_layout.childCount -4)
         val urls = MyApplication.instance.getSharedPreferences("links" , Context.MODE_PRIVATE).getString("data" , "")
         if(!TextUtils.isEmpty(urls)){
             val gson  = Gson()

@@ -59,7 +59,7 @@ class MyApplication  : Application(){
         colorGreen = ContextCompat.getColor(this , R.color.change_green)
         colorRed = ContextCompat.getColor(this , R.color.change_red)
         Thread.setDefaultUncaughtExceptionHandler(UnCaughtException())
-        initUmengPush()
+//        initUmengPush()
     }
 
 

@@ -59,6 +59,7 @@ class HomeAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerV
         }
         holder.itemView.content_text.text = Integer.toString(position +1 )
                 .plus("、").plus(itemData.title?.removePrefix("】")).plus(itemData.content)
+                .replace("\n", "")
         if(TextUtils.isEmpty(itemData.link) || !itemData.link!!.startsWith("http")){
             holder.itemView.action0_text .visibility = View.INVISIBLE
         }else{

@@ -72,5 +72,8 @@
     <string name="url_exist">地址已经存在</string>
     <string name="notification_not">第一时间获取资讯通知</string>
     <string name="update_not">不消耗流量</string>
+    <string name="bz_share">【币知分享】 </string>
+    <string name="share_app">谢谢分享</string>
+    <string name="share_text">币知：区块链爱好者业余时间制作，纯绿色的一款币圈资讯、行情浏览应用，欢迎下载使用。</string>
 
 </resources>

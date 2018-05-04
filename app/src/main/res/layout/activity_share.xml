@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-
+    android:minHeight="100dp"
+    android:maxHeight="400dp"
     android:layout_gravity="center_horizontal"
     android:scrollbars="none"
     android:orientation="vertical">
@@ -11,9 +12,10 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:id="@+id/content"
-        android:minWidth="200dp"
+        android:background="@drawable/share_bg"
+        android:minWidth="300dp"
+        android:paddingBottom="20dp"
         android:layout_gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -24,6 +26,7 @@
             android:background="@color/colorPrimary"
             android:gravity="center_horizontal"
             android:orientation="vertical"
+            android:visibility="gone"
             android:padding="15dp"
             >
 
@@ -56,9 +59,10 @@
             android:id="@+id/time_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:paddingLeft="15dp"
             android:textColor="#888888"
+            android:text="1222222222222222"
             android:paddingRight="15dp"
             android:textSize="14sp" />
 
@@ -74,6 +78,7 @@
             android:lineSpacingExtra="4dp"
             android:textColor="#333333"
             android:textSize="15sp"
+            android:text="1111111111111111"
             android:focusable="true"
             tools:targetApi="lollipop" />
 
@@ -84,6 +89,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="10dp"
+            android:visibility="gone"
             android:src="@mipmap/download_qr" />
     </LinearLayout>
 </ScrollView>
