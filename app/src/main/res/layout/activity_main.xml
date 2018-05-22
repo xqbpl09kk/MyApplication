@@ -9,33 +9,144 @@
 
     <FrameLayout
         android:id="@+id/main_fragment_container"
-        android:layout_height="0dp"
         android:layout_width="0dp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <View android:layout_height="0.5dp"
+    <View
         android:id="@+id/view"
         android:layout_width="match_parent"
-        app:layout_constraintBottom_toTopOf="@+id/navigation"
-        android:background="@color/half_trans"/>
-    <android.support.design.widget.BottomNavigationView
+        android:layout_height="0.5dp"
+        android:background="@color/half_trans"
+        app:layout_constraintBottom_toTopOf="@+id/navigation" />
+
+
+    <LinearLayout
         android:id="@+id/navigation"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_marginEnd="0dp"
         android:layout_marginStart="0dp"
-        app:elevation="100dp"
-        android:background="?android:attr/windowBackground"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/navigation" />
+        app:layout_constraintRight_toRightOf="parent">
 
+        <LinearLayout
+            android:id="@+id/tab1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?selectableItemBackground"
+            android:gravity="center_horizontal"
+            android:onClick="onTabItemSelected"
+            android:orientation="vertical"
+            android:padding="5dp">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/new_selector" />
+
+            <TextView
+                style="@style/TextViewSmall"
+                android:layout_marginTop="3dp"
+                android:text="@string/title_home"
+                android:textColor="@drawable/selectable_text_color" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tab2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?selectableItemBackground"
+            android:gravity="center_horizontal"
+            android:onClick="onTabItemSelected"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/market_selector" />
+
+            <TextView
+                style="@style/TextViewSmall"
+                android:layout_marginTop="3dp"
+                android:text="@string/title_dashboard"
+                android:textColor="@drawable/selectable_text_color" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tab3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?selectableItemBackground"
+            android:gravity="center_horizontal"
+            android:onClick="onTabItemSelected"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/calculator_selector" />
+
+            <TextView
+                style="@style/TextViewSmall"
+                android:layout_marginTop="3dp"
+                android:text="@string/assert_title"
+                android:textColor="@drawable/selectable_text_color" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tab4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?selectableItemBackground"
+            android:gravity="center_horizontal"
+            android:onClick="onTabItemSelected"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/more_selector" />
+
+            <TextView
+                style="@style/TextViewSmall"
+                android:layout_marginTop="3dp"
+                android:text="@string/more"
+                android:textColor="@drawable/selectable_text_color" />
+        </LinearLayout>
+        <!--<android.support.design.widget.BottomNavigationView-->
+        <!--android:id="@+id/navigation"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="45dp"-->
+        <!--android:layout_marginEnd="0dp"-->
+        <!--android:layout_marginStart="0dp"-->
+        <!--app:elevation="100dp"-->
+        <!--android:background="?android:attr/windowBackground"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:menu="@menu/navigation" />-->
+
+    </LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>

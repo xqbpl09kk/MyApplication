@@ -2,34 +2,27 @@ package fast.information.main
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.os.Handler
-import android.os.Message
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import fast.information.common.MyApplication
 import fast.information.R
 import fast.information.common.BaseFragment
-import fast.information.main.adapter.BoardAdapter
 import fast.information.main.adapter.MuiltBoardAdapter
 import fast.information.network.RetrofitHelper
 import fast.information.network.bean.TickerListItem
 import fast.information.network.bean.base.ResultCallback
 import fast.information.network.bean.base.ResultListBundle
-import kotlinx.android.synthetic.main.fragment_second.*
-import java.util.*
+import kotlinx.android.synthetic.main.fragment_market.*
 
 /**
 * MyApplication
 * Created by xiaqibo on 2018/3/1-0:19.
 */
-class FragmentTwo : BaseFragment() {
+class FragmentMarket : BaseFragment() {
     override fun getLayoutRes(): Int {
-        return R.layout.fragment_second
+        return R.layout.fragment_market
     }
 
     private val size :Int = 20
@@ -40,8 +33,8 @@ class FragmentTwo : BaseFragment() {
 
     companion object {
 
-        fun createInstance(argBundle : Bundle) : FragmentTwo {
-            val instance = FragmentTwo()
+        fun createInstance(argBundle : Bundle) : FragmentMarket {
+            val instance = FragmentMarket()
             instance.arguments = argBundle
             return instance
         }

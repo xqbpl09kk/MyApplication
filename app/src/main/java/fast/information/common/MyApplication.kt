@@ -59,13 +59,13 @@ class MyApplication  : Application(){
         colorGreen = ContextCompat.getColor(this , R.color.change_green)
         colorRed = ContextCompat.getColor(this , R.color.change_red)
         Thread.setDefaultUncaughtExceptionHandler(UnCaughtException())
-//        initUmengPush()
+        initUmengPush()
     }
 
 
 
     private fun initUmengPush(){
-//        if(BuildConfig.DEBUG) return
+        if(BuildConfig.DEBUG) return
         UMConfigure.init(this@MyApplication , UMConfigure.DEVICE_TYPE_PHONE , "88f7edf62d3a92c69092d60a77b73729")
         val mPushAgent = PushAgent.getInstance(this)
 

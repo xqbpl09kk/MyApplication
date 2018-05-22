@@ -1,17 +1,11 @@
 package fast.information.network
 
-import fast.information.network.bean.MessageItem
-import fast.information.network.bean.SearchResult
-import fast.information.network.bean.TickerListItem
-import fast.information.network.bean.UpdateInfo
+import fast.information.network.bean.*
 import fast.information.network.bean.base.ResultBundle
 import fast.information.network.bean.base.ResultListBundle
 import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
-import retrofit2.http.Url
+import retrofit2.http.*
 
 /**
 * MyApplication
@@ -43,4 +37,14 @@ interface ZhiService {
     @GET("/v1/ticker/{symbol}")
     fun getTickerItem(@Path("symbol") symbol :String)
             :Call<ResultBundle<TickerListItem>>
+
+    @POST("/v1/auth/login/email/captcha")
+    fun emailCaptcha(@Field("client_id") clientId :String
+            ,@Field("client_secret") clientSecret:String
+            ,@Field("grant_type") grantType :String
+            ,@Field("country_code") countryCode :String
+            ,@Field("email") email:String
+            ,@Field("password") password:String
+            ,@Field("device_Token" )deviceToken:String)
+            :Call<ResultBundle<AuthItem>>
 }

@@ -2,7 +2,6 @@ package fast.information.main
 
 import android.content.*
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
@@ -11,6 +10,8 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import fast.information.CollectionCoinsActivity
@@ -25,7 +26,7 @@ import fast.information.network.RetrofitHelper
 import fast.information.network.bean.UpdateInfo
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseActivity(),TimerHandler.Timer{
+class MainActivity : BaseActivity(), TimerHandler.Timer {
 
 
     override fun getLayoutRes(): Int {
@@ -34,52 +35,66 @@ class MainActivity : BaseActivity(),TimerHandler.Timer{
 
     private val fragmentManager: FragmentManager = supportFragmentManager
     private val fragmentList: ArrayList<Fragment> = ArrayList()
-    private var fragmentOne: FragmentOne? = null
-    private var fragmentTwo: FragmentTwo? = null
-    private var fragmentThree: FragmentThree? = null
+    private var fragmentNews: FragmentNews? = null
+    private var fragmentMarket: FragmentMarket? = null
+    private var fragmentAssert :FragmentAssert ?= null
+    private var fragmentMore: FragmentMore? = null
     private var currentFragment: Fragment? = null
     private var isStarChecked: Boolean = false
     private val bottomMenuIds: IntArray = intArrayOf(R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
 
-    private var searchView : SearchView ?= null
-    private var timerHandler :TimerHandler ?=null
-    private val navListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.navigation_home -> {
-                switchPageByFragment(fragmentOne)
-                setTitle(fragmentOne?.getTitle()!!)
-            }
-            R.id.navigation_dashboard -> {
-                switchPageByFragment(fragmentTwo)
-                setTitle(R.string.title_dashboard)
-            }
-            R.id.navigation_notifications -> {
-                switchPageByFragment(fragmentThree)
-                setTitle(R.string.more
+    private var searchView: SearchView? = null
+    private var timerHandler: TimerHandler? = null
+    private var selectedTabId = R.id.tab1
 
-
-                )
-            }
-        }
-        invalidateOptionsMenu()
-        return@OnNavigationItemSelectedListener true
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         savedInstanceState?.putParcelable("android:support:fragments", null)
         super.onCreate(savedInstanceState)
         Log.e("tag", "onCreate")
-        navigation.setOnNavigationItemSelectedListener(navListener)
-        initFragments()
-        checkUpdate()
 
+        initFragments()
+//        tab1.setOnClickListener({onTabItemSelected(it)})
+//        tab2.setOnClickListener({onTabItemSelected(it)})
+//        tab3.setOnClickListener({onTabItemSelected(it)})
+//        tab4.setOnClickListener({onTabItemSelected(it)})
+        checkUpdate()
+    }
+
+     fun onTabItemSelected(targetView : View){
+        when(targetView.id){
+            R.id.tab1 ->{
+                switchPageByFragment(fragmentNews)
+                setTitle(fragmentNews?.getTitle()!!)
+            }
+            R.id.tab2 ->{
+                switchPageByFragment(fragmentMarket)
+                setTitle(R.string.title_dashboard)
+            }
+            R.id.tab3 ->{
+                switchPageByFragment(fragmentAssert)
+                setTitle(R.string.assert_title)
+            }
+            R.id.tab4 ->{
+                switchPageByFragment(fragmentMore)
+                setTitle(R.string.more)
+            }
+        }
+        selectedTabId = targetView.id
+        invalidateOptionsMenu()
+        var index =0
+        while(index < (targetView.parent as ViewGroup).childCount){
+            (targetView.parent as ViewGroup).getChildAt(index).isSelected =
+                    targetView == (targetView.parent as ViewGroup).getChildAt(index)
+            index ++
+        }
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        menu?.findItem(R.id.scroll)?.isVisible = navigation.selectedItemId == R.id.navigation_home
-        menu?.findItem(R.id.star)?.isVisible = navigation.selectedItemId == R.id.navigation_home
-        menu?.findItem(R.id.search)?.isVisible = navigation.selectedItemId == R.id.navigation_dashboard
-        menu?.findItem(R.id.coin_collection)?.isVisible =  navigation.selectedItemId == R.id.navigation_dashboard
+        menu?.findItem(R.id.scroll)?.isVisible =selectedTabId == R.id.tab1
+        menu?.findItem(R.id.star)?.isVisible = selectedTabId== R.id.tab1
+        menu?.findItem(R.id.search)?.isVisible = selectedTabId == R.id.tab2
+        menu?.findItem(R.id.coin_collection)?.isVisible = selectedTabId == R.id.tab2
         return super.onPrepareOptionsMenu(menu)
     }
 
@@ -93,8 +108,8 @@ class MainActivity : BaseActivity(),TimerHandler.Timer{
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item?.itemId ?: 0 == R.id.scroll) {
-            if (currentFragment == fragmentOne) {
-                fragmentOne?.scrollToTop()
+            if (currentFragment == fragmentNews) {
+                fragmentNews?.scrollToTop()
             }
         } else if (item?.itemId ?: 0 == R.id.star) {
             isStarChecked = !isStarChecked
@@ -105,22 +120,21 @@ class MainActivity : BaseActivity(),TimerHandler.Timer{
                 item?.setIcon(R.drawable.ic_star_black_24dp)
                 setTitle(R.string.fast_information)
             }
-            fragmentOne?.switchContent()
-        }else if(item?.itemId ?:0 == android.R.id.home){
-            if(currentFragment == fragmentTwo) shrinkSearchView()
-        }else if(item?.itemId == R.id.coin_collection){
-             MyApplication.instance.jumpActivity(CollectionCoinsActivity::class.java , null)
+            fragmentNews?.switchContent()
+        } else if (item?.itemId ?: 0 == android.R.id.home) {
+            if (currentFragment == fragmentMarket) shrinkSearchView()
+        } else if (item?.itemId == R.id.coin_collection) {
+            MyApplication.instance.jumpActivity(CollectionCoinsActivity::class.java, null)
         }
         return true
     }
 
 
-
     override fun onResume() {
         super.onResume()
-        if(timerHandler == null)
+        if (timerHandler == null)
             timerHandler = TimerHandler(this)
-        timerHandler!!.sendEmptyMessageDelayed(TimerHandler.move , TimerHandler.delayMillis)
+        timerHandler!!.sendEmptyMessageDelayed(TimerHandler.move, TimerHandler.delayMillis)
     }
 
     override fun onStop() {
@@ -132,61 +146,50 @@ class MainActivity : BaseActivity(),TimerHandler.Timer{
 
 
     override fun onBackPressed() {
-        if(searchView?.isIconified == false){
+        if (searchView?.isIconified == false) {
             shrinkSearchView()
-        }else
+        } else
             moveTaskToBack(true)
     }
 
     override fun onTime() {
-        if(fragmentTwo?.isVisible == true)
-            fragmentTwo?.netStep(false)
+        if (fragmentMarket?.isVisible == true)
+            fragmentMarket?.netStep(false)
     }
 
-//    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-//        Log.e("tag", "onRestoreInstanceState")
-//        val position = savedInstanceState.getInt("position")
-//        switchPageByIndex(position)
-//        navigation.selectedItemId = bottomMenuIds[position]
-//        super.onRestoreInstanceState(savedInstanceState)
-//    }
-//
-//
-//    override fun onSaveInstanceState(outState: Bundle?) {
-//        super.onSaveInstanceState(outState)
-//        outState!!.putInt("position", fragmentList.indexOf(currentFragment))
-//        Log.e("tag", "onSaveInstanceState")
-//    }
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+
+    }
 
     private fun initFragments() {
 
         val bundle1 = Bundle()
-        fragmentOne = FragmentOne.createInstance(bundle1)
-//        fragmentOne = Fragment.instantiate(MyApplication.instance
-//                , "fast.information.main.FragmentOne" , bundle1 ) as FragmentOne
-        fragmentList.add(fragmentOne!!)
+        fragmentNews = FragmentNews.createInstance(bundle1)
+        fragmentList.add(fragmentNews!!)
 
         val bundle2 = Bundle()
-        fragmentTwo = FragmentTwo.createInstance(bundle2)
-//        fragmentTwo = Fragment.instantiate(MyApplication.instance
-//                , "fast.information.main.FragmentTwo" , bundle2 ) as FragmentTwo
-        fragmentList.add(fragmentTwo!!)
+        fragmentMarket = FragmentMarket.createInstance(bundle2)
+        fragmentList.add(fragmentMarket!!)
 
         val bundle3 = Bundle()
-        fragmentThree = FragmentThree.createInstance(bundle3)
-//        fragmentThree = Fragment.instantiate(MyApplication.instance
-//                , "fast.information.main.FragmentThree" , bundle3 ) as FragmentThree
+        fragmentAssert = FragmentAssert.createInstance(bundle3)
+        fragmentList.add(fragmentAssert!!)
 
-        fragmentList.add(fragmentThree!!)
+        val bundle4 = Bundle()
+        fragmentMore = FragmentMore.createInstance(bundle4)
+        fragmentList.add(fragmentMore!!)
         switchPageByIndex(0)
+        tab1.isSelected = true
+
     }
 
     private fun switchPageByIndex(pageIndex: Int) {
         assert(pageIndex < 3)
         val ft = fragmentManager.beginTransaction()
         currentFragment = if (currentFragment == null) {
-            ft.add(R.id.main_fragment_container, fragmentOne)
-            fragmentOne
+            ft.add(R.id.main_fragment_container, fragmentNews)
+            fragmentNews
         } else {
             ft.hide(currentFragment)
             val targetFragment: Fragment = fragmentList[pageIndex]
@@ -204,8 +207,8 @@ class MainActivity : BaseActivity(),TimerHandler.Timer{
     private fun switchPageByFragment(targetFragment: Fragment?) {
         val ft = fragmentManager.beginTransaction()
         currentFragment = if (currentFragment == null) {
-            ft.add(R.id.main_fragment_container, fragmentOne)
-            fragmentOne
+            ft.add(R.id.main_fragment_container, fragmentNews)
+            fragmentNews
         } else {
             ft.hide(currentFragment)
             if (targetFragment?.isAdded == true) {
@@ -228,10 +231,10 @@ class MainActivity : BaseActivity(),TimerHandler.Timer{
                 val updateInfo = t?.item ?: return
                 if (updateInfo.latest_app_version
                         != packageManager.getPackageInfo(packageName, 0).versionName) {
-                    if(getSharedPreferences("settings", Context.MODE_PRIVATE).getBoolean("update" , false)){
-                        download(updateInfo.android_url ,updateInfo.latest_app_version)
-                        Toast.makeText(MyApplication.instance , R.string.auto_update_on_go , Toast.LENGTH_LONG).show()
-                    }else{
+                    if (getSharedPreferences("settings", Context.MODE_PRIVATE).getBoolean("update", false)) {
+                        download(updateInfo.android_url, updateInfo.latest_app_version)
+                        Toast.makeText(MyApplication.instance, R.string.auto_update_on_go, Toast.LENGTH_LONG).show()
+                    } else {
                         showUpdateDialog(updateInfo)
                     }
                 }
@@ -243,7 +246,7 @@ class MainActivity : BaseActivity(),TimerHandler.Timer{
         })
     }
 
-    private var updateDialog : AlertDialog ? = null
+    private var updateDialog: AlertDialog? = null
 
     private fun showUpdateDialog(updateInfo: UpdateInfo) {
         if (isFinishing) return
@@ -256,19 +259,17 @@ class MainActivity : BaseActivity(),TimerHandler.Timer{
                 }.setPositiveButton(R.string.update) { dialog, _ ->
                     dialog.cancel()
                     updateDialog = null
-                    download(updateInfo.android_url,updateInfo.latest_app_version)
-                }.setOnCancelListener({ updateDialog = null  })
+                    download(updateInfo.android_url, updateInfo.latest_app_version)
+                }.setOnCancelListener({ updateDialog = null })
         updateDialog = dialogBuilder.create()
         updateDialog?.show()
     }
 
 
-
-
-    private fun setupSearchView(searchView :SearchView?){
-        if(searchView == null ) return
+    private fun setupSearchView(searchView: SearchView?) {
+        if (searchView == null) return
         searchView.queryHint = getString(R.string.coin_symbol)
-        searchView.setOnCloseListener ({
+        searchView.setOnCloseListener({
             supportActionBar?.setDisplayHomeAsUpEnabled(false)
             false
         })
@@ -290,17 +291,17 @@ class MainActivity : BaseActivity(),TimerHandler.Timer{
     }
 
 
-    private fun shrinkSearchView(){
+    private fun shrinkSearchView() {
         searchView?.findViewById<TextView>(R.id.search_src_text)?.text = ""
         searchView?.isIconified = true
     }
 
 
-    private fun doSearch(query :String ?){
+    private fun doSearch(query: String?) {
 
-        if(TextUtils.isEmpty(query)) return
+        if (TextUtils.isEmpty(query)) return
         val bundle = Bundle()
-        bundle.putString("key" , query)
-        MyApplication.instance.jumpActivity(SearchActivity::class.java , bundle)
+        bundle.putString("key", query)
+        MyApplication.instance.jumpActivity(SearchActivity::class.java, bundle)
     }
 }

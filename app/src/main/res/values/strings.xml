@@ -59,7 +59,7 @@
     <string name="collected_link">收藏网址</string>
     <string name="save">保存</string>
     <string name="link_name_hint">网站名称</string>
-    <string name="link_url_hint">网站地址(以http/https/ftp开头)</string>
+    <string name="link_url_hint">网站地址(以http/https开头)</string>
     <string name="url_none_empty">请输入地址</string>
     <string name="url_invalidate">输入的地址无效</string>
     <string name="edit">编辑</string>
@@ -74,6 +74,7 @@
     <string name="update_not">不消耗流量</string>
     <string name="bz_share">【币知分享】 </string>
     <string name="share_app">谢谢分享</string>
-    <string name="share_text">币知：区块链爱好者业余时间制作，纯绿色的一款币圈资讯、行情浏览应用，欢迎下载使用。</string>
-
+    <string name="share_text">币知：区块链爱好者业余时间制作，纯绿色的一款币圈资讯、行情浏览应用，欢迎到Play商店下载使用。</string>
+    <string name="assert_title">我的资产</string>
+    <string name="assert_group">资产组合</string>
 </resources>

@@ -6,7 +6,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
-import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -28,15 +27,15 @@ import kotlin.collections.ArrayList
  * MyApplication
  * Created by xiaqibo on 2018/3/1-0:18.
  */
-class FragmentThree : BaseFragment() {
+class FragmentMore : BaseFragment() {
     override fun getLayoutRes(): Int {
         return R.layout.fragment_more
     }
 
     companion object {
 
-        fun createInstance(argBundle: Bundle): FragmentThree {
-            val instance = FragmentThree()
+        fun createInstance(argBundle: Bundle): FragmentMore {
+            val instance = FragmentMore()
             instance.arguments = argBundle
             return instance
         }

@@ -5,10 +5,7 @@ import android.util.Log
 import com.google.gson.GsonBuilder
 import fast.information.BuildConfig
 import fast.information.common.MyApplication
-import fast.information.network.bean.MessageItem
-import fast.information.network.bean.SearchResult
-import fast.information.network.bean.TickerListItem
-import fast.information.network.bean.UpdateInfo
+import fast.information.network.bean.*
 import fast.information.network.bean.base.ResultBundle
 import fast.information.network.bean.base.ResultCallback
 import fast.information.network.bean.base.ResultListBundle
@@ -86,6 +83,20 @@ class RetrofitHelper private constructor(){
 
     fun search(key:String, result : ResultCallback<ResultListBundle<TickerListItem>>){
         val call : Call<ResultListBundle<TickerListItem>> = service.search(key)
+        handleRequest(call , result)
+    }
+
+    fun emailCaptcha(countryCode :String , email :String
+                     , password :String , deviceToken:String
+                     , result : ResultCallback<ResultBundle<AuthItem>>){
+        val call :Call<ResultBundle<AuthItem>> = service.emailCaptcha(
+                "0cxBeKjNbdFvp8S7su3feAbDvIGxMGfXxvcd1p9A"
+                ,"OfMwjhasmVuLi8WNAYHaxF4IgsjnBVcREuN3fJXr"
+                ,"password"
+                ,countryCode
+                ,email
+                ,password
+                ,deviceToken )
         handleRequest(call , result)
     }
 

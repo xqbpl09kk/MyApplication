@@ -16,5 +16,8 @@
         android:id="@+id/navigation_notifications"
         android:icon="@drawable/ic_more_horiz_black_24dp"
         android:title="@string/more" />
-
+    <item
+        android:id="@+id/navigation_notifications1"
+        android:icon="@drawable/ic_more_horiz_black_24dp"
+        android:title="@string/more" />
 </menu>

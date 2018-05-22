@@ -4,14 +4,9 @@ import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.support.annotation.StringRes
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.SimpleItemAnimator
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import com.google.gson.Gson
 import fast.information.common.MyApplication
@@ -22,21 +17,17 @@ import fast.information.network.bean.MessageItem
 import fast.information.network.bean.base.ResultCallback
 import fast.information.network.bean.base.ResultListBundle
 import fast.information.network.RetrofitHelper
-import kotlinx.android.synthetic.main.fragment_one.*
-import java.util.regex.Matcher
-import java.util.regex.Pattern
+import kotlinx.android.synthetic.main.fragment_news.*
 
 /**
  * MyApplication
  * Created by xiaqibo on 2018/3/1-0:19.
  */
-class FragmentOne : BaseFragment() , HomeAdapter.OnItemClick {
-    override fun onItemClicked(position : Int ) {
-        recycler_view.smoothScrollToPosition(position)
-    }
+class FragmentNews : BaseFragment() , HomeAdapter.OnItemClick {
+
 
     override fun getLayoutRes(): Int {
-        return R.layout.fragment_one
+        return R.layout.fragment_news
     }
 
     private var cursor: Int = 0
@@ -47,8 +38,8 @@ class FragmentOne : BaseFragment() , HomeAdapter.OnItemClick {
 
     companion object {
 
-        fun createInstance(argBundle: Bundle): FragmentOne {
-            val instance = FragmentOne()
+        fun createInstance(argBundle: Bundle): FragmentNews {
+            val instance = FragmentNews()
             instance.arguments = argBundle
             return instance
         }
@@ -59,7 +50,7 @@ class FragmentOne : BaseFragment() , HomeAdapter.OnItemClick {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = HomeAdapter(context!!)
-        adapter.setClickListener(this@FragmentOne)
+        adapter.setClickListener(this@FragmentNews)
 
         recycler_view.adapter = adapter
         recycler_view.layoutManager = layoutManager
@@ -182,5 +173,7 @@ class FragmentOne : BaseFragment() , HomeAdapter.OnItemClick {
             R.string.title_home
         }
     }
-
+    override fun onItemClicked(position : Int ) {
+        recycler_view.smoothScrollToPosition(position)
+    }
 }

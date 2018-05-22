@@ -24,4 +24,28 @@
         <item name="android:textColorHint">@color/text_hint</item>
     </style>
 
+    <style name="TextViewNormal">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/textColorBlackTitle</item>
+        <item name="android:textSize">@dimen/textSizeNormal</item>
+    </style>
+
+    <style name="TextViewSmall" parent="TextViewNormal">
+        <item name="android:textSize">@dimen/textSizeSmall</item>
+    </style>
+
+    <style name="TextViewLarge" parent="TextViewNormal">
+        <item name="android:textSize">@dimen/textSizeLarge</item>
+    </style>
+
+    <style name="TextViewLight" parent="TextViewNormal">
+
+        <item name="android:textColor">@color/textColorGrayLabel</item>
+    </style>
+    <style name="TextViewLightSmall" parent = "TextViewSmall">
+        <item name="android:textColor">@color/textColorGrayLabel</item>
+    </style>
+
 </resources>
