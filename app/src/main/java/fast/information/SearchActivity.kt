@@ -1,7 +1,9 @@
 package fast.information
 
+import android.support.v7.app.ActionBar
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
+import android.widget.SearchView
 import android.widget.Toast
 import fast.information.common.BaseActivity
 import fast.information.common.MyApplication
@@ -32,9 +34,13 @@ class SearchActivity : BaseActivity() {
         super.registerViews()
         recycler_view.adapter = adapter
         recycler_view.layoutManager = LinearLayoutManager(MyApplication.instance)
-        key= intent.getBundleExtra("data").getString("key")
-        title = getString(R.string.search).plus(key?.toUpperCase())
-        search()
+        key= intent.getBundleExtra("data")?.getString("key")
+        if(!TextUtils.isEmpty(key)){
+            title = getString(R.string.search).plus(key?.toUpperCase())
+            search()
+        }else{
+            supportActionBar?.setCustomView(SearchView(this) , ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT , ActionBar.LayoutParams.WRAP_CONTENT))
+        }
     }
 
 

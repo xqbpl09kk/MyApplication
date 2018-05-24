@@ -77,4 +77,24 @@
     <string name="share_text">币知：区块链爱好者业余时间制作，纯绿色的一款币圈资讯、行情浏览应用，欢迎到Play商店下载使用。</string>
     <string name="assert_title">我的资产</string>
     <string name="assert_group">资产组合</string>
+    <string name="coin_information">购买信息</string>
+    <string name="select_coin">请选择你投资的币种</string>
+    <string name="amount">数量</string>
+    <string name="create_assert">添加资产</string>
+    <string name="price_when_bought">买入价格</string>
+    <string name="total_price">总价</string>
+    <string name="bought_date">购买时间</string>
+    <string name="label">标签</string>
+    <string name="default_label">默认标签</string>
+    <string name="remark">备注</string>
+    <string name="coin_note_hint">选填项，最多200字</string>
+    <string name="USDT">USDT</string>
+    <string name="ETH">ETH</string>
+    <string name="BTC">BTC</string>
+    <string name="unit_price">单价</string>
+    <string name="select_label">选择标签</string>
+    <string name="input_coin_name">请输入币的简称</string>
+    <string name="create_label">创建标签</string>
+    <string name="create">新建</string>
+    <string name="login">登录</string>
 </resources>

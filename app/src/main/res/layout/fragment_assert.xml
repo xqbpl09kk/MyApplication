@@ -6,6 +6,7 @@
     <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -84,6 +85,15 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="20dp"
+        android:visibility="gone"
         android:src="@drawable/add" />
+
+    <Button style="@style/TextViewLarge"
+        android:id="@+id/login_btn"
+        android:background="@drawable/save_bg"
+        android:layout_gravity="center"
+        android:text="@string/login"
+        android:gravity="center"
+        android:textColor="@color/white"/>
 
 </FrameLayout>

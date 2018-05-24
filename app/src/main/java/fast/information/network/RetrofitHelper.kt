@@ -37,37 +37,37 @@ class RetrofitHelper private constructor(){
             .build()
 
 
-    private val service: ZhiService = retrofit.create(ZhiService::class.java)
-
+    private val zhiService: ZhiService = retrofit.create(ZhiService::class.java)
+    private val tokenService: TokenService = retrofit.create(TokenService::class.java)
 
     companion object {
         val instance: RetrofitHelper = RetrofitHelper()
     }
 
     fun getMessage(cursor: Int, size: Int, result: ResultCallback<ResultListBundle<MessageItem>>){
-        val call : Call<ResultListBundle<MessageItem>> = service.getMessage(cursor , size )
+        val call : Call<ResultListBundle<MessageItem>> = zhiService.getMessage(cursor , size )
         handleRequest(call , result)
     }
 
 
     fun checkUpdate(result : ResultCallback<ResultBundle<UpdateInfo>>){
-        val call : Call<ResultBundle<UpdateInfo>> = service.checkUpdate()
+        val call : Call<ResultBundle<UpdateInfo>> = zhiService.checkUpdate()
         handleRequest(call , result)
     }
 
 
     fun tickerList(cursor:Int , size:Int , result : ResultCallback<ResultListBundle<TickerListItem>>){
-        val call : Call<ResultListBundle<TickerListItem>> = service.tickerList(cursor , size )
+        val call : Call<ResultListBundle<TickerListItem>> = zhiService.tickerList(cursor , size )
         handleRequest(call , result)
     }
 
     fun tickerItem(symbol:String ,result : ResultCallback<ResultBundle<TickerListItem>>){
-        val call : Call<ResultBundle<TickerListItem>> = service.getTickerItem(symbol)
+        val call : Call<ResultBundle<TickerListItem>> = zhiService.getTickerItem(symbol)
         handleRequest(call , result)
     }
 
     fun tickerItemSync(symbol:String ,result : ResultCallback<ResultBundle<TickerListItem>>){
-        val call : Call<ResultBundle<TickerListItem>> = service.getTickerItem(symbol)
+        val call : Call<ResultBundle<TickerListItem>> = zhiService.getTickerItem(symbol)
         var  response : Response<ResultBundle<TickerListItem>> ? = null
         try{
             response = call.execute()
@@ -82,14 +82,14 @@ class RetrofitHelper private constructor(){
     }
 
     fun search(key:String, result : ResultCallback<ResultListBundle<TickerListItem>>){
-        val call : Call<ResultListBundle<TickerListItem>> = service.search(key)
+        val call : Call<ResultListBundle<TickerListItem>> = zhiService.search(key)
         handleRequest(call , result)
     }
 
     fun emailCaptcha(countryCode :String , email :String
                      , password :String , deviceToken:String
                      , result : ResultCallback<ResultBundle<AuthItem>>){
-        val call :Call<ResultBundle<AuthItem>> = service.emailCaptcha(
+        val call :Call<ResultBundle<AuthItem>> = zhiService.emailCaptcha(
                 "0cxBeKjNbdFvp8S7su3feAbDvIGxMGfXxvcd1p9A"
                 ,"OfMwjhasmVuLi8WNAYHaxF4IgsjnBVcREuN3fJXr"
                 ,"password"
@@ -100,9 +100,24 @@ class RetrofitHelper private constructor(){
         handleRequest(call , result)
     }
 
+    fun getCoins(result : ResultCallback<ResultListBundle<String>>){
+        handleRequest( tokenService.getCoins() , result)
+    }
+
+    fun assertGroup(result : ResultCallback<ResultListBundle<AssertGroup>>){
+        handleRequest(tokenService.assertGroups() ,result)
+    }
+
+
+    fun createAssertGroup(name :String , result : ResultCallback<ResultBundle<AssertGroup>>){
+        handleRequest(tokenService.createAssertGroup(name) ,result)
+    }
+
+
+
 
     fun downloadApkFile(downloadUrl :String , result : ResultCallback<Int>){
-        val call = service.downloadApkFile(downloadUrl)
+        val call = zhiService.downloadApkFile(downloadUrl)
 
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {

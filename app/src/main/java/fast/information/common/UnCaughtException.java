@@ -49,7 +49,6 @@ public class UnCaughtException implements Thread.UncaughtExceptionHandler {
             if(!BuildConfig.DEBUG){
                 System.exit(0);
             }else{
-                Toast.makeText(MyApplication.instance, "遇到致命BUG， 请在文件系统查看LOG", Toast.LENGTH_LONG).show();
                 ClipboardManager clipboardManager = (ClipboardManager) MyApplication.instance.getSystemService(Context.CLIPBOARD_SERVICE);
                 clipboardManager.setText(info) ;
             }

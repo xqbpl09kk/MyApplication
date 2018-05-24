@@ -55,6 +55,14 @@
             android:label="@string/collection"/>
         <activity android:name=".LinkEditActivity"
             android:label="@string/collected_link"/>
+
+        <activity android:name=".CreateAssertActivity"
+            android:label="@string/create_assert"/>
+
+        <activity android:name=".CoinSelectActivity"
+            android:label="@string/select_coin"/>
+        <activity android:name=".LabelActivity"
+            android:label="@string/select_label"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"

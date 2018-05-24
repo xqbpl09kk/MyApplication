@@ -4,6 +4,6 @@
 
     <dimen name="textSizeNormal">16sp</dimen>
 
-    <dimen name="textSizeSmall">11sp</dimen>
+    <dimen name="textSizeSmall">13sp</dimen>
     <dimen name="textSizeLarge">18sp</dimen>
 </resources>

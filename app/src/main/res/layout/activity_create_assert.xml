@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TextViewNormal"
+            android:layout_width="match_parent"
+            android:background="@color/label_color"
+            android:paddingBottom="5dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/coin_information" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp">
+
+            <TextView
+                android:id="@+id/coin_text"
+                style="@style/TextViewLarge"
+                android:layout_width="match_parent"
+                android:background="?android:selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingBottom="5dp"
+                android:paddingTop="10dp"
+                android:text="@string/select_coin" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:focusedByDefault="false">
+
+                <EditText
+                    android:id="@+id/amount_editor"
+                    style="@style/TextViewNormal"
+                    android:layout_width="match_parent"
+                    android:focusedByDefault="false"
+                    android:hint="@string/amount"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:id="@+id/price_editor"
+                        style="@style/TextViewNormal"
+                        android:layout_width="match_parent"
+                        android:hint="@string/price_when_bought"
+                        android:inputType="number" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/price_unit"
+                    style="@style/TextViewNormal"
+                    android:layout_marginStart="10dp"
+                    android:background="?android:selectableItemBackground"
+                    android:drawableEnd="@drawable/down"
+                    android:paddingStart="5dp"
+                    android:text="usdt" />
+
+                <TextView
+                    android:id="@+id/price_mode"
+                    style="@style/TextViewNormal"
+                    android:layout_marginStart="10dp"
+                    android:background="?android:selectableItemBackground"
+                    android:drawableEnd="@drawable/down"
+                    android:paddingStart="5dp"
+                    android:text="@string/total_price" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <TextView
+            style="@style/TextViewSmall"
+            android:layout_width="match_parent"
+            android:background="@color/label_color"
+            android:paddingBottom="5dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/bought_date" />
+
+        <TextView
+            android:id="@+id/bought_date"
+            style="@style/TextViewNormal"
+            android:layout_width="match_parent"
+            android:background="?android:selectableItemBackground"
+            android:padding="10dp"
+            android:text="2018-01-29" />
+
+        <TextView
+            style="@style/TextViewSmall"
+            android:layout_width="match_parent"
+            android:background="@color/label_color"
+            android:paddingBottom="5dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/label" />
+
+        <TextView
+            android:id="@+id/label_text"
+            style="@style/TextViewNormal"
+            android:layout_width="match_parent"
+            android:background="?android:selectableItemBackground"
+            android:padding="10dp"
+            android:paddingBottom="5dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="5dp"
+            android:text="@string/default_label" />
+
+        <TextView
+            style="@style/TextViewSmall"
+            android:layout_width="match_parent"
+            android:background="@color/label_color"
+            android:paddingBottom="5dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/remark" />
+
+        <EditText
+            style="@style/TextViewSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="top"
+            android:hint="@string/coin_note_hint"
+            android:minHeight="59dp"
+            android:padding="10dp" />
+    </LinearLayout>
+
+</ScrollView>
