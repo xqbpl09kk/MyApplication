@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!--<uses-permission android:name="android.permission.READ_PHONE_STATE" />-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="false"
@@ -57,12 +57,16 @@
             android:label="@string/collected_link"/>
 
         <activity android:name=".CreateAssertActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/create_assert"/>
 
         <activity android:name=".CoinSelectActivity"
             android:label="@string/select_coin"/>
         <activity android:name=".LabelActivity"
             android:label="@string/select_label"/>
+        <activity android:name=".LoginActivity"
+            android:label="@string/login"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"

@@ -14,6 +14,7 @@ import com.umeng.message.PushAgent
 import fast.information.common.BaseActivity
 import fast.information.common.MyApplication
 import fast.information.common.TimerHandler
+import fast.information.network.RetrofitHelper
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
 
@@ -45,6 +46,8 @@ class SettingsActivity :BaseActivity() , PopupMenu.OnMenuItemClickListener {
             rateArray[2] -> refresh_rate_selector.setText(R.string.ten_second)
             rateArray[3] -> refresh_rate_selector.setText(R.string.fiveteen_second)
         }
+        login_out.visibility = if(RetrofitHelper.auth == null) View.GONE else View.VISIBLE
+        login_out.setOnClickListener({logout()})
     }
 
     override fun onBackPressed() {
@@ -89,6 +92,13 @@ class SettingsActivity :BaseActivity() , PopupMenu.OnMenuItemClickListener {
         return true
     }
 
+
+    private fun logout(){
+        RetrofitHelper.auth = null
+        MyApplication.instance.saveAuth(null)
+        Toast.makeText(MyApplication.instance , R.string.logout_success , Toast.LENGTH_SHORT).show()
+        login_out.visibility = View.GONE
+    }
 
     private fun createMenu(view : View){
         val popupMenu = PopupMenu(MyApplication.instance, view)

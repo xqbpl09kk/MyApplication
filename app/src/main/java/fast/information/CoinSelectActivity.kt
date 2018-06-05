@@ -3,6 +3,7 @@ package fast.information
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.support.v7.app.ActionBar
@@ -18,6 +19,8 @@ import android.widget.Toast
 import fast.information.common.BaseActivity
 import fast.information.common.MyApplication
 import fast.information.network.RetrofitHelper
+import fast.information.network.bean.TickerListItem
+import fast.information.network.bean.base.ResultBundle
 import fast.information.network.bean.base.ResultCallback
 import fast.information.network.bean.base.ResultListBundle
 import kotlinx.android.synthetic.main.activity_coin_select.*
@@ -43,8 +46,20 @@ class CoinSelectActivity : BaseActivity() {
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             (holder.itemView as TextView).text = showData?.get(position) ?: ""
             holder.itemView.setOnClickListener({
-                setResult(Activity.RESULT_OK , Intent().putExtra("coin" , showData?.get(position)))
-                finish()
+
+                RetrofitHelper.instance.tickerItem(showData?.get(position)!! , object:ResultCallback<ResultBundle<TickerListItem>>{
+                    override fun onSuccess(t: ResultBundle<TickerListItem>?) {
+                        setResult(Activity.RESULT_OK , Intent().putExtra("coin" , showData?.get(position)))
+                        finish()
+                    }
+
+                    override fun onFailure(message: String, errorCode: Int) {
+                        Toast.makeText(MyApplication.instance , "抱歉，暂时不支持这种币的计算。" , Toast.LENGTH_SHORT).show()
+                    }
+                })
+
+
+
             })
         }
 

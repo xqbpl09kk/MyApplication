@@ -14,6 +14,7 @@ import android.support.annotation.ColorInt
 import android.support.annotation.Nullable
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
 import com.umeng.commonsdk.UMConfigure
@@ -21,6 +22,8 @@ import com.umeng.message.IUmengRegisterCallback
 import com.umeng.message.PushAgent
 import fast.information.BuildConfig
 import fast.information.R
+import fast.information.network.RetrofitHelper
+import fast.information.network.bean.AuthItem
 import org.android.agoo.huawei.HuaWeiRegister
 import org.android.agoo.mezu.MeizuRegister
 import org.android.agoo.xiaomi.MiPushRegistar
@@ -58,8 +61,9 @@ class MyApplication  : Application(){
         instance = this
         colorGreen = ContextCompat.getColor(this , R.color.change_green)
         colorRed = ContextCompat.getColor(this , R.color.change_red)
-        Thread.setDefaultUncaughtExceptionHandler(UnCaughtException())
-        initUmengPush()
+//        Thread.setDefaultUncaughtExceptionHandler(UnCaughtException())
+//        initUmengPush()
+        RetrofitHelper.auth = restoreAuth()
     }
 
 
@@ -84,6 +88,41 @@ class MyApplication  : Application(){
         MiPushRegistar.register(this@MyApplication , miPushId , miPushSecret)
         MeizuRegister.register(this@MyApplication , meiZuId , meizuKey)
 
+    }
+
+
+
+    fun saveAuth(item :AuthItem ?){
+        val preferenceEditor  = getSharedPreferences("auth" , Context.MODE_PRIVATE).edit()
+        preferenceEditor.putString("access_token" , item?.access_token)
+        preferenceEditor.putString("token_type" , item?.token_type)
+        preferenceEditor.putString("expires_at" , item?.expires_at)
+        preferenceEditor.putString("refresh_token" , item?.refresh_token)
+        preferenceEditor.putBoolean("is_new" , item?.is_new?:false)
+        preferenceEditor.putString("user_id" , item?.user?.id)
+        preferenceEditor.putString("user_name" , item?.user?.name)
+        preferenceEditor.putString("user_avatar" , item?.user?.avatar)
+        preferenceEditor.putString("user_email" ,item?.user?.email)
+        preferenceEditor.apply()
+    }
+
+
+    private fun restoreAuth() : AuthItem ?{
+        val preference  = getSharedPreferences("auth" , Context.MODE_PRIVATE)
+        if(TextUtils.isEmpty(preference.getString("access_token" ,"")))
+            return null
+        val item = AuthItem()
+        item.user = AuthItem.Companion.User()
+        item.access_token = preference.getString("access_token" ,"")
+        item.token_type = preference.getString("token_type" ,"")
+        item.expires_at = preference.getString("expires_at" ,"")
+        item.refresh_token = preference.getString("refresh_token" ,"")
+        item.is_new = preference.getBoolean("is_new" ,false)
+        item.user!!.id = preference.getString("user_id" ,"")
+        item.user!!.name = preference.getString("user_name" ,"")
+        item.user!!.avatar = preference.getString("user_avatar" ,"")
+        item.user!!.email = preference.getString("user_email" ,"")
+        return item
     }
 
 

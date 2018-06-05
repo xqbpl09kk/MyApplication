@@ -6,77 +6,14 @@
     <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
-        android:visibility="gone"
         android:layout_height="match_parent">
 
-        <LinearLayout
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/red">
-
-                <TextView
-                    android:id="@+id/group_text"
-                    style="@style/TextViewNormal"
-                    android:drawableEnd="@drawable/down"
-                    android:text="@string/assert_group" />
-
-                <TextView
-                    android:id="@+id/text1"
-                    style="@style/TextViewSmall"
-                    android:layout_alignBottom="@id/amount"
-                    android:text="=￥" />
-
-                <TextView
-                    android:id="@+id/amount"
-                    style="@style/TextViewLarge"
-                    android:layout_below="@id/group_text"
-                    android:layout_toRightOf="@+id/text1"
-                    android:text="172,182,11" />
-
-                <TextView
-                    android:id="@+id/rate_today"
-                    style="@style/TextViewSmall"
-                    android:layout_below="@id/text1"
-                    android:text="今日利润" />
-
-                <TextView
-                    android:id="@+id/rate_total"
-                    style="@style/TextViewSmall"
-                    android:layout_below="@id/rate_today"
-                    android:text="总利润" />
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/TextViewNormal"
-                    android:layout_weight="1"
-                    android:text="具体项" />
-
-                <TextView
-                    android:id="@+id/sort_mode"
-                    style="@style/TextViewSmall"
-                    android:background="?selectableItemBackgroundBorderless"
-                    android:clickable="true"
-                    android:drawableEnd="@drawable/ic_sort_black_24dp"
-                    android:drawablePadding="3dp"
-                    android:focusable="true"
-                    android:text="利润" />
-            </LinearLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.design.widget.FloatingActionButton
@@ -85,15 +22,16 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="20dp"
-        android:visibility="gone"
         android:src="@drawable/add" />
 
-    <Button style="@style/TextViewLarge"
+    <Button
         android:id="@+id/login_btn"
-        android:background="@drawable/save_bg"
+        style="@style/TextViewLarge"
         android:layout_gravity="center"
-        android:text="@string/login"
+        android:background="@drawable/save_bg"
         android:gravity="center"
-        android:textColor="@color/white"/>
+        android:text="@string/login"
+        android:textColor="@color/white"
+        android:visibility="gone" />
 
 </FrameLayout>

@@ -2,10 +2,12 @@ package fast.information.network
 
 
 import android.util.Log
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import fast.information.BuildConfig
 import fast.information.common.MyApplication
 import fast.information.network.bean.*
+import fast.information.network.bean.base.ErrorBundle
 import fast.information.network.bean.base.ResultBundle
 import fast.information.network.bean.base.ResultCallback
 import fast.information.network.bean.base.ResultListBundle
@@ -19,6 +21,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.OutputStream
+import java.util.*
 
 /**
 * MyApplication
@@ -37,11 +40,14 @@ class RetrofitHelper private constructor(){
             .build()
 
 
+
+
     private val zhiService: ZhiService = retrofit.create(ZhiService::class.java)
     private val tokenService: TokenService = retrofit.create(TokenService::class.java)
 
     companion object {
         val instance: RetrofitHelper = RetrofitHelper()
+        var auth : AuthItem ?= null
     }
 
     fun getMessage(cursor: Int, size: Int, result: ResultCallback<ResultListBundle<MessageItem>>){
@@ -86,18 +92,28 @@ class RetrofitHelper private constructor(){
         handleRequest(call , result)
     }
 
-    fun emailCaptcha(countryCode :String , email :String
-                     , password :String , deviceToken:String
-                     , result : ResultCallback<ResultBundle<AuthItem>>){
-        val call :Call<ResultBundle<AuthItem>> = zhiService.emailCaptcha(
+    fun emailAuth(countryCode :String, email :String
+                  , password :String, deviceToken:String
+                  , result : ResultCallback<ResultBundle<AuthItem>>){
+        val call :Call<ResultBundle<AuthItem>> = zhiService.emailAuth(
                 "0cxBeKjNbdFvp8S7su3feAbDvIGxMGfXxvcd1p9A"
                 ,"OfMwjhasmVuLi8WNAYHaxF4IgsjnBVcREuN3fJXr"
-                ,"password"
-                ,countryCode
-                ,email
-                ,password
-                ,deviceToken )
+                ,"password" ,countryCode ,email ,password ,deviceToken )
         handleRequest(call , result)
+    }
+
+    fun phoneAuth(countryCode :String, cell :String
+                  , code :String, deviceToken:String
+                  , result : ResultCallback<ResultBundle<AuthItem>>){
+        val call :Call<ResultBundle<AuthItem>> = zhiService.phoneAuth(
+                "0cxBeKjNbdFvp8S7su3feAbDvIGxMGfXxvcd1p9A"
+                ,"OfMwjhasmVuLi8WNAYHaxF4IgsjnBVcREuN3fJXr"
+                ,"password" ,countryCode ,cell ,code ,deviceToken )
+        handleRequest(call , result)
+    }
+
+    fun captureCode(countryCode: String , cell: String , result : ResultCallback<ResultBundle<String>>){
+        handleRequest(zhiService.captureCode(countryCode ,cell , "sms" ) ,result)
     }
 
     fun getCoins(result : ResultCallback<ResultListBundle<String>>){
@@ -105,47 +121,63 @@ class RetrofitHelper private constructor(){
     }
 
     fun assertGroup(result : ResultCallback<ResultListBundle<AssertGroup>>){
-        handleRequest(tokenService.assertGroups() ,result)
+        handleRequest(tokenService.assertGroups("Bearer ".plus(RetrofitHelper.auth?.access_token)) ,result)
     }
 
 
     fun createAssertGroup(name :String , result : ResultCallback<ResultBundle<AssertGroup>>){
-        handleRequest(tokenService.createAssertGroup(name) ,result)
+        handleRequest(tokenService.createAssertGroup("Bearer ".plus(RetrofitHelper.auth?.access_token), name) ,result)
     }
 
+    fun createAssert(coin :String , currency: String
+                     , amount :String ,cost_price :String
+                     , position:String , exchange:String
+                     , wallet_address:String ,operate_date:String
+                     , result : ResultCallback<ResultBundle<Assert>>){
+        handleRequest(tokenService.createAssert("Bearer ".plus(RetrofitHelper.auth?.access_token)
+            ,coin , currency , amount , cost_price,position , exchange , wallet_address, operate_date ) ,result)
 
-
-
-    fun downloadApkFile(downloadUrl :String , result : ResultCallback<Int>){
-        val call = zhiService.downloadApkFile(downloadUrl)
-
-        call.enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
-               if(response?.isSuccessful == true
-                       && response.body()!=null){
-                   saveApk(response.body()!!, result)
-               }else{
-                   result.onFailure("下载失败" ,101)
-               }
-            }
-
-            override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
-                result.onFailure("下载失败" ,101)
-            }
-
-        })
     }
+    fun editAssert(assertId :String , coin :String , currency: String
+                     , amount :String ,cost_price :String
+                     , position:String , exchange:String
+                     , wallet_address:String ,operate_date:String
+                     , result : ResultCallback<ResultBundle<Assert>>){
+        handleRequest(tokenService.editAssert("Bearer ".plus(RetrofitHelper.auth?.access_token)
+               , assertId ,coin , currency , amount , cost_price,position
+                , exchange , wallet_address, operate_date ) ,result)
+
+    }
+
+    fun getAssert(result : ResultCallback<ResultListBundle<Assert>>){
+        handleRequest(tokenService.getAssert("Bearer ".plus(RetrofitHelper.auth?.access_token)) , result)
+    }
+
+    fun deleteAssert(assertId :String , result : ResultCallback<ResultListBundle<Assert>>){
+        handleRequest(tokenService.deleteAssert("Bearer ".plus(RetrofitHelper.auth?.access_token) , assertId) , result)
+    }
+    fun regions(result : ResultCallback<ResultBundle<Regions>>){
+        handleRequest(tokenService.createAssertGroup() , result)
+    }
+
 
 
     private fun<T> handleRequest(call :Call<T>  ,result:ResultCallback<T> ){
-
         call.enqueue(object : Callback<T> {
             override fun onResponse(call: Call<T>?, response: Response<T>?) {
                 if(call?.isCanceled != false) return
                 try{
-                    result.onSuccess(response?.body())
+                   if(response?.isSuccessful == true){
+                       result.onSuccess(response.body())
+                   }else{
+                       Log.e("RetrofitHelper" , response?.errorBody()?.string())
+                       val gson = Gson()
+                       val error = gson.fromJson(response?.errorBody()?.string(), ErrorBundle::class.java)
+                       result.onFailure(error.message?:"Error" , error.status_code ?:500)
+                   }
                 }catch (e:Exception){
                     e.printStackTrace()
+                    result.onFailure("Error" , 500)
                 }finally {
                     Log.i(tag.plus("-success"),response?.body().toString())
                 }
@@ -154,7 +186,7 @@ class RetrofitHelper private constructor(){
             override fun onFailure(call: Call<T>?, t: Throwable?) {
                 if(call?.isCanceled != false) return
                 try{
-                    t?.message?.let { result.onFailure(it,500 ) }
+                    t?.message?.let { result.onFailure(it,1001 ) }
                 }catch (e:Exception){
                     e.printStackTrace()
                 }finally {
@@ -166,6 +198,25 @@ class RetrofitHelper private constructor(){
     }
 
 
+    fun downloadApkFile(downloadUrl :String , result : ResultCallback<Int>){
+        val call = zhiService.downloadApkFile(downloadUrl)
+
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
+                if(response?.isSuccessful == true
+                        && response.body()!=null){
+                    saveApk(response.body()!!, result)
+                }else{
+                    result.onFailure("下载失败" ,101)
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
+                result.onFailure("下载失败" ,101)
+            }
+
+        })
+    }
     private fun saveApk(responseBody : ResponseBody , result: ResultCallback<Int>){
         var outputStream: OutputStream ?= null
         var inputStream :InputStream ? = null

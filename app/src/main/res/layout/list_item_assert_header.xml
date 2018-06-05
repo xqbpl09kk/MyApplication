@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/group_text"
+            style="@style/TextViewNormal"
+            android:text="@string/total_assert" />
+
+        <TextView
+            android:id="@+id/tamount"
+            style="@style/TextViewLarge"
+            android:layout_toLeftOf="@id/text1"
+             />
+
+        <TextView
+            android:id="@+id/text1"
+            style="@style/TextViewSmall"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@id/amount"
+            android:layout_marginLeft="5dp"
+            android:text="USDT" />
+
+        <TextView
+            android:id="@+id/rate_today"
+            android:layout_marginTop="6dp"
+            style="@style/TextViewSmall"
+            android:layout_below="@id/text1"
+            android:text="今日利润" />
+
+        <TextView
+            android:id="@+id/rate_total"
+            style="@style/TextViewSmall"
+            android:layout_marginTop="6dp"
+            android:layout_below="@id/rate_today"
+            android:text="总利润" />
+    </RelativeLayout>
+    <!--<TextView-->
+        <!--style="@style/TextViewNormal"-->
+        <!--android:text="具体项" />-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:background="@color/windowBackground"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp">
+
+        <TextView
+            style="@style/TextViewNormal"
+            android:layout_weight="1"
+            android:text="具体项" />
+
+        <TextView
+            android:id="@+id/sort_mode"
+            style="@style/TextViewSmall"
+            android:drawablePadding="3dp"
+            android:focusable="true"
+            android:drawableRight="@drawable/ic_sort_black_24dp"
+            android:text="添加时间" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:layout_marginBottom="2.5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="2.5dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="3dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:padding="10dp">
+
+        <RelativeLayout
+            android:id="@+id/head"
+            android:layout_width="match_parent"
+            android:layout_height="70dp">
+
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="14dp"
+                android:layout_height="14dp" />
+
+            <TextView
+                android:id="@+id/coin"
+                style="@style/TextViewNormal"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/icon"
+                android:text="BTC/USDT" />
+
+            <TextView
+                android:id="@+id/amount"
+                style="@style/TextViewSmall"
+                android:layout_alignBottom="@id/coin"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/coin" />
+
+            <TextView
+                android:id="@+id/today_rate"
+                style="@style/TextViewSmall"
+                android:layout_alignBottom="@id/coin"
+                android:layout_alignParentRight="true"
+                android:text="5.00%/24h"
+                android:textColor="@color/change_red" />
+
+            <TextView
+                android:id="@+id/current_worth_title"
+                style="@style/TextViewSmall"
+                android:layout_below="@id/coin"
+                android:layout_marginTop="8dp"
+                android:text="当前价值(USDT):  " />
+
+            <TextView
+                android:id="@+id/current_worth"
+                style="@style/TextViewLarge"
+                android:layout_below="@id/coin"
+                android:layout_toRightOf="@id/current_worth_title"
+                android:text="3000USDT" />
+
+
+            <TextView
+                android:id="@+id/cost"
+                style="@style/TextViewSmall"
+                android:layout_below="@id/current_worth"
+                android:layout_marginTop="5dp"
+                android:text="成本:2000" />
+
+            <TextView
+                style="@style/TextViewSmall"
+                android:layout_alignBottom="@id/cost"
+                android:layout_toLeftOf="@id/total_rate"
+                android:text="总收益率:"  />
+            <TextView
+                android:id="@+id/total_rate"
+                style="@style/TextViewSmall"
+                android:layout_alignBottom="@id/cost"
+                android:layout_alignParentRight="true"
+                android:text="5.00%"
+                android:textColor="@color/change_red" />
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/tail"
+            android:layout_width="match_parent"
+            android:layout_height="210dp"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/textColorGrayLabel" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/TextViewSmall"
+                    android:layout_weight="1"
+                    android:text="当前价格(USDT)" />
+
+                <TextView
+                    android:id="@+id/current_price"
+                    style="@style/TextViewNormal"
+                    android:text="13" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/TextViewSmall"
+                    android:layout_weight="1"
+                    android:text="成本价格(USDT)" />
+
+                <TextView
+                    android:id="@+id/cost_price"
+                    style="@style/TextViewNormal"
+                    android:text="18" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/TextViewSmall"
+                    android:layout_weight="1"
+                    android:text="总利润(USDT)" />
+
+                <TextView
+                    android:id="@+id/total_profit"
+                    style="@style/TextViewNormal"
+                    android:text="1300" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/TextViewSmall"
+                    android:layout_weight="1"
+                    android:text="资产占比" />
+
+                <TextView
+                    android:id="@+id/percent"
+                    style="@style/TextViewNormal"
+                    android:text="18%" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/TextViewSmall"
+                    android:layout_weight="1"
+                    android:text="购买时间" />
+
+                <TextView
+                    android:id="@+id/create_date"
+                    style="@style/TextViewNormal"
+                    android:text="这是一个悲伤的故事" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/TextViewSmall"
+                    android:layout_weight="1"
+                    android:text="备注" />
+
+                <TextView
+                    android:id="@+id/note"
+                    style="@style/TextViewNormal"
+                    android:text="这是一个悲伤的故事" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/edit"
+                style="@style/TextViewSmall"
+                android:layout_height="0dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:background="?android:selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:drawableRight="@drawable/ic_edit_white_16dp"
+                android:padding="5dp"
+                android:text="@string/edit"
+                tools:targetApi="lollipop" />
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

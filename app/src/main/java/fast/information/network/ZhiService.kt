@@ -38,13 +38,33 @@ interface ZhiService {
     fun getTickerItem(@Path("symbol") symbol :String)
             :Call<ResultBundle<TickerListItem>>
 
-    @POST("/v1/auth/login/email/captcha")
-    fun emailCaptcha(@Field("client_id") clientId :String
-            ,@Field("client_secret") clientSecret:String
-            ,@Field("grant_type") grantType :String
-            ,@Field("country_code") countryCode :String
-            ,@Field("email") email:String
-            ,@Field("password") password:String
-            ,@Field("device_Token" )deviceToken:String)
+    @FormUrlEncoded
+    @POST("/v1/auth/email/register")
+    fun emailAuth(@Field("client_id") clientId :String
+                  , @Field("client_secret") clientSecret:String
+                  , @Field("grant_type") grantType :String
+                  , @Field("country_code") countryCode :String
+                  , @Field("email") email:String
+                  , @Field("password") password:String
+                  , @Field("device_Token" )deviceToken:String)
             :Call<ResultBundle<AuthItem>>
+
+    @FormUrlEncoded
+    @POST("/v1/auth/login/cell/captcha")
+    fun phoneAuth(@Field("client_id") clientId :String
+                  , @Field("client_secret") clientSecret:String
+                  , @Field("grant_type") grantType :String
+                  , @Field("country_code") countryCode :String
+                  , @Field("cell") cell:String
+                  , @Field("code") code:String
+                  , @Field("device_Token" )deviceToken:String)
+            :Call<ResultBundle<AuthItem>>
+
+
+    @FormUrlEncoded
+    @POST("/v1/tool/captcha/cell/create")
+    fun captureCode(@Field("country_code")  countryCode :String
+                    ,@Field("cell") cell :String
+                    ,@Field("type") type:String)
+            :Call<ResultBundle<String>>
 }

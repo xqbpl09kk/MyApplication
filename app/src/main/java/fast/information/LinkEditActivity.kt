@@ -90,7 +90,7 @@ class LinkEditActivity : BaseActivity(), PopupMenu.OnMenuItemClickListener {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when {
-            item?.itemId == R.id.create -> createDialog("", "", -1)
+            item?.itemId == R.id.create -> createDialog("", "https://", -1)
 
         }
         return super.onOptionsItemSelected(item)

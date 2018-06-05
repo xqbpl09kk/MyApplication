@@ -97,4 +97,20 @@
     <string name="create_label">创建标签</string>
     <string name="create">新建</string>
     <string name="login">登录</string>
+    <string name="login_account_hint">邮箱地址</string>
+    <string name="password">密码</string>
+    <string name="logout">登出</string>
+    <string name="capture_code">验证码</string>
+    <string name="login_email">使用邮箱登录</string>
+    <string name="telephone">手机号码</string>
+    <string name="login_phone">使用手机登录</string>
+    <string name="complete_infor">请填写完整的信息</string>
+    <string name="account_notice">首次登录将创建账号，请使用自己的邮箱登录，以便后期找回账号</string>
+    <string name="illegal_email">请输入正确的邮箱地址</string>
+    <string name="logout_success">已经退出登录</string>
+    <string name="no_assert">暂时没有添加资产</string>
+    <string name="data_error">数据出错，请刷新重试</string>
+    <string name="input_unit_price">请输入你购买时候相应%s价格</string>
+    <string name="total_assert">总资产</string>
+    <string name="complete_assert_information">请先完成资产信息</string>
 </resources>

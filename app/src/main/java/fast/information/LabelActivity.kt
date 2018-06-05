@@ -2,6 +2,7 @@ package fast.information
 
 import android.app.Activity
 import android.content.Intent
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
@@ -38,7 +39,7 @@ class LabelActivity :BaseActivity() {
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             (holder.itemView as TextView).text = data?.get(position)?.name ?: ""
             holder.itemView.setOnClickListener({
-                setResult(Activity.RESULT_OK , Intent().putExtra("group_id" , data?.get(position)?.id))
+                setResult(Activity.RESULT_OK , Intent().putExtra("assert_group" , data?.get(position)))
                 finish()
             })
         }
@@ -54,17 +55,12 @@ class LabelActivity :BaseActivity() {
         super.registerViews()
         recycler_view.adapter = adapter
         recycler_view.layoutManager = LinearLayoutManager(MyApplication.instance)
-        RetrofitHelper.instance.assertGroup(object : ResultCallback<ResultListBundle<AssertGroup>>{
-            override fun onSuccess(t: ResultListBundle<AssertGroup>?) {
-                data = t?.items
-                adapter.notifyDataSetChanged()
+        refresh_layout.setOnRefreshListener {
+            SwipeRefreshLayout.OnRefreshListener {
+                doRefresh()
             }
+        }
 
-            override fun onFailure(message: String, errorCode: Int) {
-                Toast.makeText(MyApplication.instance , message , Toast.LENGTH_SHORT).show()
-                finish()
-            }
-        })
         save_btn.setOnClickListener({
             if(!TextUtils.isEmpty(filter_editor.text.toString()))
                 RetrofitHelper.instance.createAssertGroup(filter_editor.text.toString() , object : ResultCallback<ResultBundle<AssertGroup>> {
@@ -79,6 +75,20 @@ class LabelActivity :BaseActivity() {
 
                 })
         })
+        doRefresh()
+    }
+    private fun doRefresh(){
+        RetrofitHelper.instance.assertGroup(object : ResultCallback<ResultListBundle<AssertGroup>>{
+            override fun onSuccess(t: ResultListBundle<AssertGroup>?) {
+                data = t?.items
+                adapter.notifyDataSetChanged()
+                refresh_layout.isRefreshing = false
+            }
 
+            override fun onFailure(message: String, errorCode: Int) {
+                refresh_layout.isRefreshing = false
+                Toast.makeText(MyApplication.instance , message , Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }

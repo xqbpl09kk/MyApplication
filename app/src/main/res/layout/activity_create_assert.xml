@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:layout_height="wrap_content">
 
     <LinearLayout
@@ -50,9 +51,8 @@
                     android:id="@+id/amount_editor"
                     style="@style/TextViewNormal"
                     android:layout_width="match_parent"
-                    android:focusedByDefault="false"
                     android:hint="@string/amount"
-                    android:inputType="number" />
+                    android:inputType="numberDecimal" />
             </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
@@ -72,7 +72,7 @@
                         style="@style/TextViewNormal"
                         android:layout_width="match_parent"
                         android:hint="@string/price_when_bought"
-                        android:inputType="number" />
+                        android:inputType="numberDecimal" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -83,7 +83,7 @@
                     android:background="?android:selectableItemBackground"
                     android:drawableEnd="@drawable/down"
                     android:paddingStart="5dp"
-                    android:text="usdt" />
+                    android:text="USDT" />
 
                 <TextView
                     android:id="@+id/price_mode"
@@ -92,10 +92,25 @@
                     android:background="?android:selectableItemBackground"
                     android:drawableEnd="@drawable/down"
                     android:paddingStart="5dp"
-                    android:text="@string/total_price" />
+                    android:text="@string/unit_price" />
             </LinearLayout>
 
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/unit_price_container"
+                android:visibility="gone"
+                android:layout_marginTop="10dp"
+                android:focusedByDefault="false">
 
+                <EditText
+                    android:id="@+id/unit_price_text"
+                    style="@style/TextViewNormal"
+                    android:layout_width="match_parent"
+                    android:focusedByDefault="false"
+                    android:hint="@string/input_unit_price"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
         </LinearLayout>
 
         <TextView
@@ -156,6 +171,12 @@
             android:hint="@string/coin_note_hint"
             android:minHeight="59dp"
             android:padding="10dp" />
+        <Button style="@style/TextViewNormal"
+            android:text="@string/delete"
+            android:id="@+id/delete"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/white"
+            android:gravity="center"/>
     </LinearLayout>
 
 </ScrollView>

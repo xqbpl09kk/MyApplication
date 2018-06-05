@@ -47,7 +47,7 @@ class FragmentMarket : BaseFragment() {
         recycler_view.layoutManager = layoutManager
         recycler_view.addItemDecoration(object: RecyclerView.ItemDecoration() {
             override fun getItemOffsets(outRect: Rect?, view: View?, parent: RecyclerView?, state: RecyclerView.State?) {
-                outRect?.set(0 ,0 , 0, 2)
+                outRect?.set(0 ,0 , 0, 5)
             }
         })
         refresh_layout.setOnRefreshListener ( {  netStep(false)  })

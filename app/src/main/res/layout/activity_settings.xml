@@ -46,16 +46,16 @@
         android:background="@color/windowBackground" />
 
     <LinearLayout
+        android:id="@+id/rate_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rate_container"
         android:background="?android:selectableItemBackground"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:drawableLeft="@drawable/update"
             android:drawablePadding="5dp"
             android:padding="@dimen/common_padding"
@@ -63,20 +63,31 @@
             android:textColor="@color/text_normal"
             android:textSize="16sp" />
 
-        <TextView android:layout_height="wrap_content"
+        <TextView
+            android:id="@+id/refresh_rate_selector"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/down"
+            android:gravity="center"
             android:paddingLeft="20dp"
             android:paddingRight="10dp"
-            android:id="@+id/refresh_rate_selector"
-            android:gravity="center"
-            android:textSize="14sp"
-            android:drawableRight="@drawable/down"
-            android:text="15分钟"/>
+            android:text="15分钟"
+            android:textSize="14sp" />
 
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/windowBackground" />
 
+    <Button
+        android:id="@+id/login_out"
+        style="@style/TextViewNormal"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/save_bg"
+        android:gravity="center"
+        android:text="@string/logout"
+        android:textColor="@color/white" />
 </LinearLayout>

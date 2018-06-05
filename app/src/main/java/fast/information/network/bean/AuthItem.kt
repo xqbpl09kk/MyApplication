@@ -13,7 +13,7 @@ class AuthItem {
     var user:User ? = null
 
     companion object {
-        class User{
+        public class User{
             var id:String ?= null
             var name:String ?= null
             var avatar:String ?=null

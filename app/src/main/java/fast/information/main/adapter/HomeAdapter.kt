@@ -3,6 +3,8 @@ package fast.information.main.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Point
+import android.graphics.Rect
 import android.net.Uri
 import android.support.annotation.IntegerRes
 import android.support.v4.content.ContextCompat
@@ -17,7 +19,12 @@ import fast.information.ShareActivity
 import fast.information.network.bean.MessageItem
 import kotlinx.android.synthetic.main.list_item_main.view.*
 import android.support.v4.app.ActivityOptionsCompat
+import android.text.TextPaint
 import android.text.TextUtils
+import android.util.Log
+import android.widget.TextView
+import android.opengl.ETC1.getWidth
+import android.view.WindowManager
 
 
 /**
@@ -34,6 +41,15 @@ class HomeAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerV
     private var showStar = true
     private var focusItemIndex :Int = -1
     private var listener : OnItemClick ?= null
+    private var contentTextWidth  = 0
+
+
+
+    init {
+        val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val point = Point()
+        wm.defaultDisplay.getSize(point)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater: LayoutInflater = LayoutInflater.from(context)
@@ -122,6 +138,7 @@ class HomeAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerV
             it.isSelected = !it.isSelected
         })
     }
+
 
     fun update(items: List<MessageItem>) {
         if (!showStar) {
