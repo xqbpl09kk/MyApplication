@@ -231,7 +231,8 @@ class MainActivity : BaseActivity(), TimerHandler.Timer {
                 val updateInfo = t?.item ?: return
                 if (updateInfo.latest_app_version
                         != packageManager.getPackageInfo(packageName, 0).versionName) {
-                    if (getSharedPreferences("settings", Context.MODE_PRIVATE).getBoolean("update", false)) {
+                    if (getSharedPreferences("settings", Context.MODE_PRIVATE).getBoolean("update", false)
+                            || updateInfo.force_update) {
                         download(updateInfo.android_url, updateInfo.latest_app_version)
                         Toast.makeText(MyApplication.instance, R.string.auto_update_on_go, Toast.LENGTH_LONG).show()
                     } else {

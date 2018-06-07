@@ -19,6 +19,7 @@ class Assert :Serializable {
     var operate_date :String ? =null
     var updated_at :String ?= null
     var created_at :String ?= null
+    var group_id:String ? = null
 
 
 

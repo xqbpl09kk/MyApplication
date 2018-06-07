@@ -75,6 +75,8 @@ class CreateAssertActivity : BaseActivity(), PopupMenu.OnMenuItemClickListener {
             amount_editor.setText(editAssert!!.amount)
             coin_text.text  = editAssert?.coin
             coin_text.isEnabled = false
+
+
             selectedCoin = editAssert?.coin?:""
             price_editor.setText(editAssert!!.cost_price)
             delete.setOnClickListener({
@@ -91,6 +93,20 @@ class CreateAssertActivity : BaseActivity(), PopupMenu.OnMenuItemClickListener {
                 })
             })
         }
+        RetrofitHelper.instance.assertGroup(object:ResultCallback<ResultListBundle<AssertGroup>>{
+            override fun onSuccess(t: ResultListBundle<AssertGroup>?) {
+                val groupId = editAssert?.group_id ?:"default"
+                t?.items?.map { if(it.id.equals(groupId)){
+                    selectedGroup = it
+                    label_text.text = selectedGroup?.name
+                } }
+            }
+
+            override fun onFailure(message: String, errorCode: Int) {
+                Toast.makeText(MyApplication.instance , "获取分组信息失败" , Toast.LENGTH_SHORT).show()
+            }
+
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -111,6 +127,10 @@ class CreateAssertActivity : BaseActivity(), PopupMenu.OnMenuItemClickListener {
                 Toast.makeText(MyApplication.instance ,R.string.complete_assert_information , Toast.LENGTH_SHORT).show()
                 return false
             }
+            if(selectedGroup == null){
+                Toast.makeText(MyApplication.instance , R.string.select_group_first , Toast.LENGTH_SHORT).show()
+                return false
+            }
             if (selectedPriceMode == PRICE_MODE_ALL) {
                 price = (price.toDouble() / amount.toDouble()).toString()
             }
@@ -125,7 +145,7 @@ class CreateAssertActivity : BaseActivity(), PopupMenu.OnMenuItemClickListener {
                 RetrofitHelper.instance.createAssert(selectedCoin
                         , "USDT", amount, price
                         , position, exchange, wallet_address
-                        , operation_date, object : ResultCallback<ResultBundle<Assert>> {
+                        , operation_date, selectedGroup ?.id?:"" ,note_editor.text.toString() ,object : ResultCallback<ResultBundle<Assert>> {
                     override fun onSuccess(t: ResultBundle<Assert>?) {
                         Toast.makeText(MyApplication.instance, "Assert create success !", Toast.LENGTH_SHORT).show()
                         finish()
@@ -140,7 +160,8 @@ class CreateAssertActivity : BaseActivity(), PopupMenu.OnMenuItemClickListener {
                 RetrofitHelper.instance.editAssert(editAssert!!.id!!, selectedCoin
                         ,"USDT" , amount , price ,position
                         , exchange , wallet_address ,operation_date
-                        , object : ResultCallback<ResultBundle<Assert>> {
+                        ,selectedGroup?.id?:"" ,note_editor.text.toString()
+                    , object : ResultCallback<ResultBundle<Assert>> {
                     override fun onSuccess(t: ResultBundle<Assert>?) {
                         Toast.makeText(MyApplication.instance, "Assert edit success !", Toast.LENGTH_SHORT).show()
                         finish()

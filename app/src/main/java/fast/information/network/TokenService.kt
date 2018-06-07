@@ -40,7 +40,9 @@ interface TokenService {
                      ,@Field("position")position:String
                      ,@Field("exchange")exchange:String
                      ,@Field("wallet_address")wallet_address:String
-                     ,@Field("operate_date")operate_date:String)
+                     ,@Field("operate_date")operate_date:String
+                     ,@Field("group_id") groupId :String
+                    ,@Field("note") note:String)
             : Call<ResultBundle<Assert>>
     @FormUrlEncoded
     @POST("/v1/asset/{asset_id}/update")
@@ -53,7 +55,9 @@ interface TokenService {
                      ,@Field("position")position:String
                      ,@Field("exchange")exchange:String
                      ,@Field("wallet_address")wallet_address:String
-                     ,@Field("operate_date")operate_date:String)
+                     ,@Field("operate_date")operate_date:String
+                   ,@Field("group_id") groupId :String
+                   ,@Field("note") note:String)
             : Call<ResultBundle<Assert>>
 
     @GET("/v1/asset/assets")

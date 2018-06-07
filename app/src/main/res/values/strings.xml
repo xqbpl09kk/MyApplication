@@ -113,4 +113,5 @@
     <string name="input_unit_price">请输入你购买时候相应%s价格</string>
     <string name="total_assert">总资产</string>
     <string name="complete_assert_information">请先完成资产信息</string>
+    <string name="select_group_first">请先选择分组信息</string>
 </resources>

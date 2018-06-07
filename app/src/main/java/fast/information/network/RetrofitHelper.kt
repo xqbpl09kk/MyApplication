@@ -133,19 +133,25 @@ class RetrofitHelper private constructor(){
                      , amount :String ,cost_price :String
                      , position:String , exchange:String
                      , wallet_address:String ,operate_date:String
+                     ,groupId:String
+                     ,note :String
                      , result : ResultCallback<ResultBundle<Assert>>){
         handleRequest(tokenService.createAssert("Bearer ".plus(RetrofitHelper.auth?.access_token)
-            ,coin , currency , amount , cost_price,position , exchange , wallet_address, operate_date ) ,result)
+            ,coin , currency , amount , cost_price
+                ,position , exchange , wallet_address
+                , operate_date , groupId ,note) ,result)
 
     }
     fun editAssert(assertId :String , coin :String , currency: String
                      , amount :String ,cost_price :String
                      , position:String , exchange:String
                      , wallet_address:String ,operate_date:String
+                     ,groupId: String
+                   ,note:String
                      , result : ResultCallback<ResultBundle<Assert>>){
         handleRequest(tokenService.editAssert("Bearer ".plus(RetrofitHelper.auth?.access_token)
                , assertId ,coin , currency , amount , cost_price,position
-                , exchange , wallet_address, operate_date ) ,result)
+                , exchange , wallet_address, operate_date ,groupId , note) ,result)
 
     }
 

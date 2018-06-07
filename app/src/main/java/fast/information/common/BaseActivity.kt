@@ -63,7 +63,9 @@ abstract class BaseActivity : AppCompatActivity() {
         val cursor  = downloadManager.query(DownloadManager.Query().setFilterById(preDownloadId))
         if(!cursor.moveToFirst()){
             val downloadId = downloadManager.enqueue(
-                    DownloadManager.Request(Uri.parse(if(BuildConfig.DEBUG) "http://img.bishijie.com/Bishijie_1.7_release.apk" else downloadUrl))
+                    DownloadManager.Request(Uri.parse(
+//                            if(BuildConfig.DEBUG) "http://img.bishijie.com/Bishijie_1.7_release.apk" else
+                        downloadUrl))
                             .setDestinationUri(Uri.fromFile(
                                     File(applicationContext.externalCacheDir.absolutePath, "bzhi.apk")))
                             .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI)

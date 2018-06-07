@@ -150,6 +150,9 @@ class LoginActivity :BaseActivity() {
                     setResult(Activity.RESULT_OK)
                     Toast.makeText(MyApplication.instance , "login success " , Toast.LENGTH_SHORT).show()
                     finish()
+
+
+
                 }
 
                 override fun onFailure(message: String, errorCode: Int) {
