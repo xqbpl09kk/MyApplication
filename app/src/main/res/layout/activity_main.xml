@@ -77,7 +77,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:src="@drawable/market_selector" />
+                android:src="@drawable/market_selector"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 style="@style/TextViewSmall"

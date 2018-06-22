@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.support.annotation.ColorInt
@@ -38,7 +39,7 @@ class MyApplication  : Application(){
 
     companion object {
         lateinit var instance: MyApplication
-
+        var isCreate = false
     }
 
 
@@ -58,14 +59,32 @@ class MyApplication  : Application(){
     override fun onCreate(){
         super.onCreate()
         System.out.print("App created ! ")
+        isCreate = true
         instance = this
         colorGreen = ContextCompat.getColor(this , R.color.change_green)
         colorRed = ContextCompat.getColor(this , R.color.change_red)
 //        Thread.setDefaultUncaughtExceptionHandler(UnCaughtException())
 //        initUmengPush()
         RetrofitHelper.auth = restoreAuth()
+        initLanguage()
     }
 
+    private fun initLanguage(){
+        val language = getSharedPreferences("settings", Context.MODE_PRIVATE).getString("language" , "auto")
+        if(language == "auto") return
+        when(language){
+            "english" ->{
+                val configuration : Configuration = resources.configuration
+                configuration.locale = Locale.ENGLISH
+                resources.updateConfiguration(configuration , resources.displayMetrics)
+            }
+            "china" ->{
+                val configuration : Configuration = resources.configuration
+                configuration.locale = Locale.CHINA
+                resources.updateConfiguration(configuration , resources.displayMetrics)
+            }
+        }
+    }
 
 
     private fun initUmengPush(){

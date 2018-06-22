@@ -42,7 +42,7 @@ class FragmentMore : BaseFragment() {
 
     }
 
-    private val nameList  = Arrays.asList("以太坊爱好者", "CoinMarketCap")
+    private val nameList  = Arrays.asList("EtherFans", "CoinMarketCap")
     private val linkList = Arrays.asList("https://ethfans.org/", "https://coinmarketcap.com/zh/")
 
 

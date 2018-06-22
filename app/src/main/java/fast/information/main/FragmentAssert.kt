@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.Toast
 import fast.information.CreateAssertActivity
 import fast.information.LoginActivity
@@ -69,6 +70,8 @@ class FragmentAssert: BaseFragment() {
                 }
             }
         })
+        val viewTreeObserver: ViewTreeObserver = recycler_view.viewTreeObserver
+        viewTreeObserver.addOnGlobalLayoutListener {  }
     }
 
 

@@ -38,7 +38,7 @@ class SearchAdapter(private val context: Context) : RecyclerView.Adapter<Recycle
     override fun getItemCount(): Int {
         return data.size
     }
-    val pattern = Pattern.compile("<[A-Z1-9a-z_\\W\\s\\r\":;',()-= \n]*>")
+    private val pattern = Pattern.compile("<[A-Z1-9a-z_\\W\\s\\r\":;',()-= \n]*>")!!
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

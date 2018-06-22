@@ -58,7 +58,9 @@ class MainActivity : BaseActivity(), TimerHandler.Timer {
 //        tab2.setOnClickListener({onTabItemSelected(it)})
 //        tab3.setOnClickListener({onTabItemSelected(it)})
 //        tab4.setOnClickListener({onTabItemSelected(it)})
-        checkUpdate()
+        if(MyApplication.isCreate)
+            checkUpdate()
+        MyApplication.isCreate = false
     }
 
      fun onTabItemSelected(targetView : View){

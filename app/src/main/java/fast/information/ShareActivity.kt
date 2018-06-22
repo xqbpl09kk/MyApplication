@@ -11,10 +11,15 @@ import android.provider.MediaStore
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
 import com.google.gson.Gson
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX
+import com.tencent.mm.opensdk.modelmsg.WXImageObject
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage
+import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import fast.information.common.MyApplication
 import fast.information.main.MainActivity
 import fast.information.network.bean.MessageItem
 import kotlinx.android.synthetic.main.activity_share.*
+import org.android.agoo.service.SendMessage
 import java.io.File
 import java.io.FileOutputStream
 
@@ -39,8 +44,7 @@ class ShareActivity :Activity() {
         content_text.text = getString(R.string.bz_share).plus(messageItem.content)
         title_text.text = messageItem.title?.removePrefix("【")?.removeSuffix("】") ?: ""
         content_text.setOnClickListener({  imageShare()  })
-        if(share)
-            Handler().postDelayed({ imageShare() },100)
+        if(share) Handler().postDelayed({imageShare()} ,10)
     }
 
     private fun imageShare(){
@@ -53,6 +57,7 @@ class ShareActivity :Activity() {
         startActivity(Intent.createChooser(shareIntent, "分享到"))
     }
 
+
     private fun makeImageFile() : Uri {
         clearTmpFile()
         val bitmap :Bitmap  = Bitmap.createBitmap(content.width , content.height , Bitmap.Config.RGB_565)
@@ -62,6 +67,28 @@ class ShareActivity :Activity() {
         val os = FileOutputStream(cacheFile)
         bitmap.compress(Bitmap.CompressFormat.JPEG ,90 , os)
         return  FileProvider.getUriForFile( this, "$packageName.provider", cacheFile)
+    }
+
+
+
+
+    private fun createImageFile():String{
+        clearTmpFile()
+        val bitmap :Bitmap = Bitmap.createBitmap(content.width , content.height , Bitmap.Config.RGB_565)
+        val canvas = Canvas(bitmap)
+        content.draw(canvas)
+        val cacheFile : File = File.createTempFile("prefix" , ".jpg" , externalCacheDir)
+        val os = FileOutputStream(cacheFile)
+        bitmap.compress(Bitmap.CompressFormat.JPEG ,90 , os)
+        return cacheFile.absolutePath
+    }
+
+    private fun createBitmap():Bitmap{
+        clearTmpFile()
+        val bitmap : Bitmap = Bitmap.createBitmap(content.width , content.height , Bitmap.Config.RGB_565)
+        val canvas :Canvas = Canvas(bitmap)
+        content.draw(canvas)
+        return bitmap
     }
 
     private fun clearTmpFile(){

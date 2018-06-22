@@ -10,8 +10,8 @@ android {
         applicationId "fast.information"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 3
-        versionName "2.0.1"
+        versionCode 4
+        versionName "2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary= true
 
@@ -57,6 +57,7 @@ dependencies {
     implementation project(':pushPlus')
     implementation 'com.umeng.sdk:analytics:7.5.0'
 
+    //noinspection GradleDynamicVersion
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 //    implementation 'com.squareup.picasso:picasso:2.71828'
     implementation ("com.github.bumptech.glide:glide:4.7.1") {

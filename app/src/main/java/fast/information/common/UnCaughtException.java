@@ -2,7 +2,6 @@ package fast.information.common;
 
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

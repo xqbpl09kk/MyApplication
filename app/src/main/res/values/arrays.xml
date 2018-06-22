@@ -2,20 +2,20 @@
 <resources>
 
     <string-array name="sort_name">
-        <item>市值</item>
-        <item>1h增幅</item>
-        <item>24h增幅</item>
-        <item>7d增幅</item>
-        <item>交易量</item>
+        <item>Market Cap</item>
+        <item>Change in 1H</item>
+        <item>Change in 24H</item>
+        <item>Change in 7 Day</item>
+        <item>Trade Volume</item>
     </string-array>
 
     <string-array name="assert_sort_name">
-        <item>添加时间</item>
-        <item>资产占比</item>
-        <item>总利润</item>
-        <item>总利润率</item>
-        <item>24小时利润率</item>
-        <item>24小时利润</item>
-        <item>本金</item>
+        <item>Create Date</item>
+        <item>Percent</item>
+        <item>Profit</item>
+        <item>Profit Margin</item>
+        <item>Profit(24h)</item>
+        <item>Profit Margin(24h)</item>
+        <item>Cost</item>
     </string-array>
 </resources>
