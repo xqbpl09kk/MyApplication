@@ -34,7 +34,7 @@
                 android:contentDescription="@string/app_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/launcher_icon" />
+                android:src="@mipmap/ic_launcher" />
 
 0
             <TextView
@@ -90,6 +90,6 @@
             android:layout_marginTop="30dp"
             android:layout_marginBottom="10dp"
             android:visibility="gone"
-            android:src="@mipmap/download_qr" />
+            android:src="@drawable/download_qr" />
     </LinearLayout>
 </ScrollView>

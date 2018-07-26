@@ -19,15 +19,10 @@ import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
 import com.umeng.commonsdk.UMConfigure
-import com.umeng.message.IUmengRegisterCallback
-import com.umeng.message.PushAgent
 import fast.information.BuildConfig
 import fast.information.R
 import fast.information.network.RetrofitHelper
 import fast.information.network.bean.AuthItem
-import org.android.agoo.huawei.HuaWeiRegister
-import org.android.agoo.mezu.MeizuRegister
-import org.android.agoo.xiaomi.MiPushRegistar
 import java.util.*
 
 
@@ -87,27 +82,6 @@ class MyApplication  : Application(){
     }
 
 
-    private fun initUmengPush(){
-        if(BuildConfig.DEBUG) return
-        UMConfigure.init(this@MyApplication , UMConfigure.DEVICE_TYPE_PHONE , "88f7edf62d3a92c69092d60a77b73729")
-        val mPushAgent = PushAgent.getInstance(this)
-
-        mPushAgent.register(object : IUmengRegisterCallback {
-
-            override fun onSuccess(deviceToken: String) {
-                Log.i("MyApplication" , "init umeng success . device token is $deviceToken")
-            }
-
-            override fun onFailure(s: String, s1: String) {
-                Log.i("MyApplication" , "error message is $s and $s1")
-            }
-        })
-
-        HuaWeiRegister.register(this@MyApplication)
-        MiPushRegistar.register(this@MyApplication , miPushId , miPushSecret)
-        MeizuRegister.register(this@MyApplication , meiZuId , meizuKey)
-
-    }
 
 
 

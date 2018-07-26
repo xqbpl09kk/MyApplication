@@ -4,14 +4,11 @@
     package="fast.information">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
 
     <application
         android:allowBackup="false"
-        android:icon="@mipmap/launcher_icon"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:name=".common.MyApplication"
@@ -35,9 +32,7 @@
 
         </activity>
 
-        <activity android:name=".NotificationRouteActivity"
-            android:launchMode="singleTask"
-            android:exported="true"/>
+
 
         <activity android:name=".ConcernActivity"
             android:label="@string/concern"/>
@@ -68,6 +63,7 @@
             android:label="@string/select_label"/>
         <activity android:name=".LoginActivity"
             android:label="@string/login"/>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"

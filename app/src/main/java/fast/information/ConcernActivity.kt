@@ -36,7 +36,7 @@ class ConcernActivity :BaseActivity() {
 
     override fun registerViews() {
         super.registerViews()
-        val emailAddress = "bzhionline@163.com"
+        val emailAddress = "pl09kk@gmail.com"
         val spanString  = SpannableString(emailAddress)
         val clickSpan :ClickableSpan  =object :ClickableSpan(){
             override fun onClick(widget: View?) {

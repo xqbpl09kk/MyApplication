@@ -12,13 +12,12 @@ import android.widget.CompoundButton
 import android.widget.PopupMenu
 import android.widget.Toast
 import com.google.gson.Gson
-import com.umeng.message.IUmengCallback
-import com.umeng.message.PushAgent
 import fast.information.common.BaseActivity
 import fast.information.common.MyApplication
 import fast.information.common.TimerHandler
 import fast.information.main.MainActivity
 import fast.information.network.RetrofitHelper
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
 
@@ -125,6 +124,7 @@ class SettingsActivity :BaseActivity() , PopupMenu.OnMenuItemClickListener {
                 val intent = Intent(this@SettingsActivity , MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
+                view.invalidate()
                 finish()
             }
             R.id.item7 -> {

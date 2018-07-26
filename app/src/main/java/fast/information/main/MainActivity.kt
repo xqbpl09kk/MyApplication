@@ -1,7 +1,8 @@
 package fast.information.main
 
+import android.app.IntentService
 import android.content.*
-import android.os.Bundle
+import android.os.*
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
@@ -61,6 +62,8 @@ class MainActivity : BaseActivity(), TimerHandler.Timer {
         if(MyApplication.isCreate)
             checkUpdate()
         MyApplication.isCreate = false
+
+
     }
 
      fun onTabItemSelected(targetView : View){
@@ -147,12 +150,12 @@ class MainActivity : BaseActivity(), TimerHandler.Timer {
     }
 
 
-    override fun onBackPressed() {
-        if (searchView?.isIconified == false) {
-            shrinkSearchView()
-        } else
-            moveTaskToBack(true)
-    }
+//    override fun onBackPressed() {
+//        if (searchView?.isIconified == false) {
+//            shrinkSearchView()
+//        } else
+//            moveTaskToBack(true)
+//    }
 
     override fun onTime() {
         if (fragmentMarket?.isVisible == true)

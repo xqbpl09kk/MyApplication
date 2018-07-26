@@ -3,9 +3,13 @@ package fast.information.main
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.provider.MediaStore
+import android.support.v4.content.FileProvider
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -20,8 +24,13 @@ import fast.information.SettingsActivity
 import fast.information.common.BaseFragment
 import kotlinx.android.synthetic.main.fragment_more.*
 import kotlinx.android.synthetic.main.more_link_item.view.*
+import java.io.File
+import java.io.FileOutputStream
 import java.util.*
 import kotlin.collections.ArrayList
+import fast.information.R.id.view
+
+
 
 /**
  * MyApplication
@@ -59,7 +68,7 @@ class FragmentMore : BaseFragment() {
                 Toast.makeText(MyApplication.instance, R.string.no_market_app, Toast.LENGTH_SHORT).show()
             }
         })
-        share.setOnClickListener({ shareApp() })
+        share.setOnClickListener({ imageShare() })
         for (i in nameList.indices) {
             addItem(nameList[i] , linkList[i] , true)
         }
@@ -84,6 +93,32 @@ class FragmentMore : BaseFragment() {
         shareIntent.putExtra(Intent.EXTRA_TEXT , getString(R.string.share_text))
         shareIntent.type = "text/*"
         startActivity(Intent.createChooser(shareIntent, "分享到"))
+    }
+
+    private fun imageShare() {
+        val content:View = LayoutInflater.from(MyApplication.instance).inflate(R.layout.common_share_layout ,content_view , false)
+        val width = View.MeasureSpec.makeMeasureSpec(0,
+                View.MeasureSpec.UNSPECIFIED)
+        val height = View.MeasureSpec.makeMeasureSpec(0,
+                View.MeasureSpec.UNSPECIFIED)
+        content.measure(width, height)
+        content.layout(0, 0 , content.measuredWidth , content.measuredHeight)
+        val w = content.measuredWidth
+        val h = content.measuredHeight
+            val bitmap : Bitmap = Bitmap.createBitmap( content.measuredWidth,
+                    content.measuredHeight, Bitmap.Config.RGB_565)
+            val canvas  = Canvas(bitmap)
+            content.draw(canvas)
+            val cacheFile : File = File.createTempFile("prefix" , ".jpg" , activity?.externalCacheDir)
+            val os = FileOutputStream(cacheFile)
+            bitmap.compress(Bitmap.CompressFormat.JPEG ,90 , os)
+            val uri:Uri=   FileProvider.getUriForFile( MyApplication.instance, "${activity?.packageName}.provider", cacheFile)
+            val shareIntent = Intent()
+            shareIntent.action = Intent.ACTION_SEND
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+            shareIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
+            shareIntent.type = "image/*"
+            startActivity(Intent.createChooser(shareIntent, "分享到"))
     }
 
 

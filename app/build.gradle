@@ -10,8 +10,8 @@ android {
         applicationId "fast.information"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 4
-        versionName "2.0"
+        versionCode 5
+        versionName "3.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary= true
 
@@ -54,7 +54,6 @@ dependencies {
     implementation 'me.codeboy.android:align-text-view:2.3.2'
 
     //umeng
-    implementation project(':pushPlus')
     implementation 'com.umeng.sdk:analytics:7.5.0'
 
     //noinspection GradleDynamicVersion
