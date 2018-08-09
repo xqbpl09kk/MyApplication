@@ -38,6 +38,8 @@ class CoinDetailActivity : BaseActivity() , TimerHandler.Timer{
     override fun getLayoutRes(): Int {
         return R.layout.activity_coin_detail
     }
+    //detail
+
 
     private var tickerItem: TickerListItem? = null
     private var timerHandler : TimerHandler?=null
@@ -47,6 +49,7 @@ class CoinDetailActivity : BaseActivity() , TimerHandler.Timer{
         window.setBackgroundDrawableResource(R.color.half_trans)
     }
 
+    //change2 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.coin_detail, menu)
         val sharedPreferences = getSharedPreferences("cache", Context.MODE_PRIVATE)
