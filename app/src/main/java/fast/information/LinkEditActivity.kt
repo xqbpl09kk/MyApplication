@@ -124,33 +124,47 @@ class LinkEditActivity : BaseActivity(), PopupMenu.OnMenuItemClickListener {
                 .setPositiveButton(R.string.save) { _, _ -> }
         val alertDialog = builder.create()
         alertDialog.show()
-        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setOnClickListener({
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setOnClickListener {
             if (TextUtils.isEmpty(contentView.url_edit.text)) {
                 Toast.makeText(MyApplication.instance, R.string.url_none_empty, Toast.LENGTH_SHORT).show()
             }else if (!matchUrl(contentView.url_edit.text.toString())) {
                 Toast.makeText(MyApplication.instance, R.string.url_invalidate, Toast.LENGTH_SHORT).show()
             }else {
-                if (TextUtils.isEmpty(url)) {
-                    if(checkExist(contentView.url_edit.text.toString())){
-                        Toast.makeText(MyApplication.instance, R.string.url_exist , Toast.LENGTH_SHORT).show()
-                    }else{
-                        alertDialog.dismiss()
-                        data.add(0, Item(contentView.name_edit.text.trim().toString(), contentView.url_edit.text.trim().toString()))
-                        getSharedPreferences("links", Context.MODE_PRIVATE).edit().putString("data", Gson().toJson(data)).apply()
+                if(position == -1 || position > data.size ){
+                    data.add(0, Item(contentView.name_edit.text.trim().toString(), contentView.url_edit.text.trim().toString()))
+                    getSharedPreferences("links", Context.MODE_PRIVATE).edit().putString("data", Gson().toJson(data)).apply()
                         recycler_view.adapter.notifyItemInserted(0)
                         recycler_view.scrollToPosition(0)
-                    }
-                } else {
-                    alertDialog.dismiss()
-                    data[position].name = contentView.name_edit.text.trim().toString()
+                }else{
+                    data[position].name =contentView.name_edit.text.trim().toString()
                     data[position].url = contentView.url_edit.text.trim().toString()
                     getSharedPreferences("links", Context.MODE_PRIVATE).edit().putString("data", Gson().toJson(data)).apply()
                     recycler_view.adapter.notifyItemChanged(position)
                     recycler_view.scrollToPosition(position)
                 }
+                alertDialog.dismiss()
+//                if (TextUtils.isEmpty(url)) {
+//                    if(checkExist(contentView.url_edit.text.toString())){
+//                        Toast.makeText(MyApplication.instance, R.string.url_exist , Toast.LENGTH_SHORT).show()
+//                    }else{
+//                        alertDialog.dismiss()
+//                        data.add(0, Item(contentView.name_edit.text.trim().toString(), contentView.url_edit.text.trim().toString()))
+//                        getSharedPreferences("links", Context.MODE_PRIVATE).edit().putString("data", Gson().toJson(data)).apply()
+//                        recycler_view.adapter.notifyItemInserted(0)
+//                        recycler_view.scrollToPosition(0)
+//                    }
+//                } else {
+//                    alertDialog.dismiss()
+//                    data.add(0, Item(contentView.name_edit.text.trim().toString() ,contentView.name_edit.text.trim().toString()))
+////                    data[position].name =
+////                    data[position].url =
+//                    getSharedPreferences("links", Context.MODE_PRIVATE).edit().putString("data", Gson().toJson(data)).apply()
+//                    recycler_view.adapter.notifyItemChanged(0)
+//                    recycler_view.scrollToPosition(position)
+//                }
                 changed = true
             }
-        })
+        }
 
         val inputMethod: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         contentView.name_edit.requestFocus()
@@ -202,14 +216,14 @@ class LinkEditActivity : BaseActivity(), PopupMenu.OnMenuItemClickListener {
                 holder.itemView.name.text = data?.get(position)?.name ?: ""
                 holder.itemView.link.text = data?.get(position)?.url ?: ""
                 holder.itemView.icon.setImageResource(R.drawable.ic_more_vert_black_24dp)
-                holder.itemView.icon.setOnClickListener({
+                holder.itemView.icon.setOnClickListener {
                     val popupMenu = PopupMenu(context, it)
                     val inflater = popupMenu.menuInflater
                     inflater.inflate(R.menu.link_options, popupMenu.menu)
                     popupMenu.show()
                     popupMenu.setOnMenuItemClickListener(achor)
                     clickPosition = holder.adapterPosition
-                })
+                }
             }
 
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

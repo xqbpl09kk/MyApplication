@@ -19,7 +19,7 @@ import fast.information.common.MyApplication
 import fast.information.main.MainActivity
 import fast.information.network.bean.MessageItem
 import kotlinx.android.synthetic.main.activity_share.*
-import org.android.agoo.service.SendMessage
+//import org.android.agoo.service.SendMessage
 import java.io.File
 import java.io.FileOutputStream
 

@@ -12,8 +12,8 @@ import android.widget.CompoundButton
 import android.widget.PopupMenu
 import android.widget.Toast
 import com.google.gson.Gson
-import com.umeng.message.IUmengCallback
-import com.umeng.message.PushAgent
+//import com.umeng.message.IUmengCallback
+//import com.umeng.message.PushAgent
 import fast.information.common.BaseActivity
 import fast.information.common.MyApplication
 import fast.information.common.TimerHandler
