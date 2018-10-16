@@ -48,9 +48,9 @@ class FragmentMore : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        concern.setOnClickListener({ startActivity(Intent(context, ConcernActivity::class.java)) })
-        settings.setOnClickListener({ startActivity(Intent(context, SettingsActivity::class.java)) })
-        comment.setOnClickListener({
+        concern.setOnClickListener { startActivity(Intent(context, ConcernActivity::class.java)) }
+        settings.setOnClickListener { startActivity(Intent(context, SettingsActivity::class.java)) }
+        comment.setOnClickListener {
             try {
                 startActivity(Intent(Intent.ACTION_VIEW)
                         .setData(Uri.parse("market://details?id="
@@ -58,13 +58,13 @@ class FragmentMore : BaseFragment() {
             }catch (e: Exception){
                 Toast.makeText(MyApplication.instance, R.string.no_market_app, Toast.LENGTH_SHORT).show()
             }
-        })
-        share.setOnClickListener({ shareApp() })
+        }
+        share.setOnClickListener { shareApp() }
         for (i in nameList.indices) {
             addItem(nameList[i] , linkList[i] , true)
         }
         initStoreItems()
-        link_title.setOnClickListener({startActivityForResult(Intent(context , LinkEditActivity::class.java) , 1001)})
+        link_title.setOnClickListener {startActivityForResult(Intent(context , LinkEditActivity::class.java) , 1001)}
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -106,7 +106,7 @@ class FragmentMore : BaseFragment() {
         contentView.link.text = url
         contentView.pin.visibility = if(showPin) View.VISIBLE else View.GONE
         link_layout.addView(contentView)
-        contentView.setOnClickListener({
+        contentView.setOnClickListener {
             try {
                 val uri = Uri.parse(url)
                 val intent = Intent(Intent.ACTION_VIEW, uri)
@@ -114,7 +114,7 @@ class FragmentMore : BaseFragment() {
             } catch (e: Exception) {
                 Toast.makeText(MyApplication.instance, R.string.no_browser_client_and_copy_to_clipboard, Toast.LENGTH_SHORT).show()
             }
-        })
+        }
     }
 
 }

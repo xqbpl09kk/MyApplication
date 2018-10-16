@@ -9,7 +9,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "fast.information"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 27
         versionCode 4
         versionName "2.0"
