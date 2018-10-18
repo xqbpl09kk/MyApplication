@@ -48,6 +48,7 @@
         <activity android:name=".MarketActivity"
             android:label="@string/all_market"/>
         <activity android:name=".CoinDetailActivity"
+
             android:label="@string/coin_detail"/>
 
         <activity android:name=".SearchActivity"

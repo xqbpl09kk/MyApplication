@@ -66,13 +66,7 @@ class FragmentNews : BaseFragment() , HomeAdapter.OnItemClick {
                 }
             }
         })
-        refresh_layout.setOnRefreshListener({
-            if (adapter.showStar()) {
-                loadStarData()
-            } else {
-                netStep(false)
-            }
-        })
+        refresh_layout.setOnRefreshListener { if (adapter.showStar()) { loadStarData() } else { netStep(false) } }
         Handler().postDelayed({ netStep(false) }, 200)
     }
 

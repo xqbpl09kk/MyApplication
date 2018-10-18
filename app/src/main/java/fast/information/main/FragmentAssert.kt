@@ -51,12 +51,8 @@ class FragmentAssert: BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        login_btn.setOnClickListener({
-            startActivityForResult(Intent(MyApplication.instance , LoginActivity::class.java) ,1000)
-        })
-        fab.setOnClickListener({
-            startActivity(Intent(MyApplication.instance.getLastActivity() , CreateAssertActivity::class.java))
-        })
+        login_btn.setOnClickListener { startActivityForResult(Intent(MyApplication.instance , LoginActivity::class.java) ,1000) }
+        fab.setOnClickListener { startActivity(Intent(MyApplication.instance.getLastActivity() , CreateAssertActivity::class.java)) }
         refresh_layout.setOnRefreshListener { loadData() }
         adapter = AssertAdapter(MyApplication.instance)
         recycler_view.adapter = adapter

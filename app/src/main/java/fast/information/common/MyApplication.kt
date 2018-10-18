@@ -149,7 +149,11 @@ class MyApplication  : Application(){
         if(activityTaskList.size == 0) {
             startActivity(Intent(this , clazz).putExtra("data" ,bundle).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         }else{
-            activityTaskList.last.startActivity(Intent(this , clazz).putExtra("data" ,bundle))
+            activityTaskList.last.startActivity(
+                    Intent(this , clazz)
+                            .putExtra("data" ,bundle)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
+                            .addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK))
         }
     }
 

@@ -72,11 +72,11 @@ class BoardAdapter(private val context: Context) : RecyclerView.Adapter<Recycler
                 holder.itemView.change.setTextColor(ContextCompat.getColor(context , R.color.text_normal))
             }
         }
-        holder.itemView.setOnClickListener({
+        holder.itemView.setOnClickListener {
             val bundle = Bundle()
             bundle.putSerializable("ticker_item" , itemData)
             MyApplication.instance.jumpActivity(CoinDetailActivity::class.java , bundle)
-        })
+        }
     }
 
     fun update(d: ArrayList<TickerListItem>){

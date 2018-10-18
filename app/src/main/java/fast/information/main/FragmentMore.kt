@@ -48,8 +48,17 @@ class FragmentMore : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        concern.setOnClickListener { startActivity(Intent(context, ConcernActivity::class.java)) }
-        settings.setOnClickListener { startActivity(Intent(context, SettingsActivity::class.java)) }
+        concern.setOnClickListener {
+            startActivity(Intent(context, ConcernActivity::class.java)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
+                    .addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK))
+        }
+        settings.setOnClickListener {
+            val intent = Intent(context , SettingsActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
+            intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
+            startActivity(intent)
+        }
         comment.setOnClickListener {
             try {
                 startActivity(Intent(Intent.ACTION_VIEW)
